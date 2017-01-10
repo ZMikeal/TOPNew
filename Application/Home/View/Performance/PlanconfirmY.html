@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>月度计划确认</h2>
+                    <h2>年度计划确认</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -43,6 +43,8 @@
                           <tr class="headings">
                             
                             <th class="column-title">员工姓名</th>
+                             <th class="column-title">员工工号</th>
+                            <th class="column-title">年</th>
                             <th class="column-title">工作事项</th>
                             
                             <th class="column-title">操作 </th>
@@ -60,7 +62,19 @@
                                 </switch>
                               </label>
                             </td>
-                            
+                            <td class=" ">
+                              <label>
+                                <switch name="Think.session.admin.id_level">
+                                <case value="4">{$vo.staff_id}</case>
+                                <case value="5">{$vo.chief_id}</case>
+                                </switch>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
                             <td class=" ">
                               <label>
                                 {$vo.plan_name}

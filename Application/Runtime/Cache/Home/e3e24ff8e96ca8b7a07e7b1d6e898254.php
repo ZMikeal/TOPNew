@@ -69,18 +69,6 @@
                             </li>
                           </ul>
                         </li>
-                        
-                        <!-- <li><a>季度计划<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li><a href="level2.html">新建清单</a>
-                            </li>
-                            <li><a href="#level2_1">修改清单</a>
-                            </li>
-                            <li><a href="#level2_2">查看清单</a>
-                            </li>
-                          </ul>
-                        </li> -->
-                        
                         <li><a>年度计划<span class="fa fa-chevron-down"></span></a>
                          <ul class="nav child_menu">
                             <li><a href="<?php echo U('PlanY/formmidplan');?>">新建清单</a>
@@ -95,9 +83,32 @@
                   </li>
                   <?php if($_SESSION['admin']['id_level']!= 3): ?><li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a></li>
-                      <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a></li>
-                      <li><a href="<?php echo U('index/index1');?>"></a></li>
+                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a>
+                            </li>
+                            <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a>
+                            </li>
+                          </ul>
+                    </li>
+                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/PlangradeM');?>">月度计划评分</a>
+                            </li>
+                            <li><a href="<?php echo U('index/index1');?>">季度计划评分</a>
+                            </li>
+                            <li><a href="<?php echo U('Performance/PlangradeY');?>">年度计划评分</a>
+                            </li>
+                          </ul>
+                    </li>
+                    <li><a>绩效评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('index/index1');?>">月度绩效</a>
+                            </li>
+                            <li><a href="<?php echo U('index/index1');?>">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
                     </ul>
                   </li><?php endif; ?>
                   <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
@@ -334,6 +345,9 @@
                           <tr class="headings">
                             
                             <th class="column-title">员工姓名</th>
+                            <th class="column-title">员工工号</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
                             <th class="column-title">工作事项</th>
                             
                             <th class="column-title">操作 </th>
@@ -348,7 +362,22 @@
                                 <?php case "5": echo ($vo["chief_name"]); break; endswitch;?>
                               </label>
                             </td>
-                            
+                            <td class=" ">
+                              <label>
+                                <?php switch($_SESSION['admin']['id_level']): case "4": echo ($vo["staff_id"]); break;?>
+                                <?php case "5": echo ($vo["chief_id"]); break; endswitch;?>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                <?php echo ($vo["year"]); ?>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                <?php echo ($vo["month"]); ?>
+                              </label>
+                            </td>
                             <td class=" ">
                               <label>
                                 <?php echo ($vo["plan_name"]); ?>

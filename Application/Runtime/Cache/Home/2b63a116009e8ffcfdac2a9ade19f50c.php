@@ -69,18 +69,6 @@
                             </li>
                           </ul>
                         </li>
-                        
-                        <!-- <li><a>季度计划<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li><a href="level2.html">新建清单</a>
-                            </li>
-                            <li><a href="#level2_1">修改清单</a>
-                            </li>
-                            <li><a href="#level2_2">查看清单</a>
-                            </li>
-                          </ul>
-                        </li> -->
-                        
                         <li><a>年度计划<span class="fa fa-chevron-down"></span></a>
                          <ul class="nav child_menu">
                             <li><a href="<?php echo U('PlanY/formmidplan');?>">新建清单</a>
@@ -95,9 +83,32 @@
                   </li>
                   <?php if($_SESSION['admin']['id_level']!= 3): ?><li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a></li>
-                      <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a></li>
-                      <li><a href="<?php echo U('index/index1');?>"></a></li>
+                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a>
+                            </li>
+                            <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a>
+                            </li>
+                          </ul>
+                    </li>
+                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/PlangradeM');?>">月度计划评分</a>
+                            </li>
+                            <li><a href="<?php echo U('Performance/PlangradeS');?>">季度计划评分</a>
+                            </li>
+                            <li><a href="<?php echo U('Performance/PlangradeY');?>">年度计划评分</a>
+                            </li>
+                          </ul>
+                    </li>
+                    <li><a>绩效评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/Planconfirm');?>">月度绩效</a>
+                            </li>
+                            <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
                     </ul>
                   </li><?php endif; ?>
                   <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
@@ -341,7 +352,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_1094698785__=1;$__FOR_END_1094698785__=11;for($j=$__FOR_START_1094698785__;$j < $__FOR_END_1094698785__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_1742037347__=1;$__FOR_END_1742037347__=11;for($j=$__FOR_START_1742037347__;$j < $__FOR_END_1742037347__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($list[$j-1]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -366,7 +377,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_270173796__=11;$__FOR_END_270173796__=16;for($j=$__FOR_START_270173796__;$j < $__FOR_END_270173796__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_1908284150__=11;$__FOR_END_1908284150__=16;for($j=$__FOR_START_1908284150__;$j < $__FOR_END_1908284150__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($nljs[$j-11]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -391,7 +402,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($nljs[$j-11]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_1875025628__=16;$__FOR_END_1875025628__=19;for($j=$__FOR_START_1875025628__;$j < $__FOR_END_1875025628__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_254204134__=16;$__FOR_END_254204134__=19;for($j=$__FOR_START_254204134__;$j < $__FOR_END_254204134__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($tzx[$j-16]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -522,7 +533,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_646794636__=1;$__FOR_END_646794636__=11;for($j=$__FOR_START_646794636__;$j < $__FOR_END_646794636__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_84218760__=1;$__FOR_END_84218760__=11;for($j=$__FOR_START_84218760__;$j < $__FOR_END_84218760__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($list[$j-1]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -547,7 +558,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_775490474__=11;$__FOR_END_775490474__=14;for($j=$__FOR_START_775490474__;$j < $__FOR_END_775490474__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_28210538__=11;$__FOR_END_28210538__=14;for($j=$__FOR_START_28210538__;$j < $__FOR_END_28210538__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($nljs[$j-11]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -572,7 +583,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($nljs[$j-11]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_2073586640__=14;$__FOR_END_2073586640__=17;for($j=$__FOR_START_2073586640__;$j < $__FOR_END_2073586640__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_995847294__=14;$__FOR_END_995847294__=17;for($j=$__FOR_START_995847294__;$j < $__FOR_END_995847294__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($tzx[$j-14]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -704,7 +715,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_934003004__=1;$__FOR_END_934003004__=6;for($j=$__FOR_START_934003004__;$j < $__FOR_END_934003004__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_601607074__=1;$__FOR_END_601607074__=6;for($j=$__FOR_START_601607074__;$j < $__FOR_END_601607074__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($list[$j-1]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -730,7 +741,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_1634347063__=6;$__FOR_END_1634347063__=8;for($j=$__FOR_START_1634347063__;$j < $__FOR_END_1634347063__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_1391086202__=6;$__FOR_END_1391086202__=8;for($j=$__FOR_START_1391086202__;$j < $__FOR_END_1391086202__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($nljs[$j-6]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -755,7 +766,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($nljs[$j-6]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_469063591__=8;$__FOR_END_469063591__=11;for($j=$__FOR_START_469063591__;$j < $__FOR_END_469063591__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_1061788924__=8;$__FOR_END_1061788924__=11;for($j=$__FOR_START_1061788924__;$j < $__FOR_END_1061788924__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($tzx[$j-8]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 

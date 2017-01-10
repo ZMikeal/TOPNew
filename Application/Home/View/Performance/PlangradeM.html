@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>月度计划确认</h2>
+                    <h2>月度计划评分</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -47,7 +47,7 @@
                             <th class="column-title">年</th>
                             <th class="column-title">月</th>
                             <th class="column-title">工作事项</th>
-                            
+                            <th class="column-title">总分</th>
                             <th class="column-title">操作 </th>
                           </tr>
                         </thead>
@@ -86,10 +86,14 @@
                                 {$vo.plan_name}
                               </label>
                             </td>
-                            
+                            <td class=" ">
+                              <label>
+                                
+                              </label>
+                            </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/Pplan',array('id'=>$vo['id']))}">[ 确认计划 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id']))}">[ 评分 ]</a>
                               </label>
                             </td>
                             

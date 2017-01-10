@@ -303,8 +303,9 @@ class PlanYController extends BaseController {
       if($le==5)
       {
         $this->model=D('planyear_minister');
-         $tj['minister_id']=session('admin.id_employee');
+        $tj['minister_id']=session('admin.id_employee');
       }
+      //dump($tj);exit;
       $list = $this->model->where($tj)->select();
       $this->assign('list',$list);
       $this->display();

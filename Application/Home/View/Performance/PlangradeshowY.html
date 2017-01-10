@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{$name}:月度计划确认</h2>
+                    <h2>{$name}:年度计划评分</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -124,15 +124,22 @@
                               </label>
                             </td>
                             <td class=" ">
-                              <a id="{$vo.id}" class="btn btn-default btn-sm active" onclick="fnn(this)">确认</a>
-                              <a id="{$vo.id}" class="btn btn-default btn-sm active" href="#" onclick="fn(this)" role="button" data-toggle="modal"  data-target="#bianji">退回</a>
+                             <select class="form-control">
+                               <option>S</option>
+                               <option>A</option>
+                               <option>B</option>
+                               <option>C</option>
+                               <option>D</option>
+                               <option>E</option>
+                             </select>
                             </td>
                             
                           </tr>
                         </volist>
                         </tbody>
                       </table>
-                      <a class="btn btn-success" href="{:U('Performance/Planconfirm')}" style="margin-left:40%;width:10%;">返回</a>
+                      <a class="btn btn-success" href="{:U('Performance/PlangradeY')}" style="margin-left:30%;width:10%;">暂不能提交</a>
+                      <a class="btn btn-success" href="{:U('Performance/PlangradeY')}" style="margin-left:10%;width:10%;">返回</a>
                     </div>
                   </div>
                 </div>
