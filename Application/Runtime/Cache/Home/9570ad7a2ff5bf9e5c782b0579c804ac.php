@@ -96,7 +96,7 @@
                   <?php if($_SESSION['admin']['id_level']!= 3): ?><li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a></li>
-                      <li><a href="<?php echo U('index/index1');?>"></a></li>
+                      <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a></li>
                       <li><a href="<?php echo U('index/index1');?>"></a></li>
                     </ul>
                   </li><?php endif; ?>
@@ -283,6 +283,9 @@
                 <li class="">
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前时间为： <?php echo ($_SESSION['admin']['year_sys']); ?> 年 <?php echo ($_SESSION['admin']['month_sys']); ?> 月 </a>
                 </li>
+                <li class="">
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.0.1</a>
+                </li>
               </ul>
             </nav>
           </div>
@@ -335,7 +338,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_869899401__=1;$__FOR_END_869899401__=11;for($j=$__FOR_START_869899401__;$j < $__FOR_END_869899401__;$j+=1){ if(!empty($list1)): ?><tr class="even pointer">
+                        <?php $__FOR_START_2001816890__=1;$__FOR_END_2001816890__=11;for($j=$__FOR_START_2001816890__;$j < $__FOR_END_2001816890__;$j+=1){ if(!empty($list1)): ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="部门重点工作" >部门重点工作</option>    
@@ -401,7 +404,7 @@
                             </select>
                             </td>
                           </tr><?php endif; } ?>
-                      <?php $__FOR_START_347897135__=11;$__FOR_END_347897135__=16;for($j=$__FOR_START_347897135__;$j < $__FOR_END_347897135__;$j+=1){ if(!empty($listt1)): ?><tr class="even pointer">
+                      <?php $__FOR_START_992549368__=11;$__FOR_END_992549368__=16;for($j=$__FOR_START_992549368__;$j < $__FOR_END_992549368__;$j+=1){ if(!empty($listt1)): ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="能力建设" >能力建设</option>    
@@ -568,7 +571,7 @@
                           </tr>
                         </thead>
                      <tbody>
-                        <?php $__FOR_START_2032623210__=1;$__FOR_END_2032623210__=8;for($j=$__FOR_START_2032623210__;$j < $__FOR_END_2032623210__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_709358051__=1;$__FOR_END_709358051__=8;for($j=$__FOR_START_709358051__;$j < $__FOR_END_709358051__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="科室工作" <?php if($list[$j-1]['plan_type'] == '科室工作'): ?>selected="selected"<?php endif; ?>>科室工作</option>
@@ -607,7 +610,7 @@
                             </select>
                             </td>
                           </tr><?php } ?>    
-                     <?php $__FOR_START_1382378755__=8;$__FOR_END_1382378755__=10;for($j=$__FOR_START_1382378755__;$j < $__FOR_END_1382378755__;$j+=1){ ?><tr class="even pointer">
+                     <?php $__FOR_START_1831894680__=8;$__FOR_END_1831894680__=10;for($j=$__FOR_START_1831894680__;$j < $__FOR_END_1831894680__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="改善创新项" >改善创新项</option>    
@@ -656,7 +659,12 @@
 </div>
 </div>
                     
-        
+        <footer>
+          <div class="pull-right">
+              
+          </div>
+          <div class="clearfix"></div>
+        </footer>
       </div>
     </div>
     <script src="/topNew/Public/custom/js/jquery.min.js"></script>
@@ -670,7 +678,6 @@
               <script src="/topNew/Public/custom/js/daterangepicker.js"></script>
                <script type="text/javascript">
                   $('.data').daterangepicker({
-      
                     //language:"zh-CN",
                     singleDatePicker: true,
                     singleClasses: "picker_4"

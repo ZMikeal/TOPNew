@@ -378,5 +378,29 @@ class PlanYController extends BaseController {
         <script> alert('更新成功！');parent.location.href='../PlanY/modmidplan'; </script>"; 
 
     }
+    public function confirm(){
+    $id=I('post.vid');
+    $tj['plan_name']=I('post.shixiang');
+    $tj['plan_content']=I('post.neirong');
+    $tj['plan_closingdate']=I('post.shijian');
+    $le=session('admin.id_level');
+      if($le==3||$le==7)
+      {
+        $this->model=D('planyear_staff');
+      }
+      if($le==4)
+      {
+        $this->model=D('planyear_chief');
+      }
+      if($le==5)
+      {
+        $this->model=D('planyear_minister');
+      }
+      $this->model->where("id=$id")->setField('if_confirm',0);
+      if($this->model->create($tj)){
+        $this->model->where("id=$id")->save();
+      }
+      $this->ajaxReturn(array('success'=>1),"json");
+   }
    
 }

@@ -96,7 +96,7 @@
                   <?php if($_SESSION['admin']['id_level']!= 3): ?><li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a></li>
-                      <li><a href="<?php echo U('index/index1');?>"></a></li>
+                      <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a></li>
                       <li><a href="<?php echo U('index/index1');?>"></a></li>
                     </ul>
                   </li><?php endif; ?>
@@ -282,6 +282,9 @@
                 </li> -->
                 <li class="">
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前时间为： <?php echo ($_SESSION['admin']['year_sys']); ?> 年 <?php echo ($_SESSION['admin']['month_sys']); ?> 月 </a>
+                </li>
+                <li class="">
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.0.1</a>
                 </li>
               </ul>
             </nav>
@@ -475,7 +478,12 @@
               </div>
 </div>
      
-        
+        <footer>
+          <div class="pull-right">
+              
+          </div>
+          <div class="clearfix"></div>
+        </footer>
       </div>
     </div>
     <script src="/topNew/Public/custom/js/jquery.min.js"></script>
@@ -489,7 +497,6 @@
               <script src="/topNew/Public/custom/js/daterangepicker.js"></script>
                <script type="text/javascript">
                   $('.data').daterangepicker({
-      
                     //language:"zh-CN",
                     singleDatePicker: true,
                     singleClasses: "picker_4"

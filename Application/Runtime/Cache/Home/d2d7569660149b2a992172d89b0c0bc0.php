@@ -96,7 +96,7 @@
                   <?php if($_SESSION['admin']['id_level']!= 3): ?><li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a></li>
-                      <li><a href="<?php echo U('index/index1');?>"></a></li>
+                      <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a></li>
                       <li><a href="<?php echo U('index/index1');?>"></a></li>
                     </ul>
                   </li><?php endif; ?>
@@ -283,6 +283,9 @@
                 <li class="">
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前时间为： <?php echo ($_SESSION['admin']['year_sys']); ?> 年 <?php echo ($_SESSION['admin']['month_sys']); ?> 月 </a>
                 </li>
+                <li class="">
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.0.1</a>
+                </li>
               </ul>
             </nav>
           </div>
@@ -297,63 +300,10 @@
 </style>
 <div class="right_col" role="main">
               <div class="row">
-              <!-- <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
-                  <div class="x_title">
-                    <h2>上级:<?php echo ($_SESSION['admin']['user_leader']); ?> 的计划表</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                  <?php if(empty($list2)): ?><p>还没有任何计划！</p><?php endif; ?>
-                  <?php if(!empty($list2)): ?><table class="table">
-                      <thead>
-                        <tr>
-                          <th>工作类型</th>
-                          <th>工作分类</th>
-                          <th>工作事项</th>
-                          <th>计划完成时间</th>
-                          <th>权重</th>
-                          <th>工作内容及目标/交付物</th>
-                          <th>是否延续</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                       <?php if(is_array($list2)): $i = 0; $__LIST__ = $list2;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vv): $mod = ($i % 2 );++$i;?><tr>
-                          <td><?php echo ($vv["plan_type"]); ?></td>
-                          <td><?php echo ($vv["plan_classify"]); ?></td>
-                          <td><?php echo ($vv["plan_name"]); ?></td>
-                          <td><?php echo ($vv["plan_closingdate"]); ?></td>
-                          <td><?php echo ($vv["plan_weight"]); ?></td>
-                          <td><?php echo ($vv["plan_content"]); ?></td>
-                          <td><?php echo ($vv["if_continue"]); ?></td>
-                        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-                      </tbody>
-                    </table><?php endif; ?>
-                  </div>
-                </div>
-              </div> -->
-              
-
-
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>清单计划查询</h2>
+                    <h2>清单月度计划查询</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -422,8 +372,16 @@
                   </div>
                 </div>
               </div>
-                                 
-        
+              </div>
+
+</div>
+     
+        <footer>
+          <div class="pull-right">
+              
+          </div>
+          <div class="clearfix"></div>
+        </footer>
       </div>
     </div>
     <script src="/topNew/Public/custom/js/jquery.min.js"></script>
@@ -437,7 +395,6 @@
               <script src="/topNew/Public/custom/js/daterangepicker.js"></script>
                <script type="text/javascript">
                   $('.data').daterangepicker({
-      
                     //language:"zh-CN",
                     singleDatePicker: true,
                     singleClasses: "picker_4"
@@ -448,7 +405,3 @@
                </script>     
   </body>
 </html>
- 
-              </div>
-
-</div>

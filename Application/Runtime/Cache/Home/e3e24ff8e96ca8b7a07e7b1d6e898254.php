@@ -96,7 +96,7 @@
                   <?php if($_SESSION['admin']['id_level']!= 3): ?><li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo U('Performance/Planconfirm');?>">月度计划确认</a></li>
-                      <li><a href="<?php echo U('index/index1');?>"></a></li>
+                      <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度计划确认</a></li>
                       <li><a href="<?php echo U('index/index1');?>"></a></li>
                     </ul>
                   </li><?php endif; ?>
@@ -283,6 +283,9 @@
                 <li class="">
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前时间为： <?php echo ($_SESSION['admin']['year_sys']); ?> 年 <?php echo ($_SESSION['admin']['month_sys']); ?> 月 </a>
                 </li>
+                <li class="">
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.0.1</a>
+                </li>
               </ul>
             </nav>
           </div>
@@ -302,7 +305,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>计划确认</h2>
+                    <h2>月度计划确认</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -324,8 +327,10 @@
                   <div class="x_content">
 
                     <div class="table-responsive"  style="height:650px;">
+
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
-                       <thead>
+                      <?php if(empty($jh)): ?>暂无计划可以确认！<?php endif; ?>
+                      <?php if(!empty($jh)): ?><thead>
                           <tr class="headings">
                             
                             <th class="column-title">员工姓名</th>
@@ -352,12 +357,12 @@
                             
                             <td class=" " width="200px;">
                               <label>
-            <a href="<?php echo U('Performance/showplan',array('id'=>$vo['id']));?>">[ 查看 ]</a>
+            <a href="<?php echo U('Performance/Pplan',array('id'=>$vo['id']));?>">[ 确认计划 ]</a>
                               </label>
                             </td>
                             
                           </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-                        </tbody>
+                        </tbody><?php endif; ?>
                       </table>
                      <!--  <a class="btn btn-success" href="<?php echo U('Plan/midplan');?>" style="margin-left:40%;width:10%;">返回</a> -->
                     </div>
@@ -369,7 +374,12 @@
 
 </div>
      
-        
+        <footer>
+          <div class="pull-right">
+              
+          </div>
+          <div class="clearfix"></div>
+        </footer>
       </div>
     </div>
     <script src="/topNew/Public/custom/js/jquery.min.js"></script>
@@ -383,7 +393,6 @@
               <script src="/topNew/Public/custom/js/daterangepicker.js"></script>
                <script type="text/javascript">
                   $('.data').daterangepicker({
-      
                     //language:"zh-CN",
                     singleDatePicker: true,
                     singleClasses: "picker_4"
