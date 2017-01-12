@@ -95,7 +95,7 @@
                         <ul class="nav child_menu">
                             <li><a href="<?php echo U('Performance/PlangradeM');?>">月度计划评分</a>
                             </li>
-                            <li><a href="<?php echo U('Performance/PlangradeS');?>">季度计划评分</a>
+                            <li><a href="<?php echo U('index/index1');?>">季度计划评分</a>
                             </li>
                             <li><a href="<?php echo U('Performance/PlangradeY');?>">年度计划评分</a>
                             </li>
@@ -103,9 +103,9 @@
                     </li>
                     <li><a>绩效评分<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?php echo U('Performance/Planconfirm');?>">月度绩效</a>
+                            <li><a href="<?php echo U('index/index1');?>">月度绩效</a>
                             </li>
-                            <li><a href="<?php echo U('Performance/PlanconfirmY');?>">年度绩效</a>
+                            <li><a href="<?php echo U('index/index1');?>">年度绩效</a>
                             </li>
                           </ul>
                     </li>

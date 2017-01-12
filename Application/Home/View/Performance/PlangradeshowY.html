@@ -33,6 +33,7 @@
                   <div class="x_content">
 
                     <div class="table-responsive"  style="height:650px;">
+                    <p>总分：<input type="text" disabled="disabled" id="zongfen" value="0"></p>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
@@ -102,7 +103,7 @@
 
                             <td class=" " width="200px;">
                               <label>
-                               
+                               <input id="chengji[{$i}]" type="text" value="{$vo.plan_grade}" disabled="disabled">
                               </label>
                             </td>
                             <td class=" ">
@@ -124,13 +125,11 @@
                               </label>
                             </td>
                             <td class=" ">
-                             <select class="form-control">
-                               <option>S</option>
-                               <option>A</option>
-                               <option>B</option>
-                               <option>C</option>
-                               <option>D</option>
-                               <option>E</option>
+                             <select class="form-control" id="fenshu[{$i}]" name="fenshu[]"  onchange="getGrade({$i})">
+                             <option value=""></option>
+                               <volist name="vo.fenshu" id="f" >
+                               <option value="{$f.fen}">{$f.dengji}</option>
+                               </volist>
                              </select>
                             </td>
                             
@@ -148,90 +147,24 @@
       </div>
    </div>
 </div>
-
-<div class="modal fade" id="bianji" tabindex="-1" role="dialog" 
-   aria-labelledby="myModalLabel" aria-hidden="true" style="float: right; border: 1px solid #333;"> 
-     <div class="modal-dialog">
-      <div class="modal-content">
-       <div class="modal-header">
-        <button type="button" class="close" 
-           data-dismiss="modal" aria-hidden="true">
-            &times;
-        </button>
-        <h4 class="modal-title" id="myModalLabel">
-           退回原因：
-        </h4>
-       </div>
-       <!--编辑主体 -->
-      <div class="modal-body">  
-         <table class="table">
-          <tr>
-          <td><input type="hidden" id="id" class="form-control">
-            <th>填写原因:</th>
-            <td><textarea class="form-control" id="text" style="height:150px;"></textarea></td>
-          </tr>
-         </table>
-         <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
-      </div>
-      </div><!-- /.modal-content -->
-      </div><!-- /.modal -->
-</div>
-
 <include file="Public/foot" /> 
 <script type="text/javascript">
-function fnn(nn){
-       var re=nn.id;
-       //alert(re);
-       var action = "/topNew/Performance/confirm";
-    if (confirm("确定要确认？")) 
-             {      
-      $.ajax({
-        type:"GET",
-        url:action,
-        data:{"vid":re},
-        dataType:"json",
-        success:function(data){
-          if(data.success==1){  
-             alert("确认成功!");
-              window.location.reload();
-          }
-          else{
-          alert("确认失败！");
-          }
+ function getGrade(i)
+        {            
+            var fenshu=document.getElementById('fenshu['+i+']').value;
+            document.getElementById('chengji['+i+']').value = fenshu;
+            var zong=0;
+            var quanju=document.getElementsByName('fenshu[]');
+            var d=quanju.length;
+            for(var i=0;i<d;i++)
+            { 
+               var dd=quanju[i].value;
+               if(dd==""){
+                dd=0;
+               }
+               zong+=parseInt(dd);
+            }             
+            document.getElementById("zongfen").value = zong;
         }
-      });
-    }
-  }
-  function fn(tt){
-       var tr1 = tt.id;  
-       document.getElementById("id").value = tr1;
-    }
-$(function(){
-    $("#sub-mod").click(function(){
-      var confirm = $("#text").val();
-      var id = $("#id").val();
-      var action = "/topNew/Performance/notconfirm";
-      if(confirm==""){
-        alert("不能为空!");
-        return false;
-      }
-      $.ajax({
-        type:"POST",
-        url:action,
-        dataType:"json",
-        data:{"confirm":confirm,"id":id},
-        success:function(data){
-          if(data.success==1){
-            alert('成功!');
-            window.location.reload();
-          }
-          if(data.success==0){ 
-          //alert(data.username);
-          alert("失败！");
-            return false;
-          }
-        }
-      });
-  });
-});
+
   </script>

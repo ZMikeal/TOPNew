@@ -88,7 +88,12 @@
                             </td>
                             <td class=" ">
                               <label>
-                                
+                                <empty name="vo[plan_grade]">
+                                暂未评分！
+                                </empty>
+                                <notempty name="vo[plan_grade]">
+                                {$vo.plan_grade}
+                                </notempty>
                               </label>
                             </td>
                             <td class=" " width="200px;">
