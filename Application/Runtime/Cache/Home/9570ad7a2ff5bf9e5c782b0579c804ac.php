@@ -359,7 +359,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_2003931084__=1;$__FOR_END_2003931084__=11;for($j=$__FOR_START_2003931084__;$j < $__FOR_END_2003931084__;$j+=1){ if(!empty($list1)): ?><tr class="even pointer">
+                        <?php $__FOR_START_1957195081__=1;$__FOR_END_1957195081__=11;for($j=$__FOR_START_1957195081__;$j < $__FOR_END_1957195081__;$j+=1){ if(!empty($list1)): ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="部门重点工作" >部门重点工作</option>    
@@ -425,7 +425,7 @@
                             </select>
                             </td>
                           </tr><?php endif; } ?>
-                      <?php $__FOR_START_304839808__=11;$__FOR_END_304839808__=16;for($j=$__FOR_START_304839808__;$j < $__FOR_END_304839808__;$j+=1){ if(!empty($listt1)): ?><tr class="even pointer">
+                      <?php $__FOR_START_1436705471__=11;$__FOR_END_1436705471__=16;for($j=$__FOR_START_1436705471__;$j < $__FOR_END_1436705471__;$j+=1){ if(!empty($listt1)): ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="能力建设" >能力建设</option>    
@@ -592,7 +592,7 @@
                           </tr>
                         </thead>
                      <tbody>
-                        <?php $__FOR_START_123318112__=1;$__FOR_END_123318112__=8;for($j=$__FOR_START_123318112__;$j < $__FOR_END_123318112__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_745612631__=1;$__FOR_END_745612631__=8;for($j=$__FOR_START_745612631__;$j < $__FOR_END_745612631__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="科室工作" <?php if($list[$j-1]['plan_type'] == '科室工作'): ?>selected="selected"<?php endif; ?>>科室工作</option>
@@ -605,18 +605,18 @@
                                     <option value="常规工作" <?php if($list[$j-1]['plan_classify'] == '常规工作'): ?>selected="selected"<?php endif; ?>>常规工作</option>
                                  </select></td>
                             <td class=" ">
-                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left;"><?php echo ($list[$j-1]["plan_name"]); ?></textarea>
+                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left; width:70%;"><?php echo ($list[$j-1]["plan_name"]); ?></textarea>
                                <input type="hidden" value="<?php echo ($list[$j-1]["id"]); ?>" name="id[]">
                             </td>
                             <td class=" ">
 
-                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="<?php echo ($list[$j-1]["plan_closingdate"]); ?>">
+                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="<?php echo ($list[$j-1]["plan_closingdate"]); ?>" style="width:70%;">
                             </td>
                             <td class=" ">
                               <input type="text" name="quanzhong[]" style="width:50px;" maxlength="3" id="quanzhong[]" value="<?php echo ($list[$j-1]["plan_weight"]); ?>">
                             </td>
                             <td class=" ">
-                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
+                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:80%; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                             <?php if(($_SESSION['admin']['id_level']== 3) and ($_SESSION['admin']['user_type']== '专业员工')): ?><td class="">
                               <select name="plan[<?php echo ($j); ?>][plan_leader]">
@@ -631,7 +631,7 @@
                             </select>
                             </td>
                           </tr><?php } ?>    
-                     <?php $__FOR_START_1119696696__=8;$__FOR_END_1119696696__=10;for($j=$__FOR_START_1119696696__;$j < $__FOR_END_1119696696__;$j+=1){ ?><tr class="even pointer">
+                     <?php $__FOR_START_1385542113__=8;$__FOR_END_1385542113__=10;for($j=$__FOR_START_1385542113__;$j < $__FOR_END_1385542113__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="改善创新项" >改善创新项</option>    
@@ -643,17 +643,17 @@
                                     <option value="常规工作" <?php if($listt[$j-8]['plan_classify'] == '常规工作'): ?>selected="selected"<?php endif; ?>>常规工作</option>
                             </select></td>
                             <td class=" ">
-                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left;"><?php echo ($listt[$j-8]["plan_name"]); ?></textarea>
+                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left;width:70%;"><?php echo ($listt[$j-8]["plan_name"]); ?></textarea>
                               <input type="hidden" value="<?php echo ($listt[$j-8]["id"]); ?>" name="id[]">
                             </td>
                             <td class=" ">
-                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="<?php echo ($listt[$j-8]["plan_closingdate"]); ?>">
+                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="<?php echo ($listt[$j-8]["plan_closingdate"]); ?>" style="width:70%;">
                             </td>
                             <td class=" ">
                               <input type="text" name="quanzhong[]" style="width:50px;" maxlength="3" id="quanzhong[]" value="<?php echo ($listt[$j-8]["plan_weight"]); ?>">
                             </td>
                             <td class=" ">
-                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($listt[$j-8]["plan_content"]); ?></textarea>
+                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:80%; "><?php echo ($listt[$j-8]["plan_content"]); ?></textarea>
                             </td>
                             <?php if(($_SESSION['admin']['id_level']== 3) and ($_SESSION['admin']['user_type']== '专业员工')): ?><td class="">
                               <select name="plan[<?php echo ($j); ?>][plan_leader]">

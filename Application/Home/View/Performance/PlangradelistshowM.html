@@ -1,0 +1,207 @@
+<include file="Public/header" /> 
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+  
+
+   <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$name[1]}: {$name[2]}年{$name[3]}月 计划评分</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+<form id="subform" action="{:U('performance/addgradeM')}" method="post" class="form-horizontal">
+                    <div class="table-responsive"  style="height:650px;">
+                    <p style="font-size:18px;"><strong>总分：<input type="text" name="sum" readonly="readonly"  id="zongfen" value="{$sum}" style="text-align:center;"></strong></p>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" style="text-align:center;">工作类别</th>
+                            <th class="column-title">工作类型</th>
+                            <th class="column-title">工作事项</th>
+                            <th class="column-title">计划完成时间 </th>
+                            <th class="column-title">权重 </th>
+                            
+                            <th class="column-title">工作内容及目标/交付物 </th>
+                            <th class="column-title">是否延续</th>
+                            <th class="column-title">自评等级</th>
+                            <th class="column-title">评价人</th>
+                            <th class="column-title">上级评分 </th>
+                            <th class="column-title">状态 </th>
+                            <th class="column-title">不通过原因 </th>
+                            <!-- <th class="column-title">评分 </th> -->
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="shuju" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                <input type="hidden" name="id[]" value="{$vo.id}">
+                                {$vo.plan_type}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_classify}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_closingdate}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_weight}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_content}
+                              </label>
+                            </td>
+                            
+                            <td class=" ">
+                              <label>
+                                <if condition="$vo.if_continue eq 1">
+                                是
+                                <else/>否
+                                </if>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_sum}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_leader}
+                              </label>
+                            </td>
+
+                            <td class=" ">
+                              <label>
+                               <input id="chengji[{$i}]" type="text" value="{$vo.plan_grade}" disabled="disabled" style="width:100px; text-align:center;">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                              <switch name="vo.if_confirm">
+                                <case value="0">* 待确认 *</case>
+                                <case value="1">已确认</case>
+                                <case value="-1">已退回</case>
+                              </switch>
+                              </label>
+                            </td>
+                            <td class="">
+                              <label>
+                               <switch name="vo.if_confirm">
+                                <case value="0">{$vo.plan_confirm}</case>
+                                <case value="1"></case>
+                                <case value="-1">{$vo.plan_confirm}</case>
+                              </switch>
+                              </label>
+                            </td>
+                            <!-- <td class=" ">
+                             <select class="form-control" id="fenshu[{$i}]" name="fenshu[]"  onchange="getGrade({$i})">
+                               <volist name="vo.fenshu" id="f" key="j">
+                               <option value="{$f.fen}" <if condition="$vo[plan_grade] eq $f[fen]">selected</if>>{$f.dengji}</option>
+                               </volist>
+                              <option value="" <if condition="$vo[plan_grade] eq ''">selected</if>></option>
+                             </select>
+                            </td> -->
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                      </table>
+                      <a class="btn btn-success" href="{:U('Performance/PlangradelistM')}" style="margin-left:40%;width:10%;">返回</a>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+
+
+      </div>
+   </div>
+</div>
+
+
+<include file="Public/foot" /> 
+<script type="text/javascript">
+ function getGrade(i)
+        {   
+            var fenshu=document.getElementById('fenshu['+i+']').value;
+            document.getElementById('chengji['+i+']').value = fenshu;
+            var zong=0;
+            var quanju=document.getElementsByName('fenshu[]');
+            var d=quanju.length;
+            for(var i=0;i<d;i++)
+            { 
+               var dd=quanju[i].value;
+               if(dd==""){
+                dd=0;
+               }
+               zong+=parseInt(dd);
+            }             
+            document.getElementById("zongfen").value = zong;
+        }
+function form(){
+  var quanju=document.getElementsByName('fenshu[]');
+  var d=quanju.length;
+            for(var i=0;i<d;i++)
+            {
+               var dd=quanju[i].value;
+               if(dd==""){
+                var l=i+1;
+                alert('第'+l+'项，未进行评分！');
+                return false;
+               }
+            }
+    $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/topNew/Performance/addgradeM",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+}
+  </script>}

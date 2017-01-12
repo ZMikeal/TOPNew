@@ -362,7 +362,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_1071143683__=1;$__FOR_END_1071143683__=11;for($j=$__FOR_START_1071143683__;$j < $__FOR_END_1071143683__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_777918934__=1;$__FOR_END_777918934__=11;for($j=$__FOR_START_777918934__;$j < $__FOR_END_777918934__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($list[$j-1]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -387,7 +387,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_1661418605__=11;$__FOR_END_1661418605__=16;for($j=$__FOR_START_1661418605__;$j < $__FOR_END_1661418605__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_988339361__=11;$__FOR_END_988339361__=16;for($j=$__FOR_START_988339361__;$j < $__FOR_END_988339361__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($nljs[$j-11]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -412,7 +412,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($nljs[$j-11]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_692807089__=16;$__FOR_END_692807089__=19;for($j=$__FOR_START_692807089__;$j < $__FOR_END_692807089__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_26769807__=16;$__FOR_END_26769807__=19;for($j=$__FOR_START_26769807__;$j < $__FOR_END_26769807__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($tzx[$j-16]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -543,7 +543,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_1888008325__=1;$__FOR_END_1888008325__=11;for($j=$__FOR_START_1888008325__;$j < $__FOR_END_1888008325__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_1148230674__=1;$__FOR_END_1148230674__=11;for($j=$__FOR_START_1148230674__;$j < $__FOR_END_1148230674__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($list[$j-1]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -568,7 +568,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_1976107536__=11;$__FOR_END_1976107536__=14;for($j=$__FOR_START_1976107536__;$j < $__FOR_END_1976107536__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_1178022790__=11;$__FOR_END_1178022790__=14;for($j=$__FOR_START_1178022790__;$j < $__FOR_END_1178022790__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($nljs[$j-11]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -593,7 +593,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($nljs[$j-11]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_1907742412__=14;$__FOR_END_1907742412__=17;for($j=$__FOR_START_1907742412__;$j < $__FOR_END_1907742412__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_656980878__=14;$__FOR_END_656980878__=17;for($j=$__FOR_START_656980878__;$j < $__FOR_END_656980878__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($tzx[$j-14]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -725,7 +725,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_849041823__=1;$__FOR_END_849041823__=6;for($j=$__FOR_START_849041823__;$j < $__FOR_END_849041823__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_1537402360__=1;$__FOR_END_1537402360__=6;for($j=$__FOR_START_1537402360__;$j < $__FOR_END_1537402360__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($list[$j-1]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -751,7 +751,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($list[$j-1]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_451968348__=6;$__FOR_END_451968348__=8;for($j=$__FOR_START_451968348__;$j < $__FOR_END_451968348__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_162900998__=6;$__FOR_END_162900998__=8;for($j=$__FOR_START_162900998__;$j < $__FOR_END_162900998__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($nljs[$j-6]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
@@ -776,7 +776,7 @@
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; "><?php echo ($nljs[$j-6]["plan_content"]); ?></textarea>
                             </td>
                           </tr><?php } ?>
-                         <?php $__FOR_START_1054108628__=8;$__FOR_END_1054108628__=11;for($j=$__FOR_START_1054108628__;$j < $__FOR_END_1054108628__;$j+=1){ ?><tr class="even pointer">
+                         <?php $__FOR_START_1915321177__=8;$__FOR_END_1915321177__=11;for($j=$__FOR_START_1915321177__;$j < $__FOR_END_1915321177__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="<?php echo ($tzx[$j-8]['id']); ?>" name="id[]">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 

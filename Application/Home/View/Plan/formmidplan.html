@@ -322,18 +322,18 @@
                                     <option value="常规工作" <if condition="$list[$j-1]['plan_classify'] eq '常规工作'">selected="selected"</if>>常规工作</option>
                                  </select></td>
                             <td class=" ">
-                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left;">{$list[$j-1].plan_name}</textarea>
+                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left; width:70%;">{$list[$j-1].plan_name}</textarea>
                                <input type="hidden" value="{$list[$j-1].id}" name="id[]">
                             </td>
                             <td class=" ">
 
-                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="{$list[$j-1].plan_closingdate}">
+                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="{$list[$j-1].plan_closingdate}" style="width:70%;">
                             </td>
                             <td class=" ">
                               <input type="text" name="quanzhong[]" style="width:50px;" maxlength="3" id="quanzhong[]" value="{$list[$j-1].plan_weight}">
                             </td>
                             <td class=" ">
-                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; ">{$list[$j-1].plan_content}</textarea>
+                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:80%; ">{$list[$j-1].plan_content}</textarea>
                             </td>
                             <if condition="($Think.session.admin.id_level eq 3) and ($Think.session.admin.user_type eq '专业员工')">
                             <td class="">
@@ -367,17 +367,17 @@
                                     <option value="常规工作" <if condition="$listt[$j-8]['plan_classify'] eq '常规工作'">selected="selected"</if>>常规工作</option>
                             </select></td>
                             <td class=" ">
-                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left;">{$listt[$j-8].plan_name}</textarea>
+                              <textarea name="gongchengxiangmu[]" id="gongchengxiangmu[]" placeholder="" style="text-align:left;width:70%;">{$listt[$j-8].plan_name}</textarea>
                               <input type="hidden" value="{$listt[$j-8].id}" name="id[]">
                             </td>
                             <td class=" ">
-                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="{$listt[$j-8].plan_closingdate}">
+                              <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="{$listt[$j-8].plan_closingdate}" style="width:70%;">
                             </td>
                             <td class=" ">
                               <input type="text" name="quanzhong[]" style="width:50px;" maxlength="3" id="quanzhong[]" value="{$listt[$j-8].plan_weight}">
                             </td>
                             <td class=" ">
-                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; ">{$listt[$j-8].plan_content}</textarea>
+                              <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:80%; ">{$listt[$j-8].plan_content}</textarea>
                             </td>
                             <if condition="($Think.session.admin.id_level eq 3) and ($Think.session.admin.user_type eq '专业员工')">
                             <td class="">
