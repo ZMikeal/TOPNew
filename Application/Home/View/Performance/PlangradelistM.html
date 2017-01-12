@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>年度计划评分</h2>
+                    <h2>月度绩效列表</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -43,11 +43,12 @@
                           <tr class="headings">
                             
                             <th class="column-title">员工姓名</th>
-                             <th class="column-title">员工工号</th>
+                            <th class="column-title">员工工号</th>
+                            <th class="column-title">科室</th>
                             <th class="column-title">年</th>
+                            <th class="column-title">月</th>
                             <th class="column-title">工作事项</th>
                             <th class="column-title">总分</th>
-                            
                             <th class="column-title">操作 </th>
                           </tr>
                         </thead>
@@ -73,7 +74,17 @@
                             </td>
                             <td class=" ">
                               <label>
+                                {$vo.office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
                                 {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
                               </label>
                             </td>
                             <td class=" ">
@@ -83,7 +94,7 @@
                             </td>
                             <td class=" ">
                               <label>
-                                 <empty name="vo[plan_grade]">
+                                <empty name="vo[plan_grade]">
                                 暂未评分！
                                 </empty>
                                 <notempty name="vo[plan_grade]">
@@ -93,7 +104,7 @@
                             </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/PlangradeshowY',array('id'=>$vo['id']))}">[ 评分 ]</a>
+           <!--  <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id']))}">[ 查看 ]</a> -->
                               </label>
                             </td>
                             

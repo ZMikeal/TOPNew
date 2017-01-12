@@ -177,13 +177,66 @@ class PerformanceController extends BaseController {
       $this->ajaxReturn(array('success'=>1),"json");
 
    }
+    public function PlangradelistM(){
+      $level=session('admin.id_level');
+      $tj['plan_leader']=session('admin.username');
+      $tj['year']=session('admin.year');
+      $tj['month']=session('admin.month');
+      if($level==4)
+      {
+        $this->model=D('planmonth_staff');
+        $jh = $this->model->field("id,staff_id,staff_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->order('staff_name')->group('staff_name')->select();
+        $this->model=D('grademonth_staff');
+        $id="staff_id";
+        $office="staff_office";
+        //dump($jh);exit;
+      }
+      if($level==5)
+      {
+        $this->model=D('planmonth_chief');
+        $jh = $this->model->field("id,chief_id,chief_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->group('chief_name')->select();
+        $this->model=D('grademonth_chief');
+        $id="chief_id";
+        $office="chief_office";
+      }
 
+      foreach ($jh as $k => $v) {   //  循环保存每一条值
+                  //$map = array();
+                  $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+                  $jh[$k]['plan_grade']=explode(",", $v['plan_grade']);
+                  $id1=$jh[$k][$id];
+                  $jh[$k]['office']=$this->model->where($id."=".$id1)->getField("$office");
+                  $sum=0;
+                  foreach ($jh[$k]['plan_grade'] as $key => $value) {
+                    $sum+=$value;
+                  }
+                  if($sum==0)
+                  {
+                    $jh[$k]['plan_grade']="";
+                  }
+                  if($sum!=0)
+                  {
+                    $jh[$k]['plan_grade']=$sum;
+                  }                  
+                }
+      //dump($jh);exit;
+      $this->assign('jh',$jh);
+      $this->display();
+   }
 
     public function PlangradeM(){
       $level=session('admin.id_level');
       $tj['plan_leader']=session('admin.username');
       $tj['year']=session('admin.year');
       $tj['month']=session('admin.month');
+      if($tj['month']==1){
+        $tj['month']=12;
+        $tj['year']=session('admin.year')-1;
+      }
+      else
+         $tj['month']=session('admin.month')-1;
+      
+      //dump($tj);exit;
       if($level==4)
       {
         $this->model=D('planmonth_staff');

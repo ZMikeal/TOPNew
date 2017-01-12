@@ -109,6 +109,16 @@
                             </li>
                           </ul>
                     </li>
+                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/PlangradelistM');?>">月度绩效</a>
+                            </li>
+                            <li><a href="<?php echo U('index/index1');?>">季度绩效</a>
+                            </li>
+                            <li><a href="<?php echo U('index/index1');?>">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
                     </ul>
                   </li><?php endif; ?>
                   <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>

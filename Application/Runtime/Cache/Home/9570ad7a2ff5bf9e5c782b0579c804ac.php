@@ -109,6 +109,16 @@
                             </li>
                           </ul>
                     </li>
+                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo U('Performance/PlangradelistM');?>">月度绩效</a>
+                            </li>
+                            <li><a href="<?php echo U('index/index1');?>">季度绩效</a>
+                            </li>
+                            <li><a href="<?php echo U('index/index1');?>">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
                     </ul>
                   </li><?php endif; ?>
                   <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
@@ -349,7 +359,7 @@
 
                         <tbody>
 
-                        <?php $__FOR_START_436326773__=1;$__FOR_END_436326773__=11;for($j=$__FOR_START_436326773__;$j < $__FOR_END_436326773__;$j+=1){ if(!empty($list1)): ?><tr class="even pointer">
+                        <?php $__FOR_START_2003931084__=1;$__FOR_END_2003931084__=11;for($j=$__FOR_START_2003931084__;$j < $__FOR_END_2003931084__;$j+=1){ if(!empty($list1)): ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="部门重点工作" >部门重点工作</option>    
@@ -415,7 +425,7 @@
                             </select>
                             </td>
                           </tr><?php endif; } ?>
-                      <?php $__FOR_START_2063181832__=11;$__FOR_END_2063181832__=16;for($j=$__FOR_START_2063181832__;$j < $__FOR_END_2063181832__;$j+=1){ if(!empty($listt1)): ?><tr class="even pointer">
+                      <?php $__FOR_START_304839808__=11;$__FOR_END_304839808__=16;for($j=$__FOR_START_304839808__;$j < $__FOR_END_304839808__;$j+=1){ if(!empty($listt1)): ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="能力建设" >能力建设</option>    
@@ -582,7 +592,7 @@
                           </tr>
                         </thead>
                      <tbody>
-                        <?php $__FOR_START_987117703__=1;$__FOR_END_987117703__=8;for($j=$__FOR_START_987117703__;$j < $__FOR_END_987117703__;$j+=1){ ?><tr class="even pointer">
+                        <?php $__FOR_START_123318112__=1;$__FOR_END_123318112__=8;for($j=$__FOR_START_123318112__;$j < $__FOR_END_123318112__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="科室工作" <?php if($list[$j-1]['plan_type'] == '科室工作'): ?>selected="selected"<?php endif; ?>>科室工作</option>
@@ -621,7 +631,7 @@
                             </select>
                             </td>
                           </tr><?php } ?>    
-                     <?php $__FOR_START_721514051__=8;$__FOR_END_721514051__=10;for($j=$__FOR_START_721514051__;$j < $__FOR_END_721514051__;$j+=1){ ?><tr class="even pointer">
+                     <?php $__FOR_START_1119696696__=8;$__FOR_END_1119696696__=10;for($j=$__FOR_START_1119696696__;$j < $__FOR_END_1119696696__;$j+=1){ ?><tr class="even pointer">
                             <td class=" ">
                             <select name="plan[<?php echo ($j); ?>][plan_type]" class="form-control">                 
                                     <option value="改善创新项" >改善创新项</option>    

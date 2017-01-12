@@ -190,8 +190,10 @@ class PlanYController extends BaseController {
         $map['plan_leader'] = session('admin.user_leader');;
       }
                   
-                  $map['year'] = session('admin.year');;
-                 // $map['month'] = session('admin.month');;
+                  $map['year'] = session('admin.year');
+                 // $map['month'] = session('admin.month');
+                  $map['department'] = session('admin.user_department');
+                  $map['office'] = session('admin.user_office');
                   $map['plan_type'] = $v['plan_type'];
                   $map['plan_classify'] = $v['plan_classify'];
                   $map['plan_name'] = $plan_name[$k-1];
