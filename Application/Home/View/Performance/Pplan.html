@@ -175,7 +175,7 @@
 function fnn(nn){
        var re=nn.id;
        //alert(re);
-       var action = "/topNew/Performance/confirm";
+       var action = "/TOPNew/Performance/confirm";
     if (confirm("确定要确认？")) 
              {      
       $.ajax({
@@ -203,7 +203,7 @@ $(function(){
     $("#sub-mod").click(function(){
       var confirm = $("#text").val();
       var id = $("#id").val();
-      var action = "/topNew/Performance/notconfirm";
+      var action = "/TOPNew/Performance/notconfirm";
       if(confirm==""){
         alert("不能为空!");
         return false;
