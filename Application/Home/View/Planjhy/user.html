@@ -58,7 +58,7 @@
                             <case value="2">计划管理员</case>
                             <case value="3">科员</case>
                             <case value="4">科长</case>
-                            <case value="5">院长</case>
+                            <case value="5">部长</case>
                             <case value="7">VSE</case>
                             <default />
                            </switch>
@@ -140,7 +140,7 @@
                             <case value="2">计划管理员</case>
                             <case value="3">科员</case>
                             <case value="4">科长</case>
-                            <case value="5">院长</case>
+                            <case value="5">部长</case>
                             <case value="7">VSE</case>
                             <default />default
                            </switch></td>
@@ -221,7 +221,7 @@
             <th>上级:</th>
             <td><select id="leader1" class="form-control">
               <volist name="leader" id="l">
-               <option value="{$l.username}">{$l.username}</option>
+               <option value="{$l}">{$l}</option>
               </volist>
             </select></td>
           </tr>
@@ -406,6 +406,26 @@ $(document).ready(function() {
        {
             document.getElementById("text"+i).value = tr1.cells[i].innerText;
        }
+       var action = "leader";
+       var level=tr1.cells[6].innerText;
+        $.ajax({
+        type:"POST",
+        url:action,
+        dataType:"json",
+        data:{"level":level},
+        //async : false,
+        success:function(data){
+             var data = data.toString();
+             var data = data.split(",");
+             var obj = document.getElementById("leader"); // 获取select对象
+             obj.options.length = 0; // 删除原有选项
+             obj.add(new Option('默认','')); 
+             for (x in data){
+                 obj.add(new Option(data[x],data[x])); // 添加选项
+              }
+          
+        }
+      });
     }
     function fnn(nn){
        var re=nn.id;

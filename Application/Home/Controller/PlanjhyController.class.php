@@ -307,24 +307,35 @@ class PlanjhyController extends BaseController {
       $vse1 = $this->model->where($tj)->order('id desc')->select();
       //dump($vse);exit;
       $this->assign('vse1',$vse1);// 赋值数据集
-
-      
+      $leadertj['user_department']=session('admin.user_department');
+      $leader=$this->model->where($leadertj)->where("id_level in (4,5)")->getField('username',true);
       $this->model=D('info_admin');
       $tj1['user_department']=session('admin.user_department');
       $form_vse = $this->model->where($tj1)->select();
       $this->assign('form_vse',$form_vse);// 赋值数据集
-      //dump($form_vse);
-
-
-
-      $this->model=D('info_admin');
-      //$leadertj['id_level']="in (4,5)";
-      $leadertj['user_department']=session('admin.user_department');;
-      $leader=$this->model->where($leadertj)->where("id_level in (4,5)")->select();
-      //dump($project);exit;
-      $this->assign('leader',$leader);// 赋值数据集
+      $this->assign('leader',$leader);   
       $this->display();
     }
+
+    public function leader(){
+      $this->model=D('info_admin');
+      $lev=I('post.level');
+      $leadertj['user_department']=session('admin.user_department');
+      if($lev=="部长"){
+         $leader=$this->model->where("id_level = 10")->getField('username',true);
+      }
+      if($lev=="科长"){
+         $leader=$this->model->where($leadertj)->where("id_level = 5")->getField('username',true);
+      }
+      if($lev=="科员"){
+         $leader=$this->model->where($leadertj)->where("id_level in (4,5)")->getField('username',true);
+      }
+      $this->assign('leader',$leader);// 赋值数据集
+      //$result['success']=1;
+      $result=$leader;
+      $this->ajaxReturn($result,"json");
+    }
+
     public function userform(){
       $username=I('post.username');
       $id_employee=I('post.id_employee');
