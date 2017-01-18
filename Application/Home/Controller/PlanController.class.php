@@ -338,6 +338,7 @@ class PlanController extends BaseController {
          $tj['minister_id']=session('admin.id_employee');
       }
       $list = $this->model->where($tj)->select();
+      //dump($list);exit;
       $this->assign('list',$list);
       $this->display();
     }

@@ -298,7 +298,6 @@ class PlanjhyController extends BaseController {
       $tj['user_department']=session('admin.user_department');
       //dump($tj);
       $vse = $this->model->where($tj)->order('id desc')->select();
-      //dump($vse);exit;
       $this->assign('vse',$vse);// 赋值数据集
 
       $tj['if_delete']='1';
@@ -330,10 +329,7 @@ class PlanjhyController extends BaseController {
       if($lev=="科员"){
          $leader=$this->model->where($leadertj)->where("id_level in (4,5)")->getField('username',true);
       }
-      $this->assign('leader',$leader);// 赋值数据集
-      //$result['success']=1;
-      $result=$leader;
-      $this->ajaxReturn($result,"json");
+      $this->ajaxReturn($leader, 'json');
     }
 
     public function userform(){

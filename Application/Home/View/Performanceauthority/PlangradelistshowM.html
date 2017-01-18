@@ -50,7 +50,7 @@
                             <th class="column-title">上级评分 </th>
                             <th class="column-title">状态 </th>
                             <th class="column-title">不通过原因 </th>
-                            <th class="column-title">评分 </th>
+                            <!-- <th class="column-title">评分 </th> -->
                           </tr>
                         </thead>
 
@@ -60,7 +60,6 @@
                             <td class=" ">
                               <label>
                                 <input type="hidden" name="id[]" value="{$vo.id}">
-                                <input type="hidden" name="lev" value="{$lev}">
                                 {$vo.plan_type}
                               </label>
                             </td>
@@ -132,26 +131,20 @@
                               </switch>
                               </label>
                             </td>
-                            <td class=" ">
-                            <if condition="$vo[if_confirm] eq -1">
-                            已退回不能评分
-                            </if>
-                            <if condition="$vo[if_confirm] neq -1">
-                             <select class="form-control" id="fenshu[{$i}]" name="fenshu[{$i-1}]"  onchange="getGrade({$i})">
+                            <!-- <td class=" ">
+                             <select class="form-control" id="fenshu[{$i}]" name="fenshu[]"  onchange="getGrade({$i})">
                                <volist name="vo.fenshu" id="f" key="j">
                                <option value="{$f.fen}" <if condition="$vo[plan_grade] eq $f[fen]">selected</if>>{$f.dengji}</option>
                                </volist>
                               <option value="" <if condition="$vo[plan_grade] eq ''">selected</if>></option>
                              </select>
-                            </if>
-                            </td>
+                            </td> -->
                             
                           </tr>
                         </volist>
                         </tbody>
                       </table>
-                      <a class="btn btn-success" onclick="document.getElementById('subform').submit();return false" style="margin-left:30%;width:10%;">提交</a>
-                      <a class="btn btn-success" href="javascript:history.go(-1)" style="margin-left:10%;width:10%;">返回</a>
+                      <a class="btn btn-success" href="javascript:history.go(-1)" style="margin-left:40%;width:10%;">返回</a>
                     </div>
                     </form>
                   </div>
@@ -170,9 +163,8 @@
             var fenshu=document.getElementById('fenshu['+i+']').value;
             document.getElementById('chengji['+i+']').value = fenshu;
             var zong=0;
-            var quanju=document.getElementsByTagName('select');
+            var quanju=document.getElementsByName('fenshu[]');
             var d=quanju.length;
-            //alert(d);
             for(var i=0;i<d;i++)
             { 
                var dd=quanju[i].value;
@@ -184,7 +176,7 @@
             document.getElementById("zongfen").value = zong;
         }
 function form(){
-  var quanju=document.getElementsByTagName('select');
+  var quanju=document.getElementsByName('fenshu[]');
   var d=quanju.length;
             for(var i=0;i<d;i++)
             {

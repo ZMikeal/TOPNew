@@ -5,11 +5,13 @@
 }
 </style>
 <div class="right_col" role="main">
-              <div class="row">
+  
+
+   <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>清单月度计划查询</h2>
+                    <h2>{$name}:年度计划确认</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -39,19 +41,19 @@
                             <th class="column-title">工作事项</th>
                             <th class="column-title">计划完成时间 </th>
                             <th class="column-title">权重 </th>
+                            
                             <th class="column-title">工作内容及目标/交付物 </th>
-                            <th class="column-title">自我工作总结（完成情况） </th>
-                            <th class="column-title">自评等级 </th>
-                            <!-- <th class="column-title">是否延续</th> -->
+                            
                             <th class="column-title">评价人</th>
-                            <th class="column-title">上级评分 </th>
-                            <th class="column-title">是否确认 </th>
-                            <th class="column-title">退回理由 </th>
+                            <th class="column-title">上级评价 </th>
+                            <th class="column-title">状态 </th>
+                            <th class="column-title">不通过原因 </th>
+                            <th class="column-title">操作 </th>
                           </tr>
                         </thead>
 
                         <tbody>
-                        <volist name="list" id="vo">
+                        <volist name="shuju" id="vo">
                           <tr class="even pointer">
                             <td class=" ">
                               <label>
@@ -83,66 +85,56 @@
                                 {$vo.plan_content}
                               </label>
                             </td>
-                             <td class=" ">
-                              <label>
-                                {$vo.plan_sum}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.plan_self}
-                              </label>
-                            </td>
-                            <!-- <td class=" ">
-                              <label>
-                                <if condition="$vo.if_continue eq 1">
-                                是
-                                <else/>否
-                                </if>
-                              </label>
-                            </td> -->
+                            
+                            
                             <td class=" ">
                               <label>
                                 {$vo.plan_leader}
                               </label>
                             </td>
 
-                            <td class=" " width=""> 
+                            <td class=" " width="200px;">
                               <label>
-                                {$vo.plan_grade}
-                              </label>                      
+                               
+                              </label>
                             </td>
                             <td class=" ">
+                              <label>
                               <switch name="vo.if_confirm">
-                                <case value="0">待确认</case>
+                                <case value="0">* 待确认 *</case>
                                 <case value="1">已确认</case>
-                                <case value="-1"><a id="{$vo.id}" href="" class="" onclick="fn(this)" data-toggle="modal"  data-target="#bianji">[ 已退回 ]</a></case>
+                                <case value="-1">已退回</case>
                               </switch>
+                              </label>
                             </td>
                             <td class="">
                               <label>
                                <switch name="vo.if_confirm">
-                                <case value="0"></case>
+                                <case value="0">{$vo.plan_confirm}</case>
                                 <case value="1"></case>
                                 <case value="-1">{$vo.plan_confirm}</case>
                               </switch>
                               </label>
+                            </td>
+                            <td class=" ">
+                              <a id="{$vo.id}" class="btn btn-default btn-sm active" onclick="fnn(this)">确认</a>
+                              <a id="{$vo.id}" class="btn btn-default btn-sm active" href="#" onclick="fn(this)" role="button" data-toggle="modal"  data-target="#bianji">退回</a>
                             </td>
                             
                           </tr>
                         </volist>
                         </tbody>
                       </table>
-                      <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a>
+                      <a class="btn btn-success" href="{:U('Performance/PlanconfirmY')}" style="margin-left:40%;width:10%;">返回</a>
                     </div>
                   </div>
                 </div>
-              </div>
-                            
-              </div>
 
+
+      </div>
+   </div>
 </div>
-<include file="Public/foot" /> 
+
 <div class="modal fade" id="bianji" tabindex="-1" role="dialog" 
    aria-labelledby="myModalLabel" aria-hidden="true" style="float: right; border: 1px solid #333;"> 
      <div class="modal-dialog">
@@ -153,63 +145,59 @@
             &times;
         </button>
         <h4 class="modal-title" id="myModalLabel">
-           编辑计划：
+           退回原因：
         </h4>
        </div>
        <!--编辑主体 -->
-      <div class="modal-body">
-          
+      <div class="modal-body">  
          <table class="table">
           <tr>
-            <th>工作类别:</th>
-            <td><input type="hidden" id="text0" class="form-control">
-          <input type="text" id="text1" class="form-control" disabled="disabled"></td>
-          </tr>
-          <tr>
-          <th>工作类型:</th>
-          <td><input type="text" id="text2" class="form-control" disabled="disabled"></td>
-          </tr>
-          <tr>
-            <th>工作事项:</th>
-            <td><input type="text" id="text3" class="form-control"></td>
-          </tr>
-          <tr>
-            <th>计划完成时间:</th>
-            <td><input type="text" class="data" id="text4" placeholder="First Name" aria-describedby="inputSuccess2Status2" style="width:450px; padding-left:10px;height:35px;"></td>
-          </tr>
-          <tr>
-            <th>权重:</th>
-            <td><input type="text" id="text5" class="form-control" disabled="disabled"></td>
-          </tr>
-          <tr>
-            <th>工作内容及目标:</th>
-            <td><input type="text" id="text6" class="form-control"></td>
+          <td><input type="hidden" id="id" class="form-control">
+            <th>填写原因:</th>
+            <td><textarea class="form-control" id="text" style="height:150px;"></textarea></td>
           </tr>
          </table>
          <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
-          
       </div>
       </div><!-- /.modal-content -->
       </div><!-- /.modal -->
 </div>
+
+<include file="Public/foot" /> 
 <script type="text/javascript">
-  function fn(tt){
-       var tr1 = tt.parentNode.parentNode;
-       var id=tt.id;
-      document.getElementById("text0").value = id;
-       for(var i=1;i<=7;i++)
-       {
-            document.getElementById("text"+i).value = tr1.cells[i-1].innerText;
-       }
+function fnn(nn){
+       var re=nn.id;
+       //alert(re);
+       var action = "/TOPNew/Performance/confirmY";
+    if (confirm("确定要确认？")) 
+             {      
+      $.ajax({
+        type:"GET",
+        url:action,
+        data:{"vid":re},
+        dataType:"json",
+        success:function(data){
+          if(data.success==1){  
+             alert("确认成功!");
+              window.location.reload();
+          }
+          else{
+          alert("确认失败！");
+          }
+        }
+      });
     }
-    $(function(){
+  }
+  function fn(tt){
+       var tr1 = tt.id;  
+       document.getElementById("id").value = tr1;
+    }
+$(function(){
     $("#sub-mod").click(function(){
-      var id = $("#text0").val();
-      var shixiang = $("#text3").val();
-      var shijian = $("#text4").val();
-      var neirong = $("#text6").val();
-      var action = "/topNew/plan/confirm";
-      if(shixiang=="" || shijian==""|| neirong==""){
+      var confirm = $("#text").val();
+      var id = $("#id").val();
+      var action = "/TOPNew/Performance/notconfirmY";
+      if(confirm==""){
         alert("不能为空!");
         return false;
       }
@@ -217,28 +205,19 @@
         type:"POST",
         url:action,
         dataType:"json",
-        data:{"shixiang":shixiang,"shijian":shijian,"neirong":neirong,"vid":id},
+        data:{"confirm":confirm,"id":id},
         success:function(data){
           if(data.success==1){
-            alert('编辑成功!');
+            alert('成功!');
             window.location.reload();
           }
           if(data.success==0){ 
-          alert("编辑失败！");
+          //alert(data.username);
+          alert("失败！");
             return false;
           }
         }
       });
   });
 });
-</script>
-<script type="text/javascript">
-       $('.data').daterangepicker({
-                    //language:"zh-CN",
-                    singleDatePicker: true,
-                    singleClasses: "picker_4"
-                  }, function(start, end, label) {
-                   // console.log(start.toISOString(), end.toISOString(), label);
-                  
-                  });
-</script>
+  </script>

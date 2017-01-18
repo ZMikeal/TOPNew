@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{$name[1]}: {$name[2]}年{$name[3]}月 计划评分</h2>
+                    <h2>{$name}:年度计划评分</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -31,9 +31,9 @@
                   </div>
 
                   <div class="x_content">
-<form id="subform" action="{:U('performance/addgradeM')}" method="post" class="form-horizontal">
+
                     <div class="table-responsive"  style="height:650px;">
-                    <p style="font-size:18px;"><strong>总分：<input type="text" name="sum" readonly="readonly"  id="zongfen" value="{$sum}" style="text-align:center;"></strong></p>
+                    <p>总分：<input type="text" disabled="disabled" id="zongfen" value="0"></p>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
@@ -45,12 +45,11 @@
                             
                             <th class="column-title">工作内容及目标/交付物 </th>
                             <th class="column-title">是否延续</th>
-                            <th class="column-title">自评等级</th>
                             <th class="column-title">评价人</th>
-                            <th class="column-title">上级评分 </th>
+                            <th class="column-title">上级评价 </th>
                             <th class="column-title">状态 </th>
                             <th class="column-title">不通过原因 </th>
-                            <th class="column-title">评分 </th>
+                            <th class="column-title">操作 </th>
                           </tr>
                         </thead>
 
@@ -59,8 +58,6 @@
                           <tr class="even pointer">
                             <td class=" ">
                               <label>
-                                <input type="hidden" name="id[]" value="{$vo.id}">
-                                <input type="hidden" name="lev" value="{$lev}">
                                 {$vo.plan_type}
                               </label>
                             </td>
@@ -100,18 +97,13 @@
                             </td>
                             <td class=" ">
                               <label>
-                                {$vo.plan_sum}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
                                 {$vo.plan_leader}
                               </label>
                             </td>
 
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
-                               <input id="chengji[{$i}]" type="text" value="{$vo.plan_grade}" disabled="disabled" style="width:100px; text-align:center;">
+                               <input id="chengji[{$i}]" type="text" value="{$vo.plan_grade}" disabled="disabled">
                               </label>
                             </td>
                             <td class=" ">
@@ -133,27 +125,21 @@
                               </label>
                             </td>
                             <td class=" ">
-                            <if condition="$vo[if_confirm] eq -1">
-                            已退回不能评分
-                            </if>
-                            <if condition="$vo[if_confirm] neq -1">
-                             <select class="form-control" id="fenshu[{$i}]" name="fenshu[{$i-1}]"  onchange="getGrade({$i})">
-                               <volist name="vo.fenshu" id="f" key="j">
-                               <option value="{$f.fen}" <if condition="$vo[plan_grade] eq $f[fen]">selected</if>>{$f.dengji}</option>
+                             <select class="form-control" id="fenshu[{$i}]" name="fenshu[]"  onchange="getGrade({$i})">
+                             <option value=""></option>
+                               <volist name="vo.fenshu" id="f" >
+                               <option value="{$f.fen}">{$f.dengji}</option>
                                </volist>
-                              <option value="" <if condition="$vo[plan_grade] eq ''">selected</if>></option>
                              </select>
-                            </if>
                             </td>
                             
                           </tr>
                         </volist>
                         </tbody>
                       </table>
-                      <a class="btn btn-success" onclick="document.getElementById('subform').submit();return false" style="margin-left:30%;width:10%;">提交</a>
-                      <a class="btn btn-success" href="javascript:history.go(-1)" style="margin-left:10%;width:10%;">返回</a>
+                      <a class="btn btn-success" href="{:U('Performance/PlangradeY')}" style="margin-left:30%;width:10%;">暂不能提交</a>
+                      <a class="btn btn-success" href="{:U('Performance/PlangradeY')}" style="margin-left:10%;width:10%;">返回</a>
                     </div>
-                    </form>
                   </div>
                 </div>
 
@@ -161,18 +147,15 @@
       </div>
    </div>
 </div>
-
-
 <include file="Public/foot" /> 
 <script type="text/javascript">
  function getGrade(i)
-        {   
+        {            
             var fenshu=document.getElementById('fenshu['+i+']').value;
             document.getElementById('chengji['+i+']').value = fenshu;
             var zong=0;
-            var quanju=document.getElementsByTagName('select');
+            var quanju=document.getElementsByName('fenshu[]');
             var d=quanju.length;
-            //alert(d);
             for(var i=0;i<d;i++)
             { 
                var dd=quanju[i].value;
@@ -183,33 +166,5 @@
             }             
             document.getElementById("zongfen").value = zong;
         }
-function form(){
-  var quanju=document.getElementsByTagName('select');
-  var d=quanju.length;
-            for(var i=0;i<d;i++)
-            {
-               var dd=quanju[i].value;
-               if(dd==""){
-                var l=i+1;
-                alert('第'+l+'项，未进行评分！');
-                return false;
-               }
-            }
-    $.ajax({
-                cache: true,
-                type: "POST",
-                url:"/TOPNew/Performance/addgradeM",
-                data:$('#subform').serialize(),// 你的formid
-                async: false,
-                error: function(request) {
-                    alert("Connection error");
-                },
-                success: function(data) {
-                    if(data.success==1){
-                    alert('成功!');
-                    window.location.reload();
-                  }
-                }
-            });
-}
-  </script>}
+
+  </script>

@@ -51,7 +51,7 @@ class LoginController extends Controller {
         if($p==null)
         {
          $admin['month']=date('m');
-         $admin['year']=date('Y');
+      $admin['year']=date('Y');
         }
          $admin['month_sys']=date('m');
          $admin['year_sys']=date('Y');

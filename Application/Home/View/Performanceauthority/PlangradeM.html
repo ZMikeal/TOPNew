@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><if condition="$Think.session.admin.id_level eq 5">科长月度计划确认</if><if condition="$Think.session.admin.id_level neq 5">月度计划确认</if></h2>
+                    <h2><if condition="$Think.session.admin.id_level eq 5">科长月度计划评分</if><if condition="$Think.session.admin.id_level neq 5">科员月度计划评分</if></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -36,7 +36,7 @@
 
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                       <empty name="jh">
-                       暂无计划可以确认！
+                       暂无计划可以评分！
                       </empty>
                       <notempty name="jh">
                        <thead>
@@ -47,7 +47,7 @@
                             <th class="column-title">年</th>
                             <th class="column-title">月</th>
                             <th class="column-title">工作事项</th>
-                            
+                            <th class="column-title">总分</th>
                             <th class="column-title">操作 </th>
                           </tr>
                         </thead>
@@ -59,6 +59,7 @@
                               <label>
                                 <switch name="Think.session.admin.id_level">
                                 <case value="4">{$vo.staff_name}</case>
+                                <case value="7">{$vo.staff_name}</case>
                                 <case value="5">{$vo.chief_name}</case>
                                 </switch>
                               </label>
@@ -67,6 +68,7 @@
                               <label>
                                 <switch name="Think.session.admin.id_level">
                                 <case value="4">{$vo.staff_id}</case>
+                                <case value="7">{$vo.staff_id}</case>
                                 <case value="5">{$vo.chief_id}</case>
                                 </switch>
                               </label>
@@ -86,10 +88,19 @@
                                 {$vo.plan_name}
                               </label>
                             </td>
-                            
+                            <td class=" ">
+                              <label>
+                                <empty name="vo[plan_grade]">
+                                暂未评分！
+                                </empty>
+                                <notempty name="vo[plan_grade]">
+                                {$vo.plan_grade}
+                                </notempty>
+                              </label>
+                            </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/Pplan',array('id'=>$vo['id']))}">[ 确认计划 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id']))}">[ 评分 ]</a>
                               </label>
                             </td>
                             
@@ -100,11 +111,13 @@
                       </table>
                      <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
                     </div>
-                  </div></div>
-<if condition="$Think.session.admin.id_level eq 5">
-              <div class="x_panel">
+                  </div></div></div>
+
+              <if condition="$Think.session.admin.id_level eq 5">
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
                   <div class="x_title">
-                    <h2>科员月度计划确认</h2>
+                    <h2>科员月度计划评分</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -129,7 +142,7 @@
 
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                       <empty name="jh1">
-                       暂无计划可以确认！
+                       暂无计划可以评分！
                       </empty>
                       <notempty name="jh1">
                        <thead>
@@ -140,7 +153,7 @@
                             <th class="column-title">年</th>
                             <th class="column-title">月</th>
                             <th class="column-title">工作事项</th>
-                            
+                            <th class="column-title">总分</th>
                             <th class="column-title">操作 </th>
                           </tr>
                         </thead>
@@ -150,12 +163,12 @@
                           <tr class="even pointer">
                             <td class=" " width="200px;">
                               <label>
-                               {$vo.staff_name}
+                               {$vo.staff_name}                              
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               {$vo.chief_id}
+                               {$vo.staff_id}
                               </label>
                             </td>
                             <td class=" ">
@@ -173,10 +186,19 @@
                                 {$vo.plan_name}
                               </label>
                             </td>
-                            
+                            <td class=" ">
+                              <label>
+                                <empty name="vo[plan_grade]">
+                                暂未评分！
+                                </empty>
+                                <notempty name="vo[plan_grade]">
+                                {$vo.plan_grade}
+                                </notempty>
+                              </label>
+                            </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/Pplan',array('id'=>$vo['id'],'lev'=>'3'))}">[ 确认计划 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3'))}">[ 评分 ]</a>
                               </label>
                             </td>
                             
@@ -187,7 +209,9 @@
                       </table>
                      <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
                     </div>
-                  </div></div></if></div>
+                  </div>
+                </div>
+              </div></if>
     </div>
 
 
