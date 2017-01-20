@@ -141,7 +141,8 @@
                   </div>
                   </div>
   </if>
-  <if condition="$Think.session.admin.id_level eq 4">
+<if condition="($Think.session.admin.id_level eq 4) or ($Think.session.admin.id_level eq 8)">
+<div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
                   <div class="x_title">
                     <h2>上级:{$Think.session.admin.user_leader} 的计划表</h2>
@@ -201,7 +202,7 @@
                     </table>
                   </notempty>
                   </div>
-                </div>
+                </div></div>
 
  <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -257,8 +258,13 @@
                           <tr class="even pointer">
                             <td class=" ">
                             <input type="hidden" value="{$list[$j-1]['id']}" name="id[]">
-                            <select name="plan[{$j}][plan_type]" class="form-control">                 
-                                    <option value="科室重点工作" <if condition="$list[$j-1]['plan_type'] eq '科室重点工作'">selected</if>>科室重点工作</option>    
+
+                            <select name="plan[{$j}][plan_type]" class="form-control">
+                            <if condition="$Think.session.admin.id_level eq 4">                
+                                    <option value="科室重点工作" <if condition="$list[$j-1]['plan_type'] eq '科室重点工作'">selected</if>>科室重点工作</option>
+                            <else/><if condition="$Think.session.admin.id_level eq 8">           
+                                    <option value="项目重点工作" <if condition="$list[$j-1]['plan_type'] eq '项目重点工作'">selected</if>>项目重点工作</option></if></else>
+                            </if>  
                                  </select>
                             </td>
                             <td class=" ">
@@ -281,6 +287,7 @@
                           </tr>  
                                          
                         </for>
+                        <if condition="$Think.session.admin.id_level eq 4"> 
                          <for start="11" end="14" name="j">
                           <tr class="even pointer">
                             <td class=" ">
@@ -308,7 +315,7 @@
                             </td>
                           </tr>  
                                          
-                        </for>
+                        </for></if>
                          <for start="14" end="17" name="j">
                           <tr class="even pointer">
                             <td class=" ">
@@ -345,6 +352,7 @@
                   </div></div>
   </if>
   <if condition="($Think.session.admin.id_level eq 3) or ($Think.session.admin.id_level eq 7)">
+  <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
                   <div class="x_title">
                     <h2>上级:{$Think.session.admin.user_leader} 的计划表</h2>
@@ -403,8 +411,7 @@
                       </tbody>
                     </table>
                   </notempty>
-                  </div>
-                </div>
+                  </div></div></div>
 
  <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -552,9 +559,8 @@
   </if>
 </notempty>
 </div>
-</div>           
+        
 <include file="Public/foot" /> 
-
               
                      
 <script type="text/javascript">

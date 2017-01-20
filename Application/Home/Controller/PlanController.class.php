@@ -28,7 +28,7 @@ class PlanController extends BaseController {
         $list = $this->model->field("id,staff_name,year,month,plan_name,group_concat(plan_name) as plan_name")->where("staff_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
         //dump($list);exit;
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
         $list = $this->model->field("id,chief_name,year,month,plan_name,group_concat(plan_name) as plan_name")->where("chief_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
@@ -80,7 +80,7 @@ class PlanController extends BaseController {
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();//上月延续改善项
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
         $tj['chief_id']=session('admin.id_employee');
@@ -163,7 +163,7 @@ class PlanController extends BaseController {
         $this->model=D('planmonth_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -216,7 +216,7 @@ class PlanController extends BaseController {
           $map['plan_leader']=session('admin.user_leader');
         }
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $map['chief_id'] = $id_employee;
         $map['chief_name'] = $chief_name;
@@ -296,7 +296,7 @@ class PlanController extends BaseController {
       //   $list2 = M('planmonth_staff')->where('staff_id="'.$list1['id_employee'].'"')->select();
       // }
 
-      if($list1['id_level']==4)
+      if($list1['id_level']==4||$list1['id_level']==8)
       {
         //dump($list1);exit;
         $tj['chief_id']=$list1['id_employee'];
@@ -327,7 +327,7 @@ class PlanController extends BaseController {
         $this->model=D('planmonth_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -362,7 +362,7 @@ class PlanController extends BaseController {
         $this->model=D('planmonth_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -387,7 +387,7 @@ class PlanController extends BaseController {
         $this->model=D('planmonth_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -423,7 +423,7 @@ class PlanController extends BaseController {
       {
         $this->model=D('planmonth_staff');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
       }

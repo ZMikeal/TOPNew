@@ -299,7 +299,7 @@
                             <th class="column-title">计划完成时间 </th>
                             <th class="column-title">权重 </th>
                             <th class="column-title">工作内容及目标/交付物 </th>
-                            <if condition="($Think.session.admin.id_level eq 3) or ($Think.session.admin.id_level eq 7) and ($Think.session.admin.user_type eq '专业员工')">
+                            <if condition="($Think.session.admin.id_level eq 3 or $Think.session.admin.id_level eq 7) and ($Think.session.admin.user_type eq '专业员工')">
                             
                             <th class="column-title">VSE姓名 </th>
                             
@@ -311,10 +311,15 @@
                         <for start="1" end="8" name="j">
                           <tr class="even pointer">
                             <td class=" ">
-                            <select name="plan[{$j}][plan_type]" class="form-control">                 
+                            <select name="plan[{$j}][plan_type]" class="form-control">
+                            <if condition="$Think.session.admin.id_level neq 8">           
                                     <option value="科室工作" <if condition="$list[$j-1]['plan_type'] eq '科室工作'">selected="selected"</if>>科室工作</option>
-                                    <option value="项目工作" <if condition="$list[$j-1]['plan_type'] eq '项目工作'">selected="selected"</if>>项目工作</option>        
-                                 </select>
+                                    <option value="项目工作" <if condition="$list[$j-1]['plan_type'] eq '项目工作'">selected="selected"</if>>项目工作</option>    
+                            <else/><option value="项目工作" <if condition="$list[$j-1]['plan_type'] eq '项目工作'">selected="selected"</if>>项目工作</option>
+                            </else>
+                            </if>    
+                            </select>
+
                             </td>
                             <td class=" ">
                             <select name="plan[{$j}][plan_classify]" class="form-control">
@@ -335,7 +340,7 @@
                             <td class=" ">
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:100%;" rows="3">{$list[$j-1].plan_content}</textarea>
                             </td>
-                            <if condition="($Think.session.admin.id_level eq 3) or ($Think.session.admin.id_level eq 7) and ($Think.session.admin.user_type eq '专业员工')">
+                            <if condition="($Think.session.admin.id_level eq 3 or $Think.session.admin.id_level eq 7) and ($Think.session.admin.user_type eq '专业员工')">
                             <td class="">
                               <select name="plan[{$j}][plan_leader]">
                               <option value="">{$Think.session.admin.user_leader}</option>
@@ -379,7 +384,7 @@
                             <td class=" ">
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:100%;" rows="3">{$listt[$j-8].plan_content}</textarea>
                             </td>
-                            <if condition="($Think.session.admin.id_level eq 3) or ($Think.session.admin.id_level eq 7) and ($Think.session.admin.user_type eq '专业员工')">
+                            <if condition="($Think.session.admin.id_level eq 3 or $Think.session.admin.id_level eq 7) and ($Think.session.admin.user_type eq '专业员工')">
                             <td class="">
                               <select name="plan[{$j}][plan_leader]">
                               <option value="">{$Think.session.admin.user_leader}</option>

@@ -17,7 +17,7 @@ class PerformanceController extends BaseController {
       $tj['plan_leader']=session('admin.username');
       $tj['year']=session('admin.year');
       $tj['month']=session('admin.month');
-      if($level==4||$level==7)
+      if($level==4||$level==7||$level==8)
       {
         $this->model=D('planmonth_staff');
         $jh = $this->model->field("id,staff_id,staff_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->order('staff_name')->group('staff_name')->select();
@@ -48,7 +48,7 @@ class PerformanceController extends BaseController {
       $tj['plan_leader']=session('admin.username');
       $tj['year']=session('admin.year');
       //$tj['month']=session('admin.month');
-      if($level==4||$level==7)
+      if($level==4||$level==7||$level==8)
       {
         $this->model=D('planyear_staff');
         $jh = $this->model->field("id,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('staff_name')->select();
@@ -70,7 +70,7 @@ class PerformanceController extends BaseController {
       $tj=I('get.id');
       $tj=explode(",", $tj);
        $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planmonth_staff');
         $name=$this->model->where("id=$tj[0]")->getField('staff_name');
@@ -102,7 +102,7 @@ class PerformanceController extends BaseController {
       $tj=I('get.id');
       $tj=explode(",", $tj);
        $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planyear_staff');
         $name=$this->model->where("id=$tj[0]")->getField('staff_name');
@@ -126,7 +126,7 @@ class PerformanceController extends BaseController {
    public function confirm(){
     $id=I('get.vid');
        $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planmonth_staff');
       }
@@ -141,7 +141,7 @@ class PerformanceController extends BaseController {
    public function confirmY(){
     $id=I('get.vid');
        $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planyear_staff');
       }
@@ -158,7 +158,7 @@ class PerformanceController extends BaseController {
     $tj['plan_confirm']=I('post.confirm');
     $tj['if_confirm']=-1;
        $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planmonth_staff');
       }
@@ -178,7 +178,7 @@ class PerformanceController extends BaseController {
     $tj['plan_confirm']=I('post.confirm');
     $tj['if_confirm']=-1;
        $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planyear_staff');
       }
@@ -213,7 +213,7 @@ class PerformanceController extends BaseController {
       $level=session('admin.id_level');
       //决定了是只检索自己的评价人还是所有评价人的list
       //dump($tj);exit();
-      if($level==4||$level==7)
+      if($level==4||$level==7||$le==8)
       {
         if($level==4){
           unset($tj['plan_leader']);
@@ -349,7 +349,7 @@ class PerformanceController extends BaseController {
         $name[3]=$name['month'];
         $this->model=D('planmonth_chief');
       }
-      if($le==4||$le==7||$level==3);
+      if($le==4||$le==7||$level==3||$le==8);
       {
         $this->model=D('planmonth_staff');
         $name=$this->model->where("id=$tj[0]")->find();
@@ -404,7 +404,7 @@ class PerformanceController extends BaseController {
          $tj['month']=session('admin.month')-1;
       
       //dump($tj);exit;
-      if($level==4||$level==7)
+      if($level==4||$level==7||$level==8)
       {
         $this->model=D('planmonth_staff');
         $jh = $this->model->field("id,staff_id,staff_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->order('staff_name')->group('staff_name')->select();
@@ -470,7 +470,7 @@ class PerformanceController extends BaseController {
       $tj['plan_leader']=session('admin.username');
       $tj['year']=session('admin.year');
       //$tj['month']=session('admin.month');
-      if($level==4||$level==7)
+      if($level==4||$level==7||$level==8)
       {
         $this->model=D('planyear_staff');
         $jh = $this->model->field("id,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('staff_name')->select();
@@ -493,7 +493,7 @@ class PerformanceController extends BaseController {
       $tj=explode(",", $tj);
       $le=session('admin.id_level');
        //dump($tj);exit;
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planmonth_staff');
         $name=$this->model->where("id=$tj[0]")->find();
@@ -575,7 +575,7 @@ class PerformanceController extends BaseController {
       {
         $id=$data['id'][$i];
         $grade=$data['fenshu'][$i];
-        if($le==4||$le==7)
+        if($le==4||$le==7||$le==8)
         {
           $this->model=D('planmonth_staff');
         }
@@ -594,7 +594,7 @@ class PerformanceController extends BaseController {
         //dump($id);
         $admin=$this->model->where("id=$id")->find();
       }
-        if($le==4||$le==7)
+        if($le==4||$le==7||$le==8)
         {
           $this->model=D('info_admin');         
           $tj['staff_id']=$admin['staff_id'];
@@ -606,8 +606,24 @@ class PerformanceController extends BaseController {
           $tj['staff_office']=$admin['user_office'];
           $tj['grade_leader']=session('admin.username');
           $this->model=D('grademonth_staff');
+
+           $found=$this->model->where($tj)->find();
+          if($found=="")
+          {
+             $tj['grade']=$data['sum'];
+             $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
+             if($this->model->create($tj))
+             {
+                $this->model->add();
+             }
+          }  
+         else
+          {
+              $id=$found['id'];$tj['grade_last']="";
+              $this->model->where($tj)->setField('grade',$data['sum']);
+          }
         }
-        if($le==5)
+        else if($le==5)
         {
           if($lev=3)
           {
@@ -617,7 +633,7 @@ class PerformanceController extends BaseController {
           $tj['staff_name']=$admin['staff_name'];
           $tj['year']=$admin['year'];
           $tj['month']=$admin['month'];
-$count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
+           $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
            foreach ($count as $k => $v) {   //  循环保存每一条值
                   //$map = array();
 
@@ -643,22 +659,22 @@ $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(pla
                  $found=$this->model->where($tj)->find();
        //dump($found);
                  
-          if($found=="")
-          {
-            $tj['grade']=$count[$k]['plan_grade'];
-            $tj['grade_last']=session('admin.username');
-            if($this->model->create($tj))
-             {
-               //dump($tj);
-               $this->model->add();
-             }
-          }  
-         else
-          {
-          $id=$found['id'];$tj['grade_last']=session('admin.username');
-          $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
-          }
-        }//dump($count);exit;
+                if($found=="")
+                 {
+                    $tj['grade']=$count[$k]['plan_grade'];
+                    $tj['grade_last']=session('admin.username');
+                    if($this->model->create($tj))
+                    {
+                      //dump($tj);
+                      $this->model->add();
+                    }
+                 }  
+               else
+                {
+                  $id=$found['id'];$tj['grade_last']=session('admin.username');
+                  $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
+                }
+           }//dump($count);exit;
           }
           else
           {
@@ -674,20 +690,20 @@ $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(pla
           $this->model=D('grademonth_chief');
           }
           $found=$this->model->where($tj)->find();
-          if($found=="")
-          {
-          $tj['grade']=$data['sum'];
-          $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
-          if($this->model->create($tj))
-          {
-            $this->model->add();
-          }
-          }  
-         else
-          {
-          $id=$found['id'];$tj['grade_last']="";
-          $this->model->where($tj)->setField('grade',$data['sum']);
-          }
+           if($found=="")
+            {
+             $tj['grade']=$data['sum'];
+             $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
+             if($this->model->create($tj))
+             {
+                $this->model->add();
+             }
+            }  
+          else
+           {
+              $id=$found['id'];$tj['grade_last']="";
+              $this->model->where($tj)->setField('grade',$data['sum']);
+           }
         }    
         //dump($tj);exit;  
         //dump($tj);exit;  
@@ -697,7 +713,7 @@ $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(pla
       $tj=I('get.id');
       $tj=explode(",", $tj);
       $le=session('admin.id_level');
-      if($le==4||$le==7)
+      if($le==4||$le==7||$le==8)
       {
         $this->model=D('planyear_staff');
         $name=$this->model->where("id=$tj[0]")->getField('staff_name');

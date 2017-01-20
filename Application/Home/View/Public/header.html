@@ -98,12 +98,15 @@
                         <ul class="nav child_menu">
                             <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
                             </li>
+                            <if condition="($Think.session.admin.id_level eq 5) or ($Think.session.admin.id_level eq 4)">
                             <li><a href="{:U('index/index1')}">季度计划评分</a>
                             </li>
+                            </if>
                             <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
                             </li>
                           </ul>
                     </li>
+                    <!-- <if condition="$Think.session.admin.id_level neq 8"> 
                     <li><a>绩效评分<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{:U('index/index1')}">月度绩效</a>
@@ -112,12 +115,15 @@
                             </li>
                           </ul>
                     </li>
+                    </if> -->
                     <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
                             </li>
+                            <if condition="($Think.session.admin.id_level eq 5) or ($Think.session.admin.id_level eq 4)">
                             <li><a href="{:U('index/index1')}">季度绩效</a>
                             </li>
+                            </if>
                             <li><a href="{:U('index/index1')}">年度绩效</a>
                             </li>
                           </ul>

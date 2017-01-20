@@ -28,7 +28,7 @@ class PlanYController extends BaseController {
         $list = $this->model->field("id,staff_name,year,plan_name,group_concat(plan_name) as plan_name")->where("staff_id=$id_employee")->order('year desc')->group('year')->select();
         //dump($list);exit;
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planyear_chief');
         $list = $this->model->field("id,chief_name,year,plan_name,group_concat(plan_name) as plan_name")->where("chief_id=$id_employee")->order('year desc')->group('year')->select();
@@ -76,7 +76,7 @@ class PlanYController extends BaseController {
         $tj['if_improve']=2;
         $tzx = $this->model->where($tj)->select();
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planyear_chief');
         $tj['chief_id']=session('admin.id_employee');
@@ -132,7 +132,7 @@ class PlanYController extends BaseController {
         $this->model=D('planyear_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planyear_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -177,7 +177,7 @@ class PlanYController extends BaseController {
           $map['plan_leader']=session('admin.user_leader');
         }
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $map['chief_id'] = $id_employee;
         $map['chief_name'] = $chief_name;
@@ -266,7 +266,7 @@ class PlanYController extends BaseController {
       //   $list2 = M('planyear_staff')->where('staff_id="'.$list1['id_employee'].'"')->select();
       // }
 
-      if($list1['id_level']==4)
+      if($list1['id_level']==4||$list1['id_level']==8)
       {
         //dump($list1);exit;
         $tj['chief_id']=$list1['id_employee'];
@@ -297,7 +297,7 @@ class PlanYController extends BaseController {
         $this->model=D('planyear_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planyear_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -327,7 +327,7 @@ class PlanYController extends BaseController {
             $this->model=D('planyear_staff');
             $tj['staff_id']=session('admin.id_employee');
           }
-          if($le==4)
+          if($le==4||$le==8)
           {
             $this->model=D('planyear_chief');
             $tj['chief_id']=session('admin.id_employee');
@@ -355,7 +355,7 @@ class PlanYController extends BaseController {
         $this->model=D('planyear_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planyear_chief');
          $tj['chief_id']=session('admin.id_employee');
@@ -391,7 +391,7 @@ class PlanYController extends BaseController {
       {
         $this->model=D('planyear_staff');
       }
-      if($le==4)
+      if($le==4||$le==8)
       {
         $this->model=D('planyear_chief');
       }
