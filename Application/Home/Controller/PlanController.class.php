@@ -295,14 +295,14 @@ class PlanController extends BaseController {
       // {
       //   $list2 = M('planmonth_staff')->where('staff_id="'.$list1['id_employee'].'"')->select();
       // }
-
+      //dump($list1);exit;
       if($list1['id_level']==4||$list1['id_level']==8)
       {
-        //dump($list1);exit;
+        
         $tj['chief_id']=$list1['id_employee'];
         $list2 = M('planmonth_chief')->where($tj)->select();
       }
-      if($list1['id_level']==5)
+      else if($list1['id_level']==5)
       {
         $tj['minister_id']=$list1['id_employee'];
         $list2 = M('planmonth_minister')->where($tj)->select();
@@ -312,7 +312,7 @@ class PlanController extends BaseController {
       {
         $list2=1; 
       }
-      //dump($list2.length);exit;
+      //dump($list2);exit;
       $this->assign('list2',$list2);// 赋值数据集
     }
 

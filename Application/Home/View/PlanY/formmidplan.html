@@ -15,6 +15,68 @@
 </empty>
 <notempty name="time">
   <if condition="$Think.session.admin.id_level eq 5">
+  <if condition="$Think.session.admin.user_type eq '副部长'">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="x_panel">
+                  <div class="x_title">
+                    <h2>上级:{$Think.session.admin.user_leader} 的计划表</h2>
+                     <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  <empty name="list2">
+                  <table class="table">
+
+                  <h3>还没有任何计划！</h3>
+
+                  </table>
+                  </empty>
+                  <notempty name="list2">
+                    <table class="table" style="text-align:center;">
+                      <thead>
+                        <tr>
+                          <th style="text-align:center;">工作类型</th>
+                          <th style="text-align:center;">工作分类</th>
+                          <th style="text-align:center;">工作事项</th>
+                          <th style="text-align:center;">计划完成时间</th>
+                          <th style="text-align:center;">权重</th>
+                          <th style="text-align:center;">工作内容及目标/交付物</th>
+                          <!-- <th style="text-align:center;">是否延续</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                       <volist name="list2" id="vv">
+  
+                        <tr>
+                          <td>{$vv.plan_type}</td>
+                          <td>{$vv.plan_classify}</td>
+                          <td>{$vv.plan_name}</td>
+                          <td>{$vv.plan_closingdate}</td>
+                          <td>{$vv.plan_weight}</td>
+                          <td>{$vv.plan_content}</td>
+                          <!-- <td><if condition="$vv.if_continue eq 1">是<else/>否</if></td> -->
+                        </tr>
+                        
+                        </volist>
+                      </tbody>
+                    </table>
+                  </notempty>
+                  </div>
+                </div></if>
   <div class="x_panel">
                <div class="x_title">
                     <h2>年度计划（时间:{$Think.session.admin.year_sys}年）</h2>
