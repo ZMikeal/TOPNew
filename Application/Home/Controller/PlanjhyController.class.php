@@ -320,8 +320,9 @@ class PlanjhyController extends BaseController {
       $this->model=D('info_admin');
       $lev=I('post.level');
       $leadertj['user_department']=session('admin.user_department');
+      $depart = $leadertj['user_department'];
       if($lev=="部长"){
-         $leader=$this->model->where("id_level = 10")->getField('username',true);
+         $leader=$this->model->where("(id_level = 10) OR ((id_level = 5) AND (user_department= '$depart' ))")->getField('username',true);
       }
       if($lev=="科长"){
          $leader=$this->model->where($leadertj)->where("id_level = 5")->getField('username',true);
@@ -373,6 +374,7 @@ class PlanjhyController extends BaseController {
         $tj2['user_office']=I('post.office');
         $tj2['user_job']=I('post.job');
         $tj2['id_level']=I('post.level');
+        $tj2['if_authority']=I('post.radio1');
         if($tj2['id_level']==""){
           unset($tj2['id_level']);
         }

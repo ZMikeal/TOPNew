@@ -39,6 +39,7 @@
                           <th>上级</th>
                           <th>等级</th>
                           <th>类型</th>
+                          <th>是否授权</th>
                           <th>操作</th>
                         </tr>
                       </thead>
@@ -58,7 +59,7 @@
                             <case value="3">科员</case>
                             <case value="4">科长</case>
                             <case value="5">部长</case>
-                            <case value="7">VSE</case><default />
+                            <case value="7">VSE</case></default>
                             </switch></td>
                        <td><switch name="vo.user_type">
                             <case value="专业员工">专业员工</case>
@@ -66,8 +67,13 @@
                             <case value="科长">科长</case>
                             <case value="院长">院长</case>
                             <case value="VSE">VSE</case>                            
-                            <default />
+                            </default>
                            </switch></td>
+                      <td><switch name="vo.if_authority">
+                            <case value="true">已授权</case>
+                            <case value="false">未授权</case>
+                            </default>
+                            </switch></td>
                        <td style="width:250px;">
                        <a class="btn btn-default btn-sm active" href="#" onclick="fn(this)" role="button" data-toggle="modal"  data-target="#bianji">编辑</a>
                        <a id="{$vo.id}" class="btn btn-default btn-sm active" onclick="fnn(this)">删除</a>
@@ -300,6 +306,13 @@
               <option value="VSE">VSE</option>
             </select></td>
           </tr>
+          <!-- <tr>
+            <th>是否授权：</th>
+            <td>
+              <label class="radio-inline"><input id="radio" type="radio" name="radio" value="true" class="">授权</label>
+              <label class="radio-inline"><input id="radio" type="radio" name="radio" value="false" class="">未授权</label>
+            </td>
+          </tr> -->
          </table>
          <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
           
@@ -368,6 +381,12 @@ $(document).ready(function() {
       var job = $("#text4").val();
       var level = $("#level").val();
       var typee = $("#typee").val();
+      var radio = document.getElementsByName("radio");  
+       for (i=0; i<radio.length; i++) {  
+        if (radio[i].checked) {  
+            var radio1= radio[i].value;
+        }  
+       }  
       var action = "usermod";
       if(office==""||job==""){
         alert("不能为空！");
@@ -377,7 +396,7 @@ $(document).ready(function() {
         type:"POST",
         url:action,
         dataType:"json",
-        data:{"id":id,"office":office,"level":level,"leader":leader,"job":job,"typee":typee},
+        data:{"id":id,"office":office,"level":level,"leader":leader,"job":job,"typee":typee,"radio1":radio1},
         success:function(data){
           if(data.success==1){
             alert('编辑成功!');
@@ -404,6 +423,17 @@ $(document).ready(function() {
        }
        var action = "leader";
        var level=tr1.cells[6].innerText;
+       var authority=tr1.cells[8].innerText;
+       if(authority=="已授权"){
+            $("input[name='radio']").eq(0).attr("checked","checked");
+            $("input[name='radio']").eq(1).removeAttr("checked");
+            $("input[name='radio']").eq(0).click();
+       }
+       else{
+            $("input[name='radio']").eq(1).attr("checked","checked");
+            $("input[name='radio']").eq(0).removeAttr("checked");
+            $("input[name='radio']").eq(1).click();
+       }
         $.ajax({
         type:"POST",
         url:action,
