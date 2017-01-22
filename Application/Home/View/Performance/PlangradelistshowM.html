@@ -39,15 +39,15 @@
                           <tr class="headings">
                             <th class="column-title" style="text-align:center;">工作类别</th>
                             <th class="column-title">工作类型</th>
-                            <th class="column-title">工作事项</th>
-                            <th class="column-title">计划完成时间 </th>
+                            <th class="column-title" style="width:14%">工作事项</th>
+                            <th class="column-title" style="width:8%">计划完成时间 </th>
                             <th class="column-title">权重 </th>
                             
-                            <th class="column-title">工作内容及目标/交付物 </th>
+                            <th class="column-title" style="width:16%">工作内容及目标/交付物 </th>
                             <th class="column-title">是否延续</th>
                             <th class="column-title">自评等级</th>
                             <th class="column-title">评价人</th>
-                            <th class="column-title">上级评分 </th>
+                            <th class="column-title" style="width:6%">上级评分 </th>
                             <th class="column-title">状态 </th>
                             <th class="column-title">不通过原因 </th>
                             <!-- <th class="column-title">评分 </th> -->
@@ -110,7 +110,7 @@
 
                             <td class=" ">
                               <label>
-                               <input id="chengji[{$i}]" type="text" value="{$vo.plan_grade}" disabled="disabled" style="width:100px; text-align:center;">
+                               <input id="chengji[{$i}]" type="text" value="{$vo.plan_grade}" disabled="disabled" style="width:30px; text-align:center;">
                               </label>
                             </td>
                             <td class=" ">
@@ -144,7 +144,7 @@
                         </volist>
                         </tbody>
                       </table>
-                      <a class="btn btn-success" href="javascript:history.go(-1)" style="margin-left:40%;width:10%;">返回</a>
+                      <a class="btn btn-success" href="javascript:" style="margin-left:40%;width:10%;" onclick="location.href=document.referrer;">返回</a>
                     </div>
                     </form>
                   </div>

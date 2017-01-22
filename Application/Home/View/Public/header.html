@@ -137,7 +137,7 @@
 
                   <!-- 项目经理兼职 -->
                   <if condition="$Think.session.admin.if_authority eq 2">                
-                  <li><a><i class="fa fa-edit"></i> 绩效总评[项目经理授权] <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> 绩效总评 [经理授权] <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                     <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
@@ -169,7 +169,43 @@
                   </if>
                   <!-- 经理兼职显示结束 -->
                   
+                  <!-- 科长兼职 -->
+                  <if condition="$Think.session.admin.if_authority eq 3">                
+                  <li><a><i class="fa fa-edit"></i> 绩效总评 [科长授权] <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/Planconfirm')}">月度计划确认</a>
+                            </li>
+                            <li><a href="{:U('Performance/PlanconfirmY')}">年度计划确认</a>
+                            </li>
+                          </ul>
+                    </li>
+                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
+                            </li>
+                            <li><a href="{:U('index/index1')}">季度计划评分</a>
+                            </li>
+                            <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
+                            </li>
+                          </ul>
+                    </li>
 
+                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
+                            </li>
+                            <li><a href="{:U('index/index1')}">季度绩效</a>
+                            </li>
+                            <li><a href="{:U('index/index1')}">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
+                    </ul>
+                  </li>
+                  </if>
+                  <!-- 科长兼职显示结束 -->
 
                   <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">

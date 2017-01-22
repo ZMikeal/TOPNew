@@ -77,8 +77,10 @@ class PlanController extends BaseController {
         $tj['if_continue']=1;
         $tj['if_improve']=0;
         $list1 = $this->model->where($tj)->select();//上月延续正常项
+        unset($list1['plan_grade']);
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();//上月延续改善项
+        unset($listt1['plan_grade']);
       }
       if($le==4||$le==8)
       {
@@ -99,8 +101,10 @@ class PlanController extends BaseController {
         $tj['if_continue']=1;
         $tj['if_improve']=0;
         $list1 = $this->model->where($tj)->select();
+        unset($list1['plan_grade']);
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();
+        unset($listt1['plan_grade']);
       }
       if($le==5)
       {
@@ -121,8 +125,10 @@ class PlanController extends BaseController {
         $tj['if_continue']=1;
         $tj['if_improve']=0;
         $list1 = $this->model->where($tj)->select();
+        unset($list1['plan_grade']);
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();
+        unset($listt1['plan_grade']);
 
       }
       if($list1!=null)
@@ -191,89 +197,106 @@ class PlanController extends BaseController {
             //$result=$this->model->where($tj)->delete();
 
 
-         if($tj['month']==1)
-        {
-          $tj['year']=session('admin.year')-1;
-          $tj['month']=12;
-        }
-        else{
-          $tj['year']=session('admin.year');
-           $tj['month']=session('admin.month')-1;
-        }
-        $tj1['if_continue']=0;
-        $this->model->where($tj)->save($tj1);
+    //dump($data1);exit;
 
-    	      foreach ($data1 as $k => $v) {   //  循环保存每一条值
+    foreach ($data1 as $k => $v) {   //  循环保存每一条值
                   $map = array();
                   //$map['k'] = $k;     //  保存216 这个键名
-      if($le==3||$le==7)
-      {
-        $map['staff_id'] = $id_employee;
-        $map['staff_name'] = $chief_name;
-        $map['plan_leader'] = $v['plan_leader'];
-        if($map['plan_leader']=="")
-        {
-          $map['plan_leader']=session('admin.user_leader');
-        }
-      }
-      if($le==4||$le==8)
-      {
-        $map['chief_id'] = $id_employee;
-        $map['chief_name'] = $chief_name;
-        $map['plan_leader'] = session('admin.user_leader');
-      }
-      if($le==5)
-      {
-        $map['minister_id'] = $id_employee;
-        $map['minister_name'] = $chief_name;
-        $map['plan_leader'] =session('admin.user_leader');
-      }
-                  
-                  $map['year'] = session('admin.year');
-                  $map['month'] = session('admin.month');
-                  $map['department'] = session('admin.user_department');
-                  $map['office'] = session('admin.user_office');
-                  $map['plan_type'] = $v['plan_type'];
-                  $map['plan_classify'] = $v['plan_classify'];
-                  $map['plan_name'] = $plan_name[$k-1];
-                  $map['plan_closingdate'] = $plan_closingdate[$k-1];
-                  $map['plan_weight'] = $plan_weight[$k-1];
-                  $map['plan_content'] = $plan_content[$k-1];
-                  $map['if_continue'] = $v['if_continue'];
-                  if($map['plan_type']=="改善创新项"||$map['plan_type']=="能力建设")
-                  {
-                    $map['if_improve']=1;
-                  }
-                  //dump($map);exit;
-                  if($id[$k-1]==null)
-                  {
-                    if($map['plan_name']!="")
-                    { 
-                      if($this->model->create($map)){
-                            $this->model->add();
-                          }
-                    }
-                  }
-                  if($id[$k-1]!=null)
-                  {
-                    $id1=$id[$k-1];
-                    //dump($id1);
-                    if($map['plan_name']!="")
-                    { 
-                      if($this->model->create($map)){
-                            $this->model->where("id=$id1")->save();
-                          }
-                    }
-                    if($map['plan_name']=="")
-                    { 
-                      if($this->model->create($map)){
-                            $this->model->where("id=$id1")->delete();
-                          }
-                    }
-                  }
-                  
-
+              if($le==3||$le==7)
+              {
+                $map['staff_id'] = $id_employee;
+                $map['staff_name'] = $chief_name;
+                $map['plan_leader'] = $v['plan_leader'];
+                if($map['plan_leader']=="")
+                {
+                  $map['plan_leader']=session('admin.user_leader');
                 }
+              }
+              if($le==4||$le==8)
+              {
+                $map['chief_id'] = $id_employee;
+                $map['chief_name'] = $chief_name;
+                $map['plan_leader'] = session('admin.user_leader');
+              }
+              if($le==5)
+              {
+                $map['minister_id'] = $id_employee;
+                $map['minister_name'] = $chief_name;
+                $map['plan_leader'] =session('admin.user_leader');
+              }
+                          
+                          $map['year'] = session('admin.year');
+                          $map['month'] = session('admin.month');
+                          $map['department'] = session('admin.user_department');
+                          $map['office'] = session('admin.user_office');
+                          $map['plan_type'] = $v['plan_type'];
+                          $map['plan_classify'] = $v['plan_classify'];
+                          $map['plan_name'] = $plan_name[$k-1];
+                          $map['plan_closingdate'] = $plan_closingdate[$k-1];
+                          $map['plan_weight'] = $plan_weight[$k-1];
+                          $map['plan_content'] = $plan_content[$k-1];
+                          $map['if_continue'] = $v['if_continue'];
+                          if($map['plan_type']=="改善创新项"||$map['plan_type']=="能力建设")
+                          {
+                            $map['if_improve']=1;
+                          }
+                          //dump($map);exit;
+                      if($tj['month']==1)
+                        {
+                          $tj['year']=session('admin.year')-1;
+                          $tj['month']=12;
+                        }
+                        else{
+                          $tj['year']=session('admin.year');
+                           $tj['month']=session('admin.month')-1;
+                        }
+                        $tj['if_continue']=1;
+                        $tj1['if_continue']=0;
+                        
+                          
+                          if($id[$k-1]==null)
+                          {
+                            if($map['plan_name']!="")
+                            { 
+                              if($this->model->create($map)){
+                                    $this->model->add();
+                                  }
+                            }
+                          }
+                          if($id[$k-1]!=null)
+                          {
+
+                            $id1=$id[$k-1];
+                            $update=$this->model->where("id=$id1")->find(); 
+                            if($update['month']==$tj['month']&&$update['year']==$tj['year'])
+                            {
+                               if($map['plan_name']!="")
+                                  { 
+                                    if($this->model->create($map)){
+                                          $this->model->add();
+                                        }
+                                  }
+                              $this->model->where("id=$id1")->save($tj1);
+                            }
+                            else
+                            {
+                              if($map['plan_name']!="")
+                              { 
+                                if($this->model->create($map)){
+                                      $this->model->where("id=$id1")->save();
+                                    }
+                              }
+                              if($map['plan_name']=="")
+                              { 
+                                if($this->model->create($map)){
+                                      $this->model->where("id=$id1")->delete();
+                                    }
+                              }
+                            }
+                          }
+                        
+                       
+      }
 
                 //$this->success('创建计划成功！',U('Plan/formmidplan'));
                 echo 
@@ -288,25 +311,30 @@ class PlanController extends BaseController {
       //dump($username);exit;
       if($username!="")
       {
-      $list1 = M('info_admin')->where('username="'.$username.'"')->find();
-      $tj['year']=session('admin.year');
-      $tj['month']=session('admin.month');
-      // if($list1['id_level']==3)
-      // {
-      //   $list2 = M('planmonth_staff')->where('staff_id="'.$list1['id_employee'].'"')->select();
-      // }
-      //dump($list1);exit;
-      if($list1['id_level']==4||$list1['id_level']==8)
-      {
-        
-        $tj['chief_id']=$list1['id_employee'];
-        $list2 = M('planmonth_chief')->where($tj)->select();
-      }
-      else if($list1['id_level']==5)
-      {
-        $tj['minister_id']=$list1['id_employee'];
-        $list2 = M('planmonth_minister')->where($tj)->select();
-      }
+        $list1 = M('info_admin')->where('username="'.$username.'"')->find();
+        $tj['year']=session('admin.year');
+        $tj['month']=session('admin.month');
+        // if($list1['id_level']==3)
+        // {
+        //   $list2 = M('planmonth_staff')->where('staff_id="'.$list1['id_employee'].'"')->select();
+        // }
+        //dump($list1);exit;
+        if($list1['id_level']==4||$list1['id_level']==8)
+        {
+          
+          $tj['chief_id']=$list1['id_employee'];
+          $list2 = M('planmonth_chief')->where($tj)->select();
+        }
+        else if($list1['id_level']==5)
+        {
+          $tj['minister_id']=$list1['id_employee'];
+          $list2 = M('planmonth_minister')->where($tj)->select();
+        }
+        else if($list1['id_level']==3)
+        {
+          $tj['staff_id']=$list1['id_employee'];
+          $list2 = M('planmonth_staff')->where($tj)->select();
+        }
       }
       if($username=="")
       {

@@ -266,17 +266,22 @@ class PlanYController extends BaseController {
       //   $list2 = M('planyear_staff')->where('staff_id="'.$list1['id_employee'].'"')->select();
       // }
 
-      if($list1['id_level']==4||$list1['id_level']==8)
-      {
-        //dump($list1);exit;
-        $tj['chief_id']=$list1['id_employee'];
-        $list2 = M('planyear_chief')->where($tj)->select();
-      }
-      if($list1['id_level']==5)
-      {
-        $tj['minister_id']=$list1['id_employee'];
-        $list2 = M('planyear_minister')->where($tj)->select();
-      }
+        if($list1['id_level']==4||$list1['id_level']==8)
+        {
+          //dump($list1);exit;
+          $tj['chief_id']=$list1['id_employee'];
+          $list2 = M('planyear_chief')->where($tj)->select();
+        }
+        else if($list1['id_level']==5)
+        {
+          $tj['minister_id']=$list1['id_employee'];
+          $list2 = M('planyear_minister')->where($tj)->select();
+        }
+        else if($list1['id_level']==3)
+        {
+          $tj['staff_id']=$list1['id_employee'];
+          $list2 = M('planyear_staff')->where($tj)->select();
+        }
       }
       if($username=="")
       {
