@@ -68,12 +68,15 @@
                             <case value="科长">科长</case>
                             <case value="院长">院长</case>
                             <case value="VSE">VSE</case> 
-                            <case value="项目经理">项目经理</case>                           
+                            <case value="项目经理">项目经理</case>
+                            <case value="副部长">副部长</case>                            
                             </default>
                            </switch></td>
                       <td><switch name="vo.if_authority">
-                            <case value="true">已授权</case>
-                            <case value="false">未授权</case>
+                            <case value="1">已授权VSE</case>
+                            <case value="2">已授权项目经理</case>
+                            <case value="3">已授权科长</case>
+                            <case value="0">未授权</case>
                             </default>
                             </switch></td>
                        <td style="width:250px;">
@@ -311,15 +314,23 @@
               <option value="科长">科长</option>
               <option value="VSE">VSE</option>
               <option value="项目经理">项目经理</option>
+              <option value="副部长">副部长</option>
             </select></td>
           </tr>
-          <!-- <tr>
+          <tr>
             <th>是否授权：</th>
             <td>
-              <label class="radio-inline"><input id="radio" type="radio" name="radio" value="true" class="">授权</label>
-              <label class="radio-inline"><input id="radio" type="radio" name="radio" value="false" class="">未授权</label>
+            <select id="radio" class="form-control">
+              <option value="">默认</option>
+              <option value="0">取消授权</option>
+              <option value="1">授权VSE</option>
+              <option value="2">授权项目经理</option>
+              <option value="3">授权科长</option>
+            </select>
+              <!-- <label class="radio-inline"><input id="radio" type="radio" name="radio" value="true" class="">授权</label>
+              <label class="radio-inline"><input id="radio" type="radio" name="radio" value="false" class="">未授权</label> -->
             </td>
-          </tr> -->
+          </tr>
          </table>
          <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
           
@@ -388,12 +399,13 @@ $(document).ready(function() {
       var job = $("#text4").val();
       var level = $("#level").val();
       var typee = $("#typee").val();
-      var radio = document.getElementsByName("radio");  
-       for (i=0; i<radio.length; i++) {  
-        if (radio[i].checked) {  
-            var radio1= radio[i].value;
-        }  
-       }  
+      var radio = $("#radio").val();
+      // var radio = document.getElementsByName("radio");  
+      //  for (i=0; i<radio.length; i++) {  
+      //   if (radio[i].checked) {  
+      //       var radio1= radio[i].value;
+      //   }  
+      //  }  
       var action = "usermod";
       if(office==""||job==""){
         alert("不能为空！");
@@ -403,7 +415,7 @@ $(document).ready(function() {
         type:"POST",
         url:action,
         dataType:"json",
-        data:{"id":id,"office":office,"level":level,"leader":leader,"job":job,"typee":typee,"radio1":radio1},
+        data:{"id":id,"office":office,"level":level,"leader":leader,"job":job,"typee":typee,"radio":radio},
         success:function(data){
           if(data.success==1){
             alert('编辑成功!');

@@ -17,7 +17,7 @@ class PerformanceController extends BaseController {
       $tj['plan_leader']=session('admin.username');
       $tj['year']=session('admin.year');
       $tj['month']=session('admin.month');
-      if($level==4||$level==7||$level==8)
+      if($level==4||$level==7||$level==8||$level==3)
       {
         $this->model=D('planmonth_staff');
         $jh = $this->model->field("id,staff_id,staff_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->order('staff_name')->group('staff_name')->select();
@@ -70,7 +70,7 @@ class PerformanceController extends BaseController {
       $tj=I('get.id');
       $tj=explode(",", $tj);
        $le=session('admin.id_level');
-      if($le==4||$le==7||$le==8)
+      if($le==4||$le==7||$le==8||$le==3)
       {
         $this->model=D('planmonth_staff');
         $name=$this->model->where("id=$tj[0]")->getField('staff_name');
@@ -126,7 +126,7 @@ class PerformanceController extends BaseController {
    public function confirm(){
     $id=I('get.vid');
        $le=session('admin.id_level');
-      if($le==4||$le==7||$le==8)
+      if($le==4||$le==7||$le==8||$le==3)
       {
         $this->model=D('planmonth_staff');
       }
@@ -141,7 +141,7 @@ class PerformanceController extends BaseController {
    public function confirmY(){
     $id=I('get.vid');
        $le=session('admin.id_level');
-      if($le==4||$le==7||$le==8)
+      if($le==4||$le==7||$le==8||$le==3)
       {
         $this->model=D('planyear_staff');
       }
@@ -158,7 +158,7 @@ class PerformanceController extends BaseController {
     $tj['plan_confirm']=I('post.confirm');
     $tj['if_confirm']=-1;
        $le=session('admin.id_level');
-      if($le==4||$le==7||$le==8)
+      if($le==4||$le==7||$le==8||$le==3)
       {
         $this->model=D('planmonth_staff');
       }
@@ -178,7 +178,7 @@ class PerformanceController extends BaseController {
     $tj['plan_confirm']=I('post.confirm');
     $tj['if_confirm']=-1;
        $le=session('admin.id_level');
-      if($le==4||$le==7||$le==8)
+      if($le==4||$le==7||$le==8||$le==3)
       {
         $this->model=D('planyear_staff');
       }
@@ -213,7 +213,7 @@ class PerformanceController extends BaseController {
       $level=session('admin.id_level');
       //决定了是只检索自己的评价人还是所有评价人的list
       //dump($tj);exit();
-      if($level==4||$level==7||$le==8)
+      if($level==4||$level==7||$level==8)
       {
         if($level==4){
           unset($tj['plan_leader']);

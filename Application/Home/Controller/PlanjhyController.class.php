@@ -374,7 +374,10 @@ class PlanjhyController extends BaseController {
         $tj2['user_office']=I('post.office');
         $tj2['user_job']=I('post.job');
         $tj2['id_level']=I('post.level');
-        $tj2['if_authority']=I('post.radio1');
+        $tj2['if_authority']=I('post.radio');
+        if($tj2['if_authority']==""){
+          unset($tj2['if_authority']);
+        }
         if($tj2['id_level']==""){
           unset($tj2['id_level']);
         }
