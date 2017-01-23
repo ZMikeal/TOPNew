@@ -152,7 +152,12 @@
                       </table>
                       <a class="btn btn-success" onclick="form()" style="margin-left:30%;width:10%;">提交</a>
                       <!--document.getElementById('subform').submit();return false-->
-                      <a class="btn btn-success" href="javascript:history.go(-1);" style="margin-left:10%;width:10%;">返回</a>
+                      <if condition="$hrf eq PlangradelistM">
+                      <a class="btn btn-success" href="/TOPNew/Performance/PlangradelistM.html" style="margin-left:10%;width:10%;" onclick="">返回</a>
+                      </if>
+                      <if condition="$hrf eq PlangradeM">
+                      <a class="btn btn-success" href="{:U('performance/PlangradeM')}" style="margin-left:10%;width:10%;" onclick="">返回</a>
+                      </if>
                       <!-- <a class="btn btn-success" href="javascript:" style="margin-left:40%;width:10%;" onclick="location.href=document.referrer;">返回</a> -->
                     </div>
                     </form>
@@ -210,6 +215,8 @@ function form(){
                     if(data.success==1){
                     alert('成功!');
                     window.location.reload();
+                    //这里直接加跳转不行吗？？？
+                    //window.location.href = '/TOPNew/Performance/PlangradelistM.html';
                   }
                 }
             });

@@ -6,7 +6,7 @@
 </style>
 <div class="right_col" role="main" onload="myfunction()">
   
-
+<form id="subform" action="{:U('Performance/PlangradelistM')}" method="post" class="form-horizontal">
   <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -33,7 +33,7 @@
                   <div class="x_content">
 
                     <div class="table-responsive"  style="">
-                    <form id="subform" action="{:U('Performance/PlangradelistM')}" method="post" class="form-horizontal">
+                    
                       年度：<select style="width:100px;" name="search[]">
                         <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
                         <option <if condition="$search[0] eq 2016">selected</if>>2016</option>
@@ -64,10 +64,10 @@
                         <option value="{$search1}">{$search1}</option>
                         </if>
                       </select></if>
-                      <button type="submit">搜索</button></form>
+                      <button type="submit">搜索</button>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                       <empty name="jh">
-                       暂无计划！
+                       <p>暂无计划！</p>
                       </empty>
                       <notempty name="jh">
                        <thead>
@@ -138,7 +138,7 @@
                             <td class=" " width="200px;">
                               <label>
             <if condition="$Think.session.admin.id_level eq 5">
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id']))}">[ 查看 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'hrf'=>'PlangradelistM'))}">[ 查看 ]</a>
             </if>
             <if condition="$Think.session.admin.id_level neq 5">
             <a href="{:U('Performance/PlangradelistshowM',array('id'=>$vo['id']))}">[ 查看 ]</a>
@@ -179,7 +179,6 @@
                   <div class="x_content">
 
                     <div class="table-responsive"  style="">
-                    <form id="subform" action="{:U('Performance/PlangradelistM')}" method="post" class="form-horizontal">
                       年度：<select style="width:100px;" name="searchh[]">
                         <option <if condition="$searchh[0] eq 2017">selected</if>>2017</option>
                         <option <if condition="$searchh[0] eq 2016">selected</if>>2016</option>
@@ -199,10 +198,10 @@
                         <option <if condition="$searchh[1] eq 12">selected</if>>12</option>
                       </select>
                       
-                      <button type="submit">搜索</button></form>
+                      <button type="submit">搜索</button>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                       <empty name="jh1">
-                       暂无计划！
+                       <p>暂无计划！</p>
                       </empty>
                       <notempty name="jh1">
                        <thead>
@@ -307,7 +306,6 @@
                   <div class="x_content">
 
                     <div class="table-responsive"  style="">
-                    <form id="subform" action="{:U('Performance/PlangradelistM')}" method="post" class="form-horizontal">
                       年度：<select style="width:100px;" name="searchh[]">
                         <option <if condition="$searchh[0] eq 2017">selected</if>>2017</option>
                         <option <if condition="$searchh[0] eq 2016">selected</if>>2016</option>
@@ -334,10 +332,10 @@
                         <option value="" <if condition="$searchh[2] eq $vv">selected</if>>全部</option>
                       </select>
                       </if>
-                      <button type="submit">搜索</button></form>
+                      <button type="submit">搜索</button>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                       <empty name="jh1">
-                       暂无计划！
+                       <p>暂无计划！</p>
                       </empty>
                       <notempty name="jh1">
                        <thead>
@@ -403,7 +401,7 @@
                             </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3'))}">[ 查看 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3','hrf'=>'PlangradelistM'))}">[ 查看 ]</a>
                               </label>
                             </td>
                           </tr>

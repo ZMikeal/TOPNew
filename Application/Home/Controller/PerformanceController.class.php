@@ -12,6 +12,7 @@ class PerformanceController extends BaseController {
            exit;
           }
     }
+    //月度计划确认列表
     public function Planconfirm(){
       $level=session('admin.id_level');
       $tj['plan_leader']=session('admin.username');
@@ -43,6 +44,8 @@ class PerformanceController extends BaseController {
       $this->assign('jh1',$jh1);
       $this->display();
     }
+    //~
+    //年度计划确认列表
     public function PlanconfirmY(){
       $level=session('admin.id_level');
       $tj['plan_leader']=session('admin.username');
@@ -66,6 +69,8 @@ class PerformanceController extends BaseController {
       $this->assign('jh',$jh);
       $this->display();
     }
+    //~
+    //月度计划确认
     public function Pplan(){
       $tj=I('get.id');
       $tj=explode(",", $tj);
@@ -98,6 +103,8 @@ class PerformanceController extends BaseController {
         $this->assign('name',$name);
         $this->display();
     }
+    //~
+    //年度计划确认
     public function PplanY(){
       $tj=I('get.id');
       $tj=explode(",", $tj);
@@ -122,7 +129,7 @@ class PerformanceController extends BaseController {
         $this->assign('name',$name);
         $this->display();
     }
-   
+   //月度计划确认数据写入
    public function confirm(){
     $id=I('get.vid');
        $le=session('admin.id_level');
@@ -138,6 +145,8 @@ class PerformanceController extends BaseController {
       $this->ajaxReturn(array('success'=>1),"json");
 
    }
+   //~
+   //年度计划确认数据写入
    public function confirmY(){
     $id=I('get.vid');
        $le=session('admin.id_level');
@@ -153,6 +162,8 @@ class PerformanceController extends BaseController {
       $this->ajaxReturn(array('success'=>1),"json");
 
    }
+   //~
+   //月度计划退回数据写入
    public function notconfirm(){
     $tj['id']=I('post.id');
     $tj['plan_confirm']=I('post.confirm');
@@ -173,6 +184,8 @@ class PerformanceController extends BaseController {
       $this->ajaxReturn(array('success'=>1),"json");
 
    }
+   //~
+   //年度计划退回数据写入
    public function notconfirmY(){
     $tj['id']=I('post.id');
     $tj['plan_confirm']=I('post.confirm');
@@ -193,10 +206,12 @@ class PerformanceController extends BaseController {
       $this->ajaxReturn(array('success'=>1),"json");
 
    }
+   //~
+   //月度绩效查看列表
     public function PlangradelistM(){
       $search=I('post.search');        
       $searchh=I('post.searchh');
-      //dump($search);exit;
+      //dump($searchh);dump($search);exit;
       if($search==""){
         $tj['year']=session('admin.year');
         $tj['month']=session('admin.month');
@@ -292,7 +307,7 @@ class PerformanceController extends BaseController {
                 }
                 //dump($search1);exit;
       //dump($jh);exit;
-     if($level==5){
+     if($level==5||$level==4){
         if($searchh==""){
         $tjh['year']=session('admin.year');
         $tjh['month']=session('admin.month');
@@ -304,26 +319,39 @@ class PerformanceController extends BaseController {
         $tjh['year']=$searchh[0];
         $tjh['month']=$searchh[1];    
         }
+
         if(session('admin.user_job')=="副部长")
         {
           $tjh['plan_leader']=session('admin.username');
-        }
-      else
-      {
-        if($searchh[2]=="")
-        {
-          unset($tjh['plan_leader']);
-          $tjh['department']=session('admin.user_department');
+          $this->model=D('planmonth_staff');
+          $jh1 = $this->model->field("id,staff_id,staff_name,office,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tjh)->group('staff_name')->select();
         }
         else
         {
-          unset($tjh['plan_leader']);
-          $tjh['office']=$searchh[2];
+          if($level==5)
+          {
+            if($searchh[2]=="")
+            {
+              unset($tjh['plan_leader']);
+              $tjh['department']=session('admin.user_department');
+            }
+            else
+            {
+              unset($tjh['plan_leader']);
+              $tjh['office']=$searchh[2];
+            }
+            $this->model=D('planmonth_staff');
+            $jh1 = $this->model->field("id,staff_id,staff_name,office,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tjh)->group('staff_name')->select();
+        
+          }
+          else{
+            $this->model=D('planmonth_staff');
+            $tjh['plan_leader']=session('admin.username');
+            $tj['office']=session('admin.user_office');
+            $jh1 = $this->model->field("id,staff_id,office,staff_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tjh)->where("'office' != '".$tj['office']."'")->group('staff_name')->select();
+          }
         }
-      }
-        $this->model=D('planmonth_staff');
-        $jh1 = $this->model->field("id,staff_id,staff_name,office,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tjh)->group('staff_name')->select();
-        //dump($jh1);exit;
+        
         foreach ($jh1 as $k => $v) {   //  循环保存每一条值
                   //$map = array();
                   $jh1[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
@@ -342,13 +370,15 @@ class PerformanceController extends BaseController {
                   }                  
                 }
                 $this->assign('jh1',$jh1);
-     }
+     }//dump($jh1);exit;
       $this->assign('jh',$jh);
       $this->assign('search',$search);
       $this->assign('searchh',$searchh);
       $this->assign('search1',$search1);
       $this->display();
    }
+   //~
+   //月度绩效查看列表显示详情
    public function PlangradelistshowM(){
       $tj=I('get.id');
       $level=I('get.level');
@@ -370,13 +400,13 @@ class PerformanceController extends BaseController {
         $name[3]=$name['month'];
         $this->model=D('planmonth_chief');
       }
-      if($le==4||$le==7||$level==3||$le==8);
+      else if($le==4||$le==7||$level==3||$le==8);
       {
         $this->model=D('planmonth_staff');
         $name=$this->model->where("id=$tj[0]")->find();
         //dump($name);exit();
         $this->model=D('grademonth_staff');
-        $name1['staff_id']=$name['staff_id'];
+        $name1['staff_id']=$name['staff_id'];   //name1查询条件变量
         $name1['year']=$name['year'];
         $name1['month']=$name['month'];
         $name1['grade_leader']=$name['plan_leader'];
@@ -411,7 +441,8 @@ class PerformanceController extends BaseController {
         $this->assign('shuju',$shuju);
         $this->display();
     }
-
+    //~
+    //月度计划评分列表
     public function PlangradeM(){
       $level=session('admin.id_level');
       $tj['plan_leader']=session('admin.username');
@@ -436,7 +467,7 @@ class PerformanceController extends BaseController {
       {
         $this->model=D('planmonth_chief');
         $jh = $this->model->field("id,chief_id,chief_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->group('chief_name')->select();
-        $this->model=D('grademonth_chief');
+        $this->model=D('grademonth_chief');//jh是查看自己下级plan_leader为自己的数据
       }
       foreach ($jh as $k => $v) {   //  循环保存每一条值
                   //$map = array();
@@ -461,8 +492,8 @@ class PerformanceController extends BaseController {
         $this->model=D('planmonth_staff');
         $jh1 = $this->model->field("id,staff_id,staff_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->order('staff_name')->group('staff_name')->select();
         $this->model=D('grademonth_staff');
-     
-      foreach ($jh1 as $k => $v) {   //  循环保存每一条值
+        //jh1是部长查看科员plan_leader为自己的数据
+        foreach ($jh1 as $k => $v) {   //  循环保存每一条值
                   //$map = array();
                   $jh1[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
                   $jh1[$k]['plan_grade']=explode(",", $v['plan_grade']);
@@ -486,6 +517,8 @@ class PerformanceController extends BaseController {
       $this->assign('jh',$jh);
       $this->display();
     }
+    //~
+    //年度计划评分列表
     public function PlangradeY(){
       $level=session('admin.id_level');
       $tj['plan_leader']=session('admin.username');
@@ -509,9 +542,13 @@ class PerformanceController extends BaseController {
       $this->assign('jh',$jh);
       $this->display();
     }
+    //~
+    //月度计划评分
     public function PlangradeshowM(){
       $tj=I('get.id');
       $tj=explode(",", $tj);
+      $hrf=I('get.hrf');
+      $this->assign('hrf',$hrf);
       $le=session('admin.id_level');
        //dump($tj);exit;
       if($le==4||$le==7||$le==8||$le==3)
@@ -587,9 +624,10 @@ class PerformanceController extends BaseController {
         $this->assign('shuju',$shuju);
         $this->display();
     }
+    //~
+    //月度分数写入数据库
     public function addgradeM(){
       $data=I('post.');
-      //dump($data);exit;
       $lev=$data['lev'];
       //dump($lev);exit;
       $ii=count($data['id']);
@@ -605,13 +643,9 @@ class PerformanceController extends BaseController {
         if($le==5)
         {
           if($lev==3)
-          {
             $this->model=D('planmonth_staff');
-          }
           else
-          {
-          $this->model=D('planmonth_chief');
-          }
+            $this->model=D('planmonth_chief');
         }
         $this->model->where("id=$id")->setField('plan_grade',$grade);
         //dump($id);
@@ -630,15 +664,13 @@ class PerformanceController extends BaseController {
           $tj['grade_leader']=session('admin.username');
           $this->model=D('grademonth_staff');
 
-           $found=$this->model->where($tj)->find();
+          $found=$this->model->where($tj)->find();
           if($found=="")
           {
              $tj['grade']=$data['sum'];
              $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
              if($this->model->create($tj))
-             {
                 $this->model->add();
-             }
           }  
          else
           {
@@ -662,7 +694,6 @@ class PerformanceController extends BaseController {
                   //$map = array();
 
                   $count[$k]['plan_grade']=explode(",", $v['plan_grade']);
-                  
                   $sum=0;
                   foreach ($count[$k]['plan_grade'] as $key => $value) {
                     $sum+=$value;
@@ -681,7 +712,7 @@ class PerformanceController extends BaseController {
                  $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];$tj['staff_office']=$admin['office'];
                  $this->model=D('grademonth_staff');
                  $found=$this->model->where($tj)->find();
-       //dump($found);
+                  //dump($found);
                  
                 if($found=="")
                  {
@@ -730,10 +761,11 @@ class PerformanceController extends BaseController {
               $this->model->where($tj)->setField('grade',$data['sum']);
            }
         }    
-        //dump($tj);exit;  
-        //dump($tj);exit;  
+        //dump($tj);exit;   
         $this->ajaxReturn(array('success'=>1),"json");
     }
+
+    //年度评分列表查看
     public function PlangradeshowY(){
       $tj=I('get.id');
       $tj=explode(",", $tj);
@@ -743,14 +775,14 @@ class PerformanceController extends BaseController {
         $this->model=D('planyear_staff');
         $name=$this->model->where("id=$tj[0]")->getField('staff_name');
       }
-      if($le==5)
+      else if($le==5)
       {
         $this->model=D('planyear_chief');
         $name=$this->model->where("id=$tj[0]")->getField('chief_name');
       }
       //dump($tj);exit;
-      foreach ($tj as $k => $v) {   //  循环保存每一条值
-                  //$map = array();
+      //循环保存每一条值
+      foreach ($tj as $k => $v) {               
                   $shuju[$k]=$this->model->where("id=$v")->find();
                   $f=1;
                   for($i=0;$i<6;$i++)
@@ -764,10 +796,11 @@ class PerformanceController extends BaseController {
                   $shuju[$k]['fenshu'][3]['dengji']=C;
                   $shuju[$k]['fenshu'][4]['dengji']=D;
                   $shuju[$k]['fenshu'][5]['dengji']=E;
-                }
-                //dump($shuju);exit;
+      }
+        //dump($shuju);exit;
         $this->assign('name',$name);
         $this->assign('shuju',$shuju);
         $this->display();
     }
+    //~
 }
