@@ -2,7 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file:$MODULE_DIR$/../../../../..//$MODULE_DIR$" />
-    <content url="file:$MODULE_DIR$/../../../../../10.32.228.112/public/wwwroot/default/topNew" />
+    <content url="file:$MODULE_DIR$/../../../../../10.32.228.112/public/wwwroot/default/TOPNew" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

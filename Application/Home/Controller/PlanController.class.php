@@ -198,7 +198,19 @@ class PlanController extends BaseController {
 
 
     //dump($data1);exit;
-
+    //tj为时间节点
+                        if($tj['month']==1)
+                        {
+                          $tj['year']=session('admin.year')-1;
+                          $tj['month']=12;
+                        }
+                        else{
+                          $tj['year']=session('admin.year');
+                           $tj['month']=session('admin.month')-1;
+                        }
+                        $tj['if_continue']=1;
+                        $tj1['if_continue']=0;
+    //~
     foreach ($data1 as $k => $v) {   //  循环保存每一条值
                   $map = array();
                   //$map['k'] = $k;     //  保存216 这个键名
@@ -241,17 +253,7 @@ class PlanController extends BaseController {
                             $map['if_improve']=1;
                           }
                           //dump($map);exit;
-                      if($tj['month']==1)
-                        {
-                          $tj['year']=session('admin.year')-1;
-                          $tj['month']=12;
-                        }
-                        else{
-                          $tj['year']=session('admin.year');
-                           $tj['month']=session('admin.month')-1;
-                        }
-                        $tj['if_continue']=1;
-                        $tj1['if_continue']=0;
+                     
                         
                           
                           if($id[$k-1]==null)
@@ -267,6 +269,7 @@ class PlanController extends BaseController {
                           {
 
                             $id1=$id[$k-1];
+                            //dump($id1);dump($tj);
                             $update=$this->model->where("id=$id1")->find(); 
                             if($update['month']==$tj['month']&&$update['year']==$tj['year'])
                             {
@@ -276,7 +279,7 @@ class PlanController extends BaseController {
                                           $this->model->add();
                                         }
                                   }
-                              $this->model->where("id=$id1")->save($tj1);
+                            $this->model->where("id=$id1")->save($tj1);
                             }
                             else
                             {

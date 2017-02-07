@@ -13,7 +13,7 @@ class LoginController extends Controller {
     'nickname'=> I('post.username'),
     'password'=> md5(md5(I('post.password')))
     );
-    $admin=M('info_admin')->where($map)->find();
+    $admin=M('info_admin')->where($map)->where("if_delete=0")->find();
     if($admin){
       
       if($admin['id_level']==2)
