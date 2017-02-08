@@ -58,7 +58,7 @@ class PlanYController extends BaseController {
       //$tj['month']=session('admin.month');
        $date=date('m-d');
        
-    if($date < '01-25'&&$date > '01-01')
+    if($date < '02-15'&&$date > '01-01')
     {
       //dump($date);exit;
       $time='可以创建计划';

@@ -78,8 +78,10 @@ class PlanController extends BaseController {
         $tj['if_improve']=0;
         $list1 = $this->model->where($tj)->select();//上月延续正常项
         unset($list1['plan_grade']);
+        unset($list1['plan_closingdate']);
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();//上月延续改善项
+        unset($listt1['plan_closingdate']);
         unset($listt1['plan_grade']);
       }
       if($le==4||$le==8)
@@ -102,9 +104,12 @@ class PlanController extends BaseController {
         $tj['if_improve']=0;
         $list1 = $this->model->where($tj)->select();
         unset($list1['plan_grade']);
+        unset($list1['plan_closingdate']);
+        //dump($list1);exit;
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();
         unset($listt1['plan_grade']);
+        unset($listt1['plan_closingdate']);
       }
       if($le==5)
       {
@@ -126,18 +131,27 @@ class PlanController extends BaseController {
         $tj['if_improve']=0;
         $list1 = $this->model->where($tj)->select();
         unset($list1['plan_grade']);
+        unset($list1['plan_closingdate']);
         $tj['if_improve']=1;
         $listt1 = $this->model->where($tj)->select();
         unset($listt1['plan_grade']);
+        unset($listt1['plan_closingdate']);
 
       }
       if($list1!=null)
       {
         $list=$list1;
+        foreach ($list as $key => $value) {
+          unset($list[$key]['plan_closingdate']);
+        }
+        //dump($list);exit;
       }
        if($listt1!=null)
       {
         $listt=$listt1;
+         foreach ($listt as $key => $value) {
+          unset($listt[$key]['plan_closingdate']);
+        }
       }
       //dump($list);
       //dump($listt);
