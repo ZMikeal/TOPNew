@@ -1,0 +1,129 @@
+<include file="Public/headerr" /> 
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+              <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><switch name="lev">
+                            <case value="3">科员</case>
+                            <case value="4">科长</case>
+                            <case value="5">部长</case>
+                            <case value="7">VSE</case>
+                            <case value="8">项目经理</case></default>
+                            </switch> ：计划列表</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+                      <empty name="jh">
+                      暂没有人提交计划！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                       <thead>
+                          <tr class="headings">
+                            <th class="column-title"></th>
+                            <th class="column-title">员工姓名</th>
+                            <th class="column-title">员工工号</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
+                            <th class="column-title">工作事项</th>
+                            <th class="column-title">总分</th>
+                            <th class="column-title">状态 </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="jh" id="vo">
+                          <tr class="even pointer">
+                            <td>
+                            {$i}
+                            </td>
+                            <td class=" " width="200px;">
+                              <label>
+                                <switch name="lev">
+                                <case value="3">{$vo.staff_name}</case>
+                                <case value="4">{$vo.chief_name}</case>
+                                <case value="7">{$vo.staff_name}</case>
+                                <case value="8">{$vo.chief_name}</case>
+                                <case value="5">{$vo.minister_name}</case>
+                                </switch>                            
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                <switch name="lev">
+                                <case value="3">{$vo.staff_id}</case>
+                                <case value="4">{$vo.chief_id}</case>
+                                <case value="7">{$vo.staff_id}</case>
+                                <case value="8">{$vo.chief_id}</case>
+                                <case value="5">{$vo.minister_id}</case>
+                                </switch>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <empty name="vo[plan_grade]">
+                                暂未评分！
+                                
+                                <else/>
+                                {$vo.plan_grade}
+                                </empty>
+                              </label>
+                            </td>
+                            <td class=" " width="200px;">
+                              <label>
+                                {$vo[if_confirm]}
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                      </table>
+                      </empty>    
+                    </div>
+                    <a class="btn btn-success" href="javascript:history.go(-1);" style="margin-left:40%;width:10%;">返回</a>
+                  </div>
+                </div>
+              </div>
+                
+              </div>
+</div>
+<include file="Public/foot" /> 

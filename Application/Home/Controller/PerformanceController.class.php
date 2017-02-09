@@ -518,6 +518,31 @@ class PerformanceController extends BaseController {
       $this->display();
     }
     //~
+    //季度计划评分列表
+    public function PlangradeQ(){
+      $level=session('admin.id_level');
+      $tj['year']=session('admin.year');
+      $tj['month']=session('admin.month');
+      
+      if($level==4||$level==7||$level==8)
+      {
+        $this->model=D('planyear_staff');
+        $jh = $this->model->field("id,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('staff_name')->select();
+      }
+      if($level==5)
+      {
+        $this->model=D('planyear_chief');
+        $jh = $this->model->field("id,chief_id,chief_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('chief_name')->select();
+      }
+      foreach ($jh as $k => $v) {   //  循环保存每一条值
+                  //$map = array();
+                  $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+                }
+      //dump($jh);exit;
+      $this->assign('jh',$jh);
+      $this->display();
+    }
+    //~
     //年度计划评分列表
     public function PlangradeY(){
       $level=session('admin.id_level');
@@ -803,4 +828,6 @@ class PerformanceController extends BaseController {
         $this->display();
     }
     //~
+
+
 }

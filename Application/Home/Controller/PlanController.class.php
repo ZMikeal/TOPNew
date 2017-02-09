@@ -25,23 +25,37 @@ class PlanController extends BaseController {
       if($le==3||$le==7)
       {
         $this->model=D('planmonth_staff');
-        $list = $this->model->field("id,staff_name,year,month,plan_name,group_concat(plan_name) as plan_name")->where("staff_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
+        $list = $this->model->field("plan_grade,id,staff_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_grade) as plan_grade")->where("staff_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
         //dump($list);exit;
       }
       if($le==4||$le==8)
       {
         $this->model=D('planmonth_chief');
-        $list = $this->model->field("id,chief_name,year,month,plan_name,group_concat(plan_name) as plan_name")->where("chief_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
+        $list = $this->model->field("plan_grade,id,chief_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_grade) as plan_grade")->where("chief_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
       }
       if($le==5)
       {
         $this->model=D('planmonth_minister');
-        $list = $this->model->field("id,minister_name,year,month,plan_name,group_concat(plan_name) as plan_name")->where("minister_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
+        $list = $this->model->field("plan_grade,id,minister_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_grade) as plan_grade")->where("minister_id=$id_employee")->order('year desc,month desc')->group('year,month')->select();
       }
        //dump($list);exit;
        foreach ($list as $k => $v) {   //  循环保存每一条值
                   //$map = array();
                   $list[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+                  $list[$k]['plan_grade']=explode(",", $v['plan_grade']);
+                  $sum=0;
+                  foreach ($list[$k]['plan_grade'] as $key => $value) {
+                    $sum+=$value;
+                  }
+                  if($sum==0)
+                  {
+                    $list[$k]['plan_grade']="";
+                  }
+                  if($sum!=0)
+                  {
+                    $list[$k]['plan_grade']=$sum;
+                  }                  
+
                 }
       $this->assign('list',$list);// 赋值数据集
       $this->display();

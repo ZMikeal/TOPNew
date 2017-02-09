@@ -1,0 +1,224 @@
+<include file="Public/headerr" /> 
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+              <div class="row">
+              
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}：清单调整</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div class="table-responsive">
+                <form id="form1" action="{:U('Planjhy/Plan_adjustment')}" method="post" class="form-horizontal">
+                      
+                      年度：<select style="width:100px;" name="search[]">
+                        <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
+                        <option <if condition="$search[0] eq 2016">selected</if>>2016</option>
+                      </select>
+                      月度：<select style="width:100px;" name="search[]">
+                        <option <if condition="$search[1] eq 1">selected</if>>1</option>
+                        <option <if condition="$search[1] eq 2">selected</if>>2</option>
+                        <option <if condition="$search[1] eq 3">selected</if>>3</option>
+                        <option <if condition="$search[1] eq 4">selected</if>>4</option>
+                        <option <if condition="$search[1] eq 5">selected</if>>5</option>
+                        <option <if condition="$search[1] eq 6">selected</if>>6</option>
+                        <option <if condition="$search[1] eq 7">selected</if>>7</option>
+                        <option <if condition="$search[1] eq 8">selected</if>>8</option>
+                        <option <if condition="$search[1] eq 9">selected</if>>9</option>
+                        <option <if condition="$search[1] eq 10">selected</if>>10</option>
+                        <option <if condition="$search[1] eq 11">selected</if>>11</option>
+                        <option <if condition="$search[1] eq 12">selected</if>>12</option>
+                      </select>
+                      职位：<select style="width:100px;" name="search[]" id="level">
+                        <option value="3"<if condition="$search[2] eq 3">selected</if>>科员</option>
+                        <option value="4"<if condition="$search[2] eq 4">selected</if>>科长</option>
+                        <option value="5"<if condition="$search[2] eq 5">selected</if>>部长</option>
+                        <option value="7"<if condition="$search[2] eq 7">selected</if>>VSE</option>
+                        <option value="8"<if condition="$search[2] eq 8">selected</if>>项目经理</option>
+                      </select>
+                      工号：<input type='text' style="width:100px;" name="search[]" value="{$search[3]}"></input>
+                      <button type="submit" id="bn">搜索</button>
+                 </form>
+                      <empty name="data">
+                      查询信息为空！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">id</th>
+                            <th class="column-title">年度</th>                     
+                            <th class="column-title">月度</th>
+                            <th class="column-title">姓名</th>
+                            <th class="column-title">工号</th>
+                            <th class="column-title">项目名称</th>
+                            <th class="column-title">完成日期</th>
+                            <th class="column-title">评价人</th>
+                            <th class="column-title">权重</th>
+                            <th class="column-title">操作</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          
+                          <volist name="data" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$vo.id}
+                            </td>
+                            <td class=" ">
+                            {$vo.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.month}
+                            </td>
+                             
+                            <td class=" ">
+                            <switch name="search[2]">
+                            <case value="3">{$vo.staff_name}</case>
+                            <case value="7">{$vo.staff_name}</case>
+                            <case value="4">{$vo.chief_name}</case>
+                            <case value="8">{$vo.chief_name}</case>
+                            <case value="5">{$vo.minister_name}</case>
+                            </switch>
+                            </td>
+                            <td class=" " width="">
+                            <switch name="search[2]">
+                            <case value="3">{$vo.staff_id}</case>
+                            <case value="7">{$vo.staff_id}</case>
+                            <case value="4">{$vo.chief_id}</case>
+                            <case value="8">{$vo.chief_id}</case>
+                            <case value="5">{$vo.minister_id}</case>
+                            </switch>
+                            </td>
+                            <td class=" ">
+                            {$vo.plan_name}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.plan_closingdate}
+                            </td>
+                            <td class=" ">
+                            {$vo.plan_leader}
+                            </td>
+                            <td class=" ">
+                            {$vo.plan_weight}
+                            </td>
+                            <td>
+                            [ <a class="" href="#" onclick="fn(this)" role="button" data-toggle="modal"  data-target="#bianji">调整</a> ]
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      </empty>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+</div>
+
+
+
+
+<div class="modal fade" id="bianji" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true" style="float: right; border: 1px solid #333;"> 
+     <div class="modal-dialog">
+      <div class="modal-content">
+       <div class="modal-header">
+        <button type="button" class="close" 
+           data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+           计划调整项：
+        </h4>
+       </div>
+       <!--编辑主体 -->
+      <div class="modal-body">
+          
+         <table class="table">
+          <tr>
+            <th>工号:</th>
+            <td><input type="hidden" id="text0" class="form-control">
+          <input type="text" id="text2" name="text[]" class="form-control" disabled="disabled"></td>
+          </tr>
+          <tr>
+          <th>人员名称:</th>
+          <td><input type="text" id="text1" name="text[]" class="form-control" disabled="disabled"></td>
+          </tr>
+          <tr>
+            <th>评价人:</th>
+            <td><input type="text" id="text3" name="text[]" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>月度:</th>
+            <td><input type="text" id="text4" name="text[]" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>年度:</th>
+            <td><input type="text" id="text5" name="text[]" class="form-control"></td>
+          </tr>
+         </table>
+         <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
+          
+      </div>
+      </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+</div>
+
+
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function fn(tt){
+       var tr1 = tt.parentNode.parentNode;
+       document.getElementById("text0").value = tr1.cells[0].innerText;
+       document.getElementById("text2").value = tr1.cells[4].innerText;
+       document.getElementById("text1").value = tr1.cells[3].innerText;
+       document.getElementById("text3").value = tr1.cells[7].innerText;
+       document.getElementById("text4").value = tr1.cells[2].innerText;
+       document.getElementById("text5").value = tr1.cells[1].innerText;
+    }
+  $(function(){
+    $("#sub-mod").click(function(){
+      var id = $("#text0").val();
+      var level = $("#level").val();
+      var leader = $("#text3").val();
+      var month  = $("#text4").val();
+      var year = $("#text5").val();
+      var action = "mod";
+      if(leader==""||month==""||year==""){
+        alert("不能为空！");
+        return false;
+      }
+      $.ajax({
+        type:"POST",
+        url:action,
+        dataType:"json",
+        data:{"id":id,"leader":leader,"month":month,"year":year,"level":level},
+        success:function(data){
+          if(data.success==1){
+            alert('编辑成功!');
+            //alert(data.ss);
+            //location.href='Plan_adjustment.html';
+            document.getElementById('form1').submit();
+          }
+          if(data.success==0){ 
+          //alert(data.username);
+          alert("编辑失败！");
+            return false;
+          }
+        }
+      });
+  });
+  });
+</script>

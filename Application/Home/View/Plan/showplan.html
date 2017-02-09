@@ -109,7 +109,11 @@
 
                             <td class=" " width=""> 
                               <label>
+                                <empty name="vo.plan_grade">
+                                暂无评分
+                                <else/>
                                 {$vo.plan_grade}
+                                </empty>
                               </label>                      
                             </td>
                             <td class=" ">

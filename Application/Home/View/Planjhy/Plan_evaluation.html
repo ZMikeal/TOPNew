@@ -1,0 +1,83 @@
+<include file="Public/headerr" /> 
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+              <div class="row">
+              
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}：计划总结提交情况</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div class="table-responsive">
+<form id="Plan_submission" action="{:U('Planjhy/Plan_evaluation')}" method="post" class="form-horizontal">
+                 职位：<select style="width:100px;" name="search">
+                        <option value="3"<if condition="$search eq 3">selected</if>>科员</option>
+                        <option value="4"<if condition="$search eq 4">selected</if>>科长</option>
+                        <option value="5"<if condition="$search eq 5">selected</if>>部长</option>
+                        <option value="7"<if condition="$search eq 7">selected</if>>VSE</option>
+                        <option value="8"<if condition="$search eq 8">selected</if>>项目经理</option>
+                      </select>
+                      <button type="submit">搜索</button>
+                 </form>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">年度</th>                     
+                            <th class="column-title">月度</th>
+                            <th class="column-title">提交人数</th>
+                            <th class="column-title">提交人</th>
+                            <th class="column-title">未提交人数</th>
+                            <th class="column-title">未提交人</th>
+                            <th class="column-title">操作</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <for start="0" end="$date.month" name="j"> 
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$date['year']}
+                            </td>
+                           
+                            <td class=" ">
+                            {$j+1}
+                            </td>
+                             
+                            <td class=" ">
+                            {$intersectsum[$j]}
+                            </td>
+                            <td class=" " width="400px">
+                            {$intersect[$j]}
+                            </td>
+                            <td class=" ">
+                            {$diffsum[$j]}
+                            </td>
+                            <td class=" " width="400px">
+                            {$diff[$j]}
+                            <empty name="diff[$j]">
+                            [ 还没有人填写该月计划！]
+                            </empty>
+                            </td>
+                            <td>
+                          [ <a href="{:U('evaluationshowlist',array('month'=>$j,'level'=>$search))}">查看</a> ]
+                            </td>
+                            </tr>
+                        </for>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+</div>
+<include file="Public/foot" /> 
