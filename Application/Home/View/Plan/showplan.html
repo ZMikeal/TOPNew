@@ -120,7 +120,7 @@
                               <switch name="vo.if_confirm">
                                 <case value="0">待确认</case>
                                 <case value="1">已确认</case>
-                                <case value="-1"><a id="{$vo.id}" href="" class="" onclick="fn(this)" data-toggle="modal"  data-target="#bianji">[ 已退回 ]</a></case>
+                                <case value="-1"><a id="{$vo.id}" href="" type="button" class="btn btn-default btn-sm active" onclick="fn(this)" data-toggle="modal"  data-target="#bianji">已退回</a></case>
                               </switch>
                             </td>
                             <td class="">
@@ -189,6 +189,18 @@
             <th>工作内容及目标:</th>
             <td><input type="text" id="text6" class="form-control"></td>
           </tr>
+          <if condition="$Think.session.admin.user_type eq '专业员工'">
+          <tr>
+            <th>VSE:</th>
+            <td>
+              <select name="vse" id="vse">
+                <volist name="vse" id="vse" >
+                <option value="{$vse}" id="{$vse}">{$vse}</option>
+                </volist>
+              </select>
+            </td>
+          </tr>
+          </if>
          </table>
          <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
           
@@ -197,14 +209,18 @@
       </div><!-- /.modal -->
 </div>
 <script type="text/javascript">
+  var clickTimes = 0;
   function fn(tt){
+       clickTimes = clickTimes + 1;
        var tr1 = tt.parentNode.parentNode;
        var id=tt.id;
-      document.getElementById("text0").value = id;
-       for(var i=1;i<=7;i++)
+       document.getElementById("text0").value = id;
+       for(var i=1;i<7;i++)
        {
             document.getElementById("text"+i).value = tr1.cells[i-1].innerText;
        }
+      var name = tr1.cells[8].innerText;
+      $("#"+name).attr("selected",true);
     }
     $(function(){
     $("#sub-mod").click(function(){
@@ -212,6 +228,7 @@
       var shixiang = $("#text3").val();
       var shijian = $("#text4").val();
       var neirong = $("#text6").val();
+      var vse = $("#vse").val();
       var action = "/TOPNew/plan/confirm";
       if(shixiang=="" || shijian==""|| neirong==""){
         alert("不能为空!");
@@ -221,7 +238,7 @@
         type:"POST",
         url:action,
         dataType:"json",
-        data:{"shixiang":shixiang,"shijian":shijian,"neirong":neirong,"vid":id},
+        data:{"shixiang":shixiang,"shijian":shijian,"neirong":neirong,"vid":id,"vse":vse},
         success:function(data){
           if(data.success==1){
             alert('编辑成功!');

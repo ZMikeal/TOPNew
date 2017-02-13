@@ -32,23 +32,21 @@
 
                   <div class="x_content">
 
-                    <div class="table-responsive"  style="height:650px;">
+                    <div class="table-responsive"  style="">
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title" style="text-align:center;">工作类别</th>
-                            <th class="column-title">工作类型</th>
-                            <th class="column-title">工作事项</th>
-                            <th class="column-title">计划完成时间 </th>
-                            <th class="column-title">权重 </th>
-                            
-                            <th class="column-title">工作内容及目标/交付物 </th>
-                            
-                            <th class="column-title">评价人</th>
-                            <th class="column-title">上级评价 </th>
-                            <th class="column-title">状态 </th>
-                            <th class="column-title">不通过原因 </th>
-                            <th class="column-title">操作 </th>
+                            <th class="column-title" style="text-align:center;" width="8%">工作类别</th>
+                            <th class="column-title" width="5%">工作类型</th>
+                            <th class="column-title" width="15%">工作事项</th>
+                            <th class="column-title" width="8%">计划完成时间 </th>
+                            <th class="column-title" width="5%">权重</th>
+                            <th class="column-title" width="23%">工作内容及目标/交付物 </th>      
+                            <th class="column-title" width="5%">评价人</th>
+                            <th class="column-title" width="8%">上级评价</th>
+                            <th class="column-title" width="5%">状态</th>
+                            <th class="column-title" width="8%">不通过原因</th>
+                            <th class="column-title" width="5%">操作</th>
                           </tr>
                         </thead>
 
@@ -117,6 +115,7 @@
                               </label>
                             </td>
                             <td class=" ">
+                              <input type="hidden" value="{$lev}" id="lev">
                               <a id="{$vo.id}" class="btn btn-default btn-sm active" onclick="fnn(this)">确认</a>
                               <a id="{$vo.id}" class="btn btn-default btn-sm active" href="#" onclick="fn(this)" role="button" data-toggle="modal"  data-target="#bianji">退回</a>
                             </td>
@@ -167,14 +166,14 @@
 <script type="text/javascript">
 function fnn(nn){
        var re=nn.id;
-       //alert(re);
+       var lev = $("#lev").val();
        var action = "/TOPNew/Performance/confirmY";
     if (confirm("确定要确认？")) 
              {      
       $.ajax({
         type:"GET",
         url:action,
-        data:{"vid":re},
+        data:{"vid":re,"lev":lev},
         dataType:"json",
         success:function(data){
           if(data.success==1){  
@@ -196,6 +195,7 @@ $(function(){
     $("#sub-mod").click(function(){
       var confirm = $("#text").val();
       var id = $("#id").val();
+      var lev = $("#lev").val();
       var action = "/TOPNew/Performance/notconfirmY";
       if(confirm==""){
         alert("不能为空!");
@@ -205,7 +205,7 @@ $(function(){
         type:"POST",
         url:action,
         dataType:"json",
-        data:{"confirm":confirm,"id":id},
+        data:{"confirm":confirm,"id":id,"lev":lev},
         success:function(data){
           if(data.success==1){
             alert('成功!');

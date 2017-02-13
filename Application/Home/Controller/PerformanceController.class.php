@@ -65,8 +65,21 @@ class PerformanceController extends BaseController {
       }
       if($level==5)
       {
+
         $this->model=D('planyear_chief');
         $jh = $this->model->field("id,chief_id,chief_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('chief_name')->select();
+        $this->model=D('planyear_staff');
+        $jh_staff = $this->model->field("id,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('staff_name')->select();
+        $this->model=D('planyear_minister');
+        $jh_minister = $this->model->field("id,minister_id,minister_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('minister_name')->select();
+        foreach ($jh_staff as $k => $v) {
+                    $jh_staff[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+                  }
+        $this->assign('jh_staff',$jh_staff);
+        foreach ($jh_minister as $k => $v) {
+                    $jh_minister[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+                  }
+        $this->assign('jh_minister',$jh_minister);
       }
       foreach ($jh as $k => $v) {   //  循环保存每一条值
                   //$map = array();
@@ -118,8 +131,10 @@ class PerformanceController extends BaseController {
     //年度计划确认
     public function PplanY(){
       $tj=I('get.id');
+
       $tj=explode(",", $tj);
-       $le=session('admin.id_level');
+
+      $le=session('admin.id_level');
       if($le==4||$le==7||$le==8)
       {
         $this->model=D('planyear_staff');
@@ -129,15 +144,15 @@ class PerformanceController extends BaseController {
       {
         $lev=I('get.lev');
         if($lev==3){
-          $this->model=D('planmonth_staff');
+          $this->model=D('planyear_staff');
           $name=$this->model->where("id=$tj[0]")->getField('staff_name');
         }
         else if($lev==5){
-          $this->model=D('planmonth_minister');
+          $this->model=D('planyear_minister');
           $name=$this->model->where("id=$tj[0]")->getField('minister_name');
         }
         else{
-          $this->model=D('planmonth_chief');
+          $this->model=D('planyear_chief');
           $name=$this->model->where("id=$tj[0]")->getField('chief_name');
         }
       }
@@ -149,6 +164,7 @@ class PerformanceController extends BaseController {
                 //dump($shuju);exit;
         $this->assign('shuju',$shuju);
         $this->assign('name',$name);
+        $this->assign('lev',$lev);
         $this->display();
     }
    //月度计划确认数据写入
@@ -187,7 +203,16 @@ class PerformanceController extends BaseController {
       }
       if($le==5)
       {
-        $this->model=D('planyear_chief');
+        $lev=I('get.lev');
+        if($lev==3){
+          $this->model=D('planyear_staff');
+        }
+        else if($lev==5){
+          $this->model=D('planyear_minister');
+        }
+        else{
+          $this->model=D('planyear_chief');
+        }
       }
       $resulet=$this->model->where("id=$id")->setField('if_confirm',1);
       $this->ajaxReturn(array('success'=>1),"json");
@@ -237,7 +262,16 @@ class PerformanceController extends BaseController {
       }
       if($le==5)
       {
-        $this->model=D('planyear_chief');
+        $lev=I('post.lev');
+        if($lev==3){
+          $this->model=D('planyear_staff');
+        }
+        else if($lev==5){
+          $this->model=D('planyear_minister');
+        }
+        else{
+          $this->model=D('planyear_chief');
+        }
       }
       $id=$tj['id'];
       if($this->model->create($tj)){

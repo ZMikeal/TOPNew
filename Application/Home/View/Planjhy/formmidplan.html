@@ -155,16 +155,13 @@
           //alert("删除成功!");
           if(data.success==1){  
              alert("删除成功!");
-              // location.reload();//页面跳转问题
-              location.href='formmidplan.html';
+             location.href='formmidplan.html';
           }
           else{
-            //alert(data.success);
-          alert("删除失败！");
-             //location.replace(location);//页面跳转问题
+             alert("删除失败！");
+             location.href='formmidplan.html';
           }
         }
-        //error:function(e){alert(e);}
       });
                 }
           }

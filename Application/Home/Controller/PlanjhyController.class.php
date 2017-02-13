@@ -77,13 +77,11 @@ class PlanjhyController extends BaseController {
       $result=M('info_systime')->where("id=$id1")->delete();
        if($result)
       {
-        $result1['success']=1;
-        //$this->redirect('Planjhy/formmidplan');
-        $this->ajaxReturn($result1,"json");
+        $this->ajaxReturn(array('success'=>1),"json");
       }
       else
       {
-           $this->ajaxReturn(array('success'=>0),"json");
+        $this->ajaxReturn(array('success'=>0),"json");
       }
     }
 

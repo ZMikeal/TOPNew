@@ -383,6 +383,8 @@ class PlanController extends BaseController {
       $id_employee=session('admin.id_employee');
       if($le==3||$le==7)
       {
+        $vse=M('info_item')->order('vse ASC')->getField('vse',true);
+        $this->assign('vse',$vse);
         $this->model=D('planmonth_staff');
         $tj['staff_id']=session('admin.id_employee');
       }
@@ -477,6 +479,10 @@ class PlanController extends BaseController {
     $tj['plan_name']=I('post.shixiang');
     $tj['plan_content']=I('post.neirong');
     $tj['plan_closingdate']=I('post.shijian');
+    if(session('admin.user_type')=='专业员工')
+    {
+      $tj['plan_leader']=I('post.vse');
+    }
     $le=session('admin.id_level');
       if($le==3||$le==7)
       {

@@ -11,7 +11,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>年度计划确认</h2>
+                    <h2>{$Think.session.admin.user_department}:年度计划确认</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -32,7 +32,7 @@
 
                   <div class="x_content">
 
-                    <div class="table-responsive"  style="height:650px;">
+                    <div class="table-responsive"  style="">
 
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                       <empty name="jh">
@@ -42,19 +42,18 @@
                        <thead>
                           <tr class="headings">
                             
-                            <th class="column-title">员工姓名</th>
-                             <th class="column-title">员工工号</th>
-                            <th class="column-title">年</th>
-                            <th class="column-title">工作事项</th>
-                            
-                            <th class="column-title">操作 </th>
+                            <th class="column-title" width="6%">员工姓名</th>
+                             <th class="column-title" width="6%">员工工号</th>
+                            <th class="column-title" width="6%">年</th>
+                            <th class="column-title" width="30%">工作事项</th>
+                            <th class="column-title" width="5%">操作</th>
                           </tr>
                         </thead>
 
                         <tbody>
                         <volist name="jh" id="vo">
                           <tr class="even pointer">
-                            <td class=" " width="200px;">
+                            <td class=" ">
                               <label>
                                 <switch name="Think.session.admin.id_level">
                                 <case value="3">{$vo.staff_id}</case>
@@ -81,7 +80,7 @@
                                 {$vo.year}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " style="text-align:left">
                               <label>
                                 {$vo.plan_name}
                               </label>
@@ -104,7 +103,177 @@
                 </div>
               </div>
     </div>
+    <if condition="$Think.session.admin.id_level eq 5">
+    <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}:科员年度计划确认</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
 
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <empty name="jh_staff">
+                       暂无计划可以确认！
+                      </empty>
+                      <notempty name="jh_staff">
+                       <thead>
+                          <tr class="headings">
+                            
+                            <th class="column-title" width="6%">员工姓名</th>
+                             <th class="column-title" width="6%">员工工号</th>
+                            <th class="column-title" width="6%">年</th>
+                            <th class="column-title" width="30%">工作事项</th>
+                            <th class="column-title" width="5%">操作</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="jh_staff" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                    {$vo.staff_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                    {$vo.staff_id}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" " style="text-align:left">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            
+                            <td class=" " width="200px;">
+                              <label>
+            <a href="{:U('Performance/PplanY',array('id'=>$vo['id'],'lev'=>'3'))}">[ 确认计划 ]</a>
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        </notempty>
+                      </table>
+                     <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </div>
+
+    <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}:副部长年度计划确认</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <empty name="jh_minister">
+                       暂无计划可以确认！
+                      </empty>
+                      <notempty name="jh_minister">
+                       <thead>
+                          <tr class="headings">
+                            
+                            <th class="column-title" width="6%">员工姓名</th>
+                             <th class="column-title" width="6%">员工工号</th>
+                            <th class="column-title" width="6%">年</th>
+                            <th class="column-title" width="30%">工作事项</th>
+                            <th class="column-title" width="5%">操作</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="jh_minister" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                   {$vo.minister_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                   {$vo.minister_id}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" " style="text-align:left">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            
+                            <td class=" " width="200px;">
+                              <label>
+            <a href="{:U('Performance/PplanY',array('id'=>$vo['id'],'lev'=>'5'))}">[ 确认计划 ]</a>
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        </notempty>
+                      </table>
+                     <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </div>
+    </if>
 
 </div>
 <include file="Public/foot" /> 
