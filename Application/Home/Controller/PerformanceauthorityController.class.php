@@ -29,9 +29,17 @@ class PerformanceController extends BaseController {
       
         $this->model=D('planmonth_chief');
         $jh = $this->model->field("id,chief_id,chief_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('chief_name')->select();
+        
+        $this->model=D('planmonth_minister');
+        $jh2 = $this->model->field("id,minister_id,minister_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->order('minister_name')->group('minister_name')->select();
+      
         foreach ($jh1 as $k => $v) {   //  循环保存每一条值
                   //$map = array();
                   $jh1[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+                }
+        foreach ($jh2 as $k => $v) {   //  循环保存每一条值
+                  //$map = array();
+                  $jh2[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
                 }
       }
       foreach ($jh as $k => $v) {   //  循环保存每一条值
@@ -41,6 +49,7 @@ class PerformanceController extends BaseController {
       //dump($jh);exit;
       $this->assign('jh',$jh);
       $this->assign('jh1',$jh1);
+      $this->assign('jh2',$jh2);
       $this->display();
     }
     public function PlanconfirmY(){
@@ -70,6 +79,7 @@ class PerformanceController extends BaseController {
       $tj=I('get.id');
       $tj=explode(",", $tj);
        $le=session('admin.id_level');
+       dump($le);exit;
       if($le==4||$le==7)
       {
         $this->model=D('planmonth_staff');
@@ -78,15 +88,19 @@ class PerformanceController extends BaseController {
       if($le==5)
       {
         $lev=I('get.lev');
+        dump($lev);exit;
         if($lev==3){
           $this->model=D('planmonth_staff');
           $name=$this->model->where("id=$tj[0]")->getField('staff_name');
         }
-        else
-        {
-        $this->model=D('planmonth_chief');
-        $name=$this->model->where("id=$tj[0]")->getField('chief_name');
-      }
+        elseif($lev==5){
+          $this->model=D('planmonth_minister');
+          $name=$this->model->where("id=$tj[0]")->getField('minister_name');
+        }
+        else{
+          $this->model=D('planmonth_chief');
+          $name=$this->model->where("id=$tj[0]")->getField('chief_name');
+        }
       }
       //dump($tj);exit;
       foreach ($tj as $k => $v) {   //  循环保存每一条值
@@ -96,6 +110,7 @@ class PerformanceController extends BaseController {
                 //dump($shuju);exit;
         $this->assign('shuju',$shuju);
         $this->assign('name',$name);
+        $this->assign('lev',$lev);
         $this->display();
     }
     public function PplanY(){

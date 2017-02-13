@@ -409,7 +409,127 @@
                         </tbody>
                         </notempty>
                       </table>
-                      </div>
+                      </div></div></div>
+
+
+                      <div class="x_panel">
+                  <div class="x_title">
+                    <h2>副部长月度绩效列表</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+                      年度：<select style="width:100px;" name="searchhh[]">
+                        <option <if condition="$searchhh[0] eq 2017">selected</if>>2017</option>
+                        <option <if condition="$searchhh[0] eq 2016">selected</if>>2016</option>
+                      </select>
+                      月度：<select style="width:100px;" name="searchhh[]">
+                        <option <if condition="$searchhh[1] eq 1">selected</if>>1</option>
+                        <option <if condition="$searchhh[1] eq 2">selected</if>>2</option>
+                        <option <if condition="$searchhh[1] eq 3">selected</if>>3</option>
+                        <option <if condition="$searchhh[1] eq 4">selected</if>>4</option>
+                        <option <if condition="$searchhh[1] eq 5">selected</if>>5</option>
+                        <option <if condition="$searchhh[1] eq 6">selected</if>>6</option>
+                        <option <if condition="$searchhh[1] eq 7">selected</if>>7</option>
+                        <option <if condition="$searchhh[1] eq 8">selected</if>>8</option>
+                        <option <if condition="$searchhh[1] eq 9">selected</if>>9</option>
+                        <option <if condition="$searchhh[1] eq 10">selected</if>>10</option>
+                        <option <if condition="$searchhh[1] eq 11">selected</if>>11</option>
+                        <option <if condition="$searchhh[1] eq 12">selected</if>>12</option>
+                      </select>
+                      <if condition="$Think.session.admin.user_job neq '副部长'">
+                      </if>
+                      <button type="submit">搜索</button>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <empty name="jh2">
+                       <p>暂无计划！</p>
+                      </empty>
+                      <notempty name="jh2">
+                       <thead>
+                          <tr class="headings">
+                            
+                            <th class="column-title">员工姓名</th>
+                            <th class="column-title">员工工号</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
+                            <th class="column-title">工作事项</th>
+                            <th class="column-title">总分</th>
+                            <th class="column-title">操作 </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="jh2" id="vo">
+                          <tr class="even pointer">
+                            <td class=" " width="200px;">
+                              <label>                             
+                                {$vo.minister_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.minister_id}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                <empty name="vo[plan_grade]">
+                                暂未评分！
+                                </empty>
+                                <notempty name="vo[plan_grade]">
+                                {$vo.plan_grade}
+                                </notempty>
+                              </label>
+                            </td>
+                            <td class=" " width="200px;">
+                              <label>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'5','hrf'=>'PlangradelistM'))}">[ 查看 ]</a>
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        </tbody>
+                        </notempty>
+                      </table>
+                      </div></div>
 </if>
                      <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
                     </div>

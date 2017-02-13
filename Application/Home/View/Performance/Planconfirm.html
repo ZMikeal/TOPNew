@@ -66,7 +66,7 @@
                                 </switch>
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
                                 <switch name="Think.session.admin.id_level">
                                 <case value="3">{$vo.staff_id}</case>
@@ -77,17 +77,17 @@
                                 </switch>
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
                                 {$vo.year}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
                                 {$vo.month}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="300px;">
                               <label>
                                 {$vo.plan_name}
                               </label>
@@ -159,22 +159,22 @@
                                {$vo.staff_name}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
-                               {$vo.chief_id}
+                               {$vo.staff_id}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
                                 {$vo.year}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="200px;">
                               <label>
                                 {$vo.month}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="300px;">
                               <label>
                                 {$vo.plan_name}
                               </label>
@@ -183,6 +183,94 @@
                             <td class=" " width="200px;">
                               <label>
             <a href="{:U('Performance/Pplan',array('id'=>$vo['id'],'lev'=>'3'))}">[ 确认计划 ]</a>
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        </notempty>
+                      </table>
+                     <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
+                    </div>
+                  </div></div>
+
+
+                  <div class="x_panel">
+                  <div class="x_title">
+                    <h2>副部长月度计划确认</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <empty name="jh2">
+                       暂无计划可以确认！
+                      </empty>
+                      <notempty name="jh2">
+                       <thead>
+                          <tr class="headings">
+                            
+                            <th class="column-title">员工姓名</th>
+                            <th class="column-title">员工工号</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
+                            <th class="column-title">工作事项</th>
+                            
+                            <th class="column-title">操作 </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="jh2" id="vo">
+                          <tr class="even pointer">
+                            <td class=" " width="200px;">
+                              <label>
+                               {$vo.minister_name}
+                              </label>
+                            </td>
+                            <td class=" " width="200px;">
+                              <label>
+                               {$vo.minister_id}
+                              </label>
+                            </td>
+                            <td class=" " width="200px;">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" " width="200px;">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                            <td class=" " width="300px;">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            
+                            <td class=" " width="200px;">
+                              <label>
+            <a href="{:U('Performance/Pplan',array('id'=>$vo['id'],'lev'=>'5'))}">[ 确认计划 ]</a>
                               </label>
                             </td>
                             

@@ -55,7 +55,7 @@
                         <tbody>
                         <volist name="jh" id="vo">
                           <tr class="even pointer">
-                            <td class=" " width="200px;">
+                            <td class=" " width="8%">
                               <label>
                                 <switch name="Think.session.admin.id_level">
                                 <case value="3">{$vo.staff_name}</case>
@@ -66,7 +66,7 @@
                                 </switch>
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 <switch name="Think.session.admin.id_level">
                                 <case value="3">{$vo.staff_id}</case>
@@ -77,22 +77,22 @@
                                 </switch>
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 {$vo.year}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 {$vo.month}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="25%">
                               <label>
                                 {$vo.plan_name}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 <empty name="vo[plan_grade]">
                                 暂未评分！
@@ -102,9 +102,9 @@
                                 </notempty>
                               </label>
                             </td>
-                            <td class=" " width="200px;">
+                            <td class=" " width="8%">
                               <label>
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id']))}">[ 评分 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'hrf'=>'PlangradeM'))}">[ 评分 ]</a>
                               </label>
                             </td>
                             
@@ -165,32 +165,32 @@
                         <tbody>
                         <volist name="jh1" id="vo">
                           <tr class="even pointer">
-                            <td class=" " width="200px;">
+                            <td class=" " width="8%">
                               <label>
                                {$vo.staff_name}                              
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                {$vo.staff_id}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 {$vo.year}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 {$vo.month}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="25%">
                               <label>
                                 {$vo.plan_name}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " width="8%">
                               <label>
                                 <empty name="vo[plan_grade]">
                                 暂未评分！
@@ -200,9 +200,107 @@
                                 </notempty>
                               </label>
                             </td>
-                            <td class=" " width="200px;">
+                            <td class=" " width="8%">
                               <label>
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3'))}">[ 评分 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3','hrf'=>'PlangradeM'))}">[ 评分 ]</a>
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        </notempty>
+                      </table>
+                     <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>副部长月度计划评分</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <empty name="jh2">
+                       暂无计划可以评分！
+                      </empty>
+                      <notempty name="jh2">
+                       <thead>
+                          <tr class="headings">
+                            
+                            <th class="column-title">员工姓名</th>
+                            <th class="column-title">员工工号</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
+                            <th class="column-title">工作事项</th>
+                            <th class="column-title">总分</th>
+                            <th class="column-title">操作 </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="jh2" id="vo">
+                          <tr class="even pointer">
+                            <td class=" " width="8%">
+                              <label>
+                               {$vo.minister_name}                              
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+                               {$vo.minister_id}
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                            <td class=" " width="25%">
+                              <label>
+                                {$vo.plan_name}
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+                                <empty name="vo[plan_grade]">
+                                暂未评分！
+                                </empty>
+                                <notempty name="vo[plan_grade]">
+                                {$vo.plan_grade}
+                                </notempty>
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'5','hrf'=>'PlangradeM'))}">[ 评分 ]</a>
                               </label>
                             </td>
                             
