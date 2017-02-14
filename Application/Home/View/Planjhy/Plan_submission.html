@@ -12,7 +12,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{$Think.session.admin.user_department}：计划提交情况</h2>
+                    <h2>{$Think.session.admin.user_department}：月度计划提交情况</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -65,7 +65,7 @@
                             {$diff[$j]}
                             </td>
                             <td>
-                          [ <a href="{:U('submissionshowlist',array('month'=>$j,'level'=>$search))}">查看</a> ]
+                          [ <a href="{:U('submissionshowlist',array('month'=>$j,'year'=>0,'level'=>$search))}">查看</a> ]
                             </td>
                             </tr>
                         </for>

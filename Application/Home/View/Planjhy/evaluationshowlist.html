@@ -15,7 +15,7 @@
                             <case value="5">部长</case>
                             <case value="7">VSE</case>
                             <case value="8">项目经理</case></default>
-                            </switch> ：计划列表</h2>
+                            </switch> ：月度计划列表</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -43,14 +43,14 @@
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                        <thead>
                           <tr class="headings">
-                            <th class="column-title"></th>
-                            <th class="column-title">员工姓名</th>
-                            <th class="column-title">员工工号</th>
-                            <th class="column-title">年</th>
-                            <th class="column-title">月</th>
-                            <th class="column-title">工作事项</th>
-                            <th class="column-title">自我评价</th>
-                            <th class="column-title">领导评分</th>
+                            <th class="column-title" width="5%">序号</th>
+                            <th class="column-title" width="5%">员工姓名</th>
+                            <th class="column-title" width="5%">员工工号</th>
+                            <th class="column-title" width="5%">年</th>
+                            <th class="column-title" width="8%">月</th>
+                            <th class="column-title" width="30%">工作事项</th>
+                            <th class="column-title" width="8%">自我评价</th>
+                            <th class="column-title" width="5%">领导评分</th>
                           </tr>
                         </thead>
 
@@ -92,7 +92,7 @@
                                 {$vo.month}
                               </label>
                             </td>
-                            <td class=" ">
+                            <td class=" " style="text-align:left">
                               <label>
                                 {$vo.plan_name}
                               </label>

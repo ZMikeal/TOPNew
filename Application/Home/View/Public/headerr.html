@@ -61,8 +61,22 @@
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-home"></i> 计划管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{:U('Planjhy/Plan_submission')}">计划提交情况</a></li>
-                      <li><a href="{:U('Planjhy/Plan_evaluation')}">计划总结情况</a></li>
+                      <li><a>计划提交情况<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Planjhy/Plan_submission')}">月度计划提交情况</a>
+                            </li>
+                            <li><a href="{:U('Planjhy/Plan_submissionY')}">年度计划提交情况</a>
+                            </li>
+                        </ul>
+                      </li>
+                      <li><a>计划总结情况<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Planjhy/Plan_evaluation')}">月度计划总结情况</a>
+                            </li>
+                            <li><a href="{:U('Planjhy/Plan_evaluationY')}">年度计划总结情况</a>
+                            </li>
+                        </ul>
+                      </li>
                       <li><a href="{:U('index/index2')}">工作类别管理</a></li>
                       <li><a href="{:U('Planjhy/Plan_adjustment')}">清单调整</a></li>
                       <li><a href="{:U('index/index2')}">成绩管理</a></li>

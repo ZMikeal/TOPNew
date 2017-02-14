@@ -18,7 +18,7 @@
                   <div class="x_content">
 
                     <div class="table-responsive">
-<form id="Plan_submission" action="{:U('Planjhy/Plan_evaluation')}" method="post" class="form-horizontal">
+<form id="Plan_submission" action="{:U('Planjhy/Plan_evaluationY')}" method="post" class="form-horizontal">
                  职位：<select style="width:100px;" name="search">
                         <option value="3"<if condition="$search eq 3">selected</if>>科员</option>
                         <option value="4"<if condition="$search eq 4">selected</if>>科长</option>
@@ -32,7 +32,6 @@
                         <thead>
                           <tr class="headings">
                             <th class="column-title">年度</th>                     
-                            <th class="column-title">月度</th>
                             <th class="column-title">提交人数</th>
                             <th class="column-title">提交人</th>
                             <th class="column-title">未提交人数</th>
@@ -42,33 +41,29 @@
                         </thead>
 
                         <tbody>
-                        <for start="0" end="$date.month" name="j"> 
+                        <for start="2016" end="$date.year" name="j"> 
                           <tr class="even pointer">
-                            <td class=" ">
-                            {$date['year']}
-                            </td>
-                           
                             <td class=" ">
                             {$j+1}
                             </td>
                              
                             <td class=" ">
-                            {$intersectsum[$j]}
+                            {$intersectsum[$j+1]}
                             </td>
                             <td class=" " width="400px">
-                            {$intersect[$j]}
+                            {$intersect[$j+1]}
                             </td>
                             <td class=" ">
-                            {$diffsum[$j]}
+                            {$diffsum[$j+1]}
                             </td>
                             <td class=" " width="400px">
-                            {$diff[$j]}
-                            <empty name="diff[$j]">
+                            {$diff[$j+1]}
+                            <empty name="diff[$j+1]">
                             [ 还没有人填写该月计划！]
                             </empty>
                             </td>
                             <td>
-                          [ <a href="{:U('evaluationshowlist',array('month'=>$j,'level'=>$search))}">查看</a> ]
+                          [ <a href="{:U('evaluationshowlist',array('year'=>$j+1,'level'=>$search))}">查看</a> ]
                             </td>
                             </tr>
                         </for>

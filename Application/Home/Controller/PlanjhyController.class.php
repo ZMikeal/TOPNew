@@ -367,7 +367,7 @@ class PlanjhyController extends BaseController {
     public function usermod(){
       $tj1['id']=I('post.id');
       $this->model=D('info_admin');
-      $result=$this->model->where($tj)->find();
+      //$result=$this->model->where($tj)->find();
       
         $tj2['user_office']=I('post.office');
         $tj2['user_job']=I('post.job');
@@ -430,7 +430,7 @@ class PlanjhyController extends BaseController {
         $result1['success']=1;
         $this->ajaxReturn($result1,"json");
     }
-    //计划提交情况查看
+    //月度计划提交情况查看
     public function Plan_submission(){
       $search=I('post.search');
       if($search!=""){
@@ -483,6 +483,56 @@ class PlanjhyController extends BaseController {
       //dump($intersect);exit;
       $this->display();
     }
+    //年度计划提交情况查看
+    public function Plan_submissionY(){
+      $search=I('post.search');
+      if($search!=""){
+        $tj['id_level']=$search;
+      }
+      else{
+        $tj['id_level']=3;
+        $search=3;
+      }
+      $tj['user_department']=session('admin.user_department');
+      $all=M('info_admin')->where($tj)->where("if_delete=0")->getField('username',true);
+
+       if($tj['id_level']==3||$tj['id_level']==7){$this->model=M('planyear_staff'); $name='staff_name';}
+       if($tj['id_level']==4||$tj['id_level']==8){$this->model=M('planyear_chief'); $name='chief_name';}
+       if($tj['id_level']==5){$this->model=M('planyear_minister'); $name='minister_name';}
+
+      unset($tj['id_level']);
+      unset($tj['user_department']);
+      $tj['department']=session('admin.user_department');
+      $tj['year']=date('Y');
+      for($i=2017;$i<=$tj['year'];$i++)
+      {
+        $submitted[$i]=array_unique($this->model->where($tj)->getField("$name",true));
+
+        $intersect[$i]=array_intersect($all,$submitted[$i]);
+        $intersectsum[$i]=count($intersect[$i]);
+
+        $diff[$i]=array_diff($all,$intersect[$i]);
+        $diffsum[$i]=count($diff[$i]);
+
+        $intersect[$i]=implode(',', $intersect[$i]);
+        $diff[$i]=implode(',', $diff[$i]);
+
+        if($diffsum[$i]==""&&$diff[$i]=="")
+        {
+          $diff[$i]=implode(',', $all);
+          $diffsum[$i]=count($all);
+        }
+      }
+      $date['year']=date('Y');
+      $this->assign('intersect',$intersect);
+      $this->assign('intersectsum',$intersectsum);
+      $this->assign('diff',$diff);
+      $this->assign('diffsum',$diffsum);
+      $this->assign('date',$date);
+      $this->assign('search',$search);
+      //dump($intersect);exit;
+      $this->display();
+    }
     public function submissionshowlist(){
       $tj['id_level']=I('get.level');
       $tj['user_department']=session('admin.user_department');
@@ -513,7 +563,36 @@ class PlanjhyController extends BaseController {
       $this->assign('jh',$jh);
       $this->display();
     }
-    //工作总结查看
+    public function submissionshowlistY(){
+      $tj['id_level']=I('get.level');
+      $tj['user_department']=session('admin.user_department');
+      $all=M('info_admin')->where($tj)->where("if_delete=0")->getField('username',true);
+      $all=implode("','", $all);
+      $lev=$tj['id_level'];
+      $tj1['year']=I('get.year');
+      $tj1['department']=session('admin.user_department');
+      if($lev==3||$lev==7){
+        $this->model=M('planyear_staff');
+        $jh = $this->model->field("if_confirm,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(if_confirm) as if_confirm")->where($tj1)->where("staff_name in ('".$all."')")->order('staff_id DESC')->group('staff_name')->select();
+      }
+      if($tj['id_level']==4||$tj['id_level']==8){
+        $this->model=M('planyear_chief'); 
+        $jh = $this->model->field("if_confirm,chief_id,chief_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(if_confirm) as if_confirm")->where($tj1)->where("chief_name in ('".$all."')")->order('chief_id DESC')->group('chief_name')->select();
+      }
+      if($tj['id_level']==5){
+        $this->model=M('planyear_minister'); 
+        $jh = $this->model->field("if_confirm,minister_id,minister_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(if_confirm) as if_confirm")->where($tj1)->where("minister_name in ('".$all."')")->order('minister_id DESC')->group('minister_name')->select();
+      }
+      foreach ($jh as $k => $v) {
+        $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+        $a=array('0'=>'待确认','1'=>'已确认','-1'=>'已退回',','=>'<br>');
+        $jh[$k]['if_confirm']=strtr($v['if_confirm'],$a);
+      }
+      $this->assign('lev',$lev);
+      $this->assign('jh',$jh);
+      $this->display();
+    }
+    //月度工作总结查看
     public function Plan_evaluation(){
       $search=I('post.search');
       if($search!=""){
@@ -566,8 +645,60 @@ class PlanjhyController extends BaseController {
       //dump($intersect);exit;
       $this->display();
     }
+    //年度工作总结查看
+    public function Plan_evaluationY(){
+      $search=I('post.search');
+      if($search!=""){
+        $tj['id_level']=$search;
+      }
+      else{
+        $tj['id_level']=3;
+        $search=3;
+      }
+      $tj['user_department']=session('admin.user_department');
+      $all=M('info_admin')->where($tj)->where("if_delete=0")->getField('username',true);
+
+       if($tj['id_level']==3||$tj['id_level']==7){$this->model=M('planyear_staff'); $name='staff_name';}
+       if($tj['id_level']==4||$tj['id_level']==8){$this->model=M('planyear_chief'); $name='chief_name';}
+       if($tj['id_level']==5){$this->model=M('planyear_minister'); $name='minister_name';}
+
+      unset($tj['id_level']);
+      unset($tj['user_department']);
+      $tj['department']=session('admin.user_department');
+      $tj['year']=date('Y');
+      for($i=2017;$i<=$tj['year'];$i++)
+      {
+        $submitted[$i]=array_unique($this->model->where($tj)->getField("$name",true));
+        $intersect[$i]=array_intersect($all,$submitted[$i]);
+        $planself_submitted[$i]=array_unique($this->model->where($tj)->where("Plan_sum!=''")->getField("$name",true));
+        $planself_intersect[$i]=array_intersect($intersect[$i],$planself_submitted[$i]);
+        $planself_intersectsum[$i]=count($planself_intersect[$i]);
+        $planself_diff[$i]=array_diff($intersect[$i],$planself_intersect[$i]);
+        $planself_diffsum[$i]=count($planself_diff[$i]);
+
+        $planself_intersect[$i]=implode(',', $planself_intersect[$i]);
+        $planself_diff[$i]=implode(',', $planself_diff[$i]);
+
+        if($planself_intersect[$i]==""&&$planself_diff[$i]=="")
+        {
+          $planself_diff[$i]=implode(',', $intersect[$i]);
+          $planself_diffsum[$i]=count($intersect[$i]);
+        }
+      }
+      $date['year']=date('Y');
+      $this->assign('intersect',$planself_intersect);
+      $this->assign('intersectsum',$planself_intersectsum);
+      $this->assign('diff',$planself_diff);
+      $this->assign('diffsum',$planself_diffsum);
+      $this->assign('date',$date);
+      $this->assign('search',$search);
+      //dump($intersect);exit;
+      $this->display();
+    }
     public function evaluationshowlist(){
       $tj['id_level']=I('get.level');
+      //$tj['id_level1']=I('get.year');
+      //dump($tj);exit;
       $tj['user_department']=session('admin.user_department');
       $all=M('info_admin')->where($tj)->where("if_delete=0")->getField('username',true);
       $all=implode("','", $all);
@@ -586,6 +717,36 @@ class PlanjhyController extends BaseController {
       if($tj['id_level']==5){
         $this->model=M('planmonth_minister'); 
         $jh = $this->model->field("plan_sum,plan_grade,minister_id,minister_name,year,month,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_sum) as plan_sum,group_concat(plan_grade) as plan_grade")->where($tj1)->where("minister_name in ('".$all."')")->where("plan_sum!=''")->order('minister_id desc')->group('minister_name')->select();
+      }
+      foreach ($jh as $k => $v) {
+        $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+        $a=array('0'=>'待确认','1'=>'已确认','-1'=>'已退回',','=>'<br>');
+        $jh[$k]['plan_sum']=strtr($v['plan_sum'],$a);
+        $jh[$k]['plan_grade']=strtr($v['plan_grade'],$a);
+      }
+      $this->assign('lev',$lev);
+      $this->assign('jh',$jh);
+      $this->display();
+    }
+     public function evaluationshowlistY(){
+      $tj['id_level']=I('get.level');
+      $tj['user_department']=session('admin.user_department');
+      $all=M('info_admin')->where($tj)->where("if_delete=0")->getField('username',true);
+      $all=implode("','", $all);
+      $lev=$tj['id_level'];
+      $tj1['year']=I('get.year');
+      $tj1['department']=session('admin.user_department');
+      if($lev==3||$lev==7){
+        $this->model=M('planyear_staff');
+        $jh = $this->model->field("plan_sum,plan_grade,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_sum) as plan_sum,group_concat(plan_grade) as plan_grade")->where($tj1)->where("staff_name in ('".$all."')")->where("plan_sum!=''")->order('staff_id desc')->group('staff_name')->select();
+      }
+      if($tj['id_level']==4||$tj['id_level']==8){
+        $this->model=M('planyear_chief'); 
+        $jh = $this->model->field("plan_sum,plan_grade,chief_id,chief_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_sum) as plan_sum,group_concat(plan_grade) as plan_grade")->where($tj1)->where("chief_name in ('".$all."')")->where("plan_sum!=''")->order('chief_id desc')->group('chief_name')->select();
+      }
+      if($tj['id_level']==5){
+        $this->model=M('planyear_minister'); 
+        $jh = $this->model->field("plan_sum,plan_grade,minister_id,minister_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(plan_sum) as plan_sum,group_concat(plan_grade) as plan_grade")->where($tj1)->where("minister_name in ('".$all."')")->where("plan_sum!=''")->order('minister_id desc')->group('minister_name')->select();
       }
       foreach ($jh as $k => $v) {
         $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
