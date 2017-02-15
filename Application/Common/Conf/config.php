@@ -19,4 +19,24 @@ return array(
         'use_trans_sid'       =>  1,                               //跨页传递
         'use_only_cookies'    =>  0,                               //是否只开启基于cookies的session的会话方式
     ),
+
+//***********************************表单命令**********************************
+        // 'TOKEN_ON'=>true,
+        // 'TOKEN_NAME'=>'__hash__',
+        // 'TOKEN_TYPE'=>'md5',
+        // 'TOKEN_RESET'=>true,
 );
+
+
+
+// return array(
+//  //'module_init'=>('app\\common\\behavior\\Token'),
+//  'view_filter'=>array('Behavior\TokenBuildBehavior'),
+//  //'app_end'=>['app\\common\\behavior\\Token'],
+//  'token'=>array(
+//         'token_on'=>true,
+//         'token_name'=>'__hash__',
+//         'token_on'=>'md5',
+//         'token_on'=>true,
+//             )
+// );

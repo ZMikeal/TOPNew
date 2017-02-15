@@ -208,15 +208,17 @@ function form(){
                 url:"/TOPNew/Performance/addgradeM",
                 data:$('#subform').serialize(),// 你的formid
                 async: false,
-                error: function(request) {
-                    alert("Connection error");
-                },
                 success: function(data) {
                     if(data.success==1){
                     alert('成功!');
                     window.location.reload();
                     //这里直接加跳转不行吗？？？
                     //window.location.href = '/TOPNew/Performance/PlangradelistM.html';
+                  }
+                  else
+                  {
+                    alert('失败!');
+                    window.location.reload();
                   }
                 }
             });

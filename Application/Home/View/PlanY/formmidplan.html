@@ -161,7 +161,7 @@
                          <input type="text" class="data" name="wanchengriqi[]" placeholder="First Name" aria-describedby="inputSuccess2Status2" value="{$nljs[$j-11].plan_closingdate}">                       
                             </td>
                             <td class=" ">
-                              <input type="text" name="quanzhong[]" style="width:50px;" maxlength="3" id="quanzhong[]" value="{$nljs[$j-11].plan_weight}">
+                              <input type="text" name="quanzhong[]" style="width:50px;" maxlength="3" id="quanzhong[]" value="{$nljs[$j-11].plan_weight}"2>
                             </td>
                             <td class=" ">
                               <textarea name="gongzuoneirong[]" id="gongzuoneirong[]" placeholder="" style="width:300px; ">{$nljs[$j-11].plan_content}</textarea>
@@ -199,7 +199,7 @@
                         </for>
                         </tbody>
                       </table>
-                      <input class="btn btn-success" type="button" value="提交" onclick="fn()" style="margin-left:40%;width:10%;">
+                      <input class="btn btn-success" type="button" value="提交" id="bn" onclick="fn()" style="margin-left:40%;width:10%;">
                   </div>
                   </div>
   </if>
@@ -408,7 +408,7 @@
                         </for>
                         </tbody>
                       </table>
-                      <input class="btn btn-success" type="button" value="提交" onclick="fn()" style="margin-left:40%;width:10%;">
+                      <input class="btn btn-success" type="button" value="提交" id="bn" onclick="fn()" style="margin-left:40%;width:10%;">
                   
                   </notempty>
                   </div></div>
@@ -614,7 +614,7 @@
                         </for>
                         </tbody>
                       </table>
-                      <input class="btn btn-success" type="button" value="提交" onclick="fn()" style="margin-left:40%;width:10%;">
+                      <input class="btn btn-success" type="button" value="提交" id="bn" onclick="fn()" style="margin-left:40%;width:10%;">
                   
                   </notempty>
                   </div></div>
@@ -677,6 +677,7 @@
        if(zongquanzhong==100)
        {
         //alert(xx[1]);
+        document.getElementById("bn").disabled = "disabled";
         document.getElementById("postForm").submit();
        }
       }

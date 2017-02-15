@@ -251,7 +251,7 @@
                           </for>
                       </tbody>
                       </table>
-                       <input class="btn btn-success" type="button" value="提交" onclick="fn1()" style="margin-left:40%;width:10%;">
+                       <input class="btn btn-success" type="button" value="提交" id="bu1" onclick="fn1()" style="margin-left:40%;width:10%;">
                       </div></div>
 </if>
 <if condition="$Think.session.admin.id_level neq 5">
@@ -467,7 +467,7 @@
                           </for>    
                      </tbody>
                       </table>
-                       <input class="btn btn-success" type="button" value="提交" onclick="fn()" style="margin-left:40%;width:10%;">
+                       <input class="btn btn-success" type="button" value="提交" id="bu" onclick="fn()" style="margin-left:40%;width:10%;">
                   </notempty>
                       
                     </div>
@@ -477,7 +477,7 @@
 </div>
 </if>
 </div>
-</div>
+</form>
                <include file="Public/foot" /> 
 <script type="text/javascript">
   function fn()
@@ -573,6 +573,7 @@
        if(zongquanzhong==100&&zongquanzhong2==10)
        {
         //alert(xx[1]);
+        document.getElementById("bu").disabled = "disabled";
         document.getElementById("postForm").submit();
        }
       }
@@ -649,6 +650,7 @@
        if(zongquanzhong==100&&zongquanzhong1==10)
        {
         //alert(xx[1]);
+        document.getElementById("bu1").disabled = "disabled";
         document.getElementById("postForm").submit();
        }
       }

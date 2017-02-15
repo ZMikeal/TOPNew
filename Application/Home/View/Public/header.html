@@ -109,16 +109,7 @@
 
 
 
-                    <!-- <if condition="$Think.session.admin.id_level neq 8"> 
-                    <li><a>绩效评分<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('index/index1')}">月度绩效</a>
-                            </li>
-                            <li><a href="{:U('index/index1')}">年度绩效</a>
-                            </li>
-                          </ul>
-                    </li>
-                    </if> -->
+                   
                     <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
@@ -131,10 +122,24 @@
                             </li>
                           </ul>
                     </li>
+                    <if condition="$Think.session.admin.id_level eq 5"> 
+                    <li><a>成绩提交<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a>
+                              </li>
+                          <!-- <ul class="nav child_menu">
+                              <li><a href="{:U('index/index1')}">月度绩效</a>
+                              </li>
+                              <li><a href="{:U('index/index1')}">年度绩效</a>
+                              </li>
+                            </ul> -->
                     </ul>
+                    </li>
+                    </if>
+                  </ul>
                   </li>
                   </if>
-
+                  
                   <!-- 项目经理兼职 -->
                   <if condition="$Think.session.admin.if_authority eq 2">                
                   <li><a><i class="fa fa-edit"></i> 绩效总评 [经理授权] <span class="fa fa-chevron-down"></span></a>

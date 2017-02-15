@@ -1,0 +1,73 @@
+<include file="Public/header" /> 
+
+<div class="right_col" role="main">
+  <div class="row">
+  <h3>{$Think.session.admin.user_department}月度成绩</h3>
+  <hr/>
+  <div class="row top_tiles">
+         <for start='1' end='13'>
+              <div class="animated flipInY col-lg-3 col-md-4 col-sm-6 col-xs-12" style="width:30%;margin-left:2.3%;margin-top:1%;">
+                <div class="tile-stats" style="height:200px;">
+                  <div class="icon">
+                    <if condition="$data[$i] eq ''">
+                      <if condition="$Think.session.admin.month_sys eq $i">
+                      <i class="fa fa-sort-amount-desc" style="margin-top:30px; float:left; margin-left:-10px;"></i>
+                      </div>
+                      <div class="count">{$i}月</div>
+                      <h3>请及时提交本月分数正式版</h3>
+                      <hr>
+                      <p>部门总人数：{$all[$i]}</p>
+                      <p>已评分人数：{$sum[$i]}</p>
+                      <else/>
+                      <i class="fa fa-car" style="margin-top:30px; float:left; margin-left:-10px;"></i>
+                      </div>
+                      <div class="count">{$i}月</div>
+                      <h3>此月暂无分数正式版</h3>
+                      <hr>
+                      <p>如需提交本月正式版请点击进行提交</p>
+                      <p>如本月暂无分数请等待此月到来</p>
+                      </if>
+                      </if>
+                    <if condition="$data[$i] neq ''">
+                      <i class="fa fa-check-square-o" style="margin-top:30px; float:left; margin-left:-10px;"></i>   
+                      </div>
+                      <div class="count">{$i}月</div>
+                      <h3>本月分数正式版已提交</h3>
+                      <hr>
+                      <p>提交总人数：{$data[$i]}</p>
+                      <p>提交平均分：{$sum[$i]}</p>            
+                    </if>
+                  
+                </div>
+              </div>
+         </for>
+              <!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-comments-o"></i></div>
+                  <div class="count">179</div>
+                  <h3>New Sign ups</h3>
+                  <p>Lorem ipsum psdea itgum rixt.</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+                  <div class="count">179</div>
+                  <h3>New Sign ups</h3>
+                  <p>Lorem ipsum psdea itgum rixt.</p>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                  <div class="count">179</div>
+                  <h3>New Sign ups</h3>
+                  <p>Lorem ipsum psdea itgum rixt.</p>
+                </div>
+              </div> -->
+   </div>
+
+
+</div>
+</div>
+<include file="Public/foot" /> 

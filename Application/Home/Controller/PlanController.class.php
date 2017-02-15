@@ -190,7 +190,7 @@ class PlanController extends BaseController {
 
 
     public function addmplan(){
-             $le=session('admin.id_level');
+      $le=session('admin.id_level');
       $id_employee=session('admin.id_employee');
       if($le==3||$le==7)
       {
@@ -282,8 +282,11 @@ class PlanController extends BaseController {
                           }
                           //dump($map);exit;
                      
-                        
-                          
+                          // var_dump($_POST);exit;
+                          // if(!$da=$this->model->create())
+                          // {
+                          //   $this->error($this->model->getError());
+                          // }
                           if($id[$k-1]==null)
                           {
                             if($map['plan_name']!="")
@@ -306,6 +309,9 @@ class PlanController extends BaseController {
                                     if($this->model->create($map)){
                                           $this->model->add();
                                         }
+                                    else{
+                                      $ERR=1;
+                                    }
                                   }
                             $this->model->where("id=$id1")->save($tj1);
                             }
@@ -326,13 +332,10 @@ class PlanController extends BaseController {
                             }
                           }
                         
-                       
-      }
-
-                //$this->success('创建计划成功！',U('Plan/formmidplan'));
-                echo 
+                 }    
         "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
         <script> alert('创建计划成功！');parent.location.href='../Plan/formmidplan'; </script>"; 
+       //$this->success('创建计划成功！',U('Plan/formmidplan'));
     }
 
 
