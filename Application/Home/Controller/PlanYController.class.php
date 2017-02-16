@@ -246,7 +246,7 @@ class PlanYController extends BaseController {
                 }
 
                 //$this->success('创建计划成功！',U('Plan/formmidplan'));
-                echo 
+    echo 
         "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
         <script> alert('创建计划成功！');parent.location.href='../PlanY/formmidplan'; </script>"; 
     }

@@ -1068,7 +1068,7 @@ class PerformanceController extends BaseController {
         $tj['month']=$i;
         $sum[$i]=0;
         $data[$i]=count(M('grademonth_confirm')->where($tj)->select());
-        if($data[$i]!=''){
+        if($data[$i]!=null){
           $grade[$i]=M('grademonth_confirm')->where($tj)->getField('grade_total',true);
           foreach ($grade[$i] as $key => $value) {
             $sum[$i]+=$value;
@@ -1080,12 +1080,41 @@ class PerformanceController extends BaseController {
       if($data[$tj['month']]==""){
         $tj1['user_department']=session('admin.user_department');
         $all[$tj['month']]=count(M('info_admin')->where($tj1)->where("id_level in (3,4,7,8)")->select());
-        $sum[$tj['month']]=count(array_unique(M('grademonth_staff')->where($tj)->where('plan_grade'!='')->select()))+count(array_unique(M('grademonth_chief')->where($tj)->where('plan_grade'!='')->select()));
+        $sum[$tj['month']]=count(array_unique(M('grademonth_staff')->where($tj)->where("'grade' != '' and 'staff_department' = '".$tj['department']."'")->select()))+count(array_unique(M('grademonth_chief')->where($tj)->where("'grade' != '' and 'staff_department' = '".$tj['department']."'")->select()));
       }
-      //dump($sum);exit;
       $this->assign('data',$data);
       $this->assign('all',$all);
       $this->assign('sum',$sum);
+      $this->display();
+    }
+    public function daihao(){
+      $id="confirm";
+      $tj['month']=I('get.month');
+      $tj['year']=session('admin.year_sys');
+      $tj['department']=session('admin.user_department');
+      $data['staff']=M('grademonth_confirm')->where($tj)->where("id_level=3")->select();
+      $data['chief']=M('grademonth_confirm')->where($tj)->where("id_level=4")->select();
+      if($data==null){
+        $id="";
+        unset($tj['department']);
+        $tj['chief_department']=session('admin.user_department');
+        $data['chief']=M('grademonth_chief')->where($tj)->select();
+        unset($tj['chief_department']);
+        $tj['staff_department']=session('admin.user_department');
+        $data['staff']=M('grademonth_staff')->field("staff_id,staff_name,staff_department,staff_office,year,month,group_concat(grade) as grade,group_concat(grade_leader) as grade_leader,grade_last")->where($tj)->group('staff_name')->select();
+        
+        foreach ($data['staff'] as $k => $v) {
+          $grade[$k]=explode(",", $data['staff'][$k]['grade']);
+          $sum=0;
+          foreach ($grade[$k] as $key => $value) {
+            $sum+=$value;
+          }
+          $data['staff'][$k]['grade']=$sum;
+        }
+      }
+      //dump($data);exit;
+      $this->assign('data',$data);
+      $this->assign('id',$id);
       $this->display();
     }
 

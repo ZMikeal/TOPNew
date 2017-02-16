@@ -1,0 +1,263 @@
+<include file="Public/header" /> 
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+  <div class="row">
+
+  <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}:月度成绩</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" style="text-align:center;">姓名</th>
+                            <th class="column-title">id</th>
+                            <th class="column-title">部门</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
+                            <th class="column-title">总分</th>
+                            <th class="column-title">评价人</th>
+                            <th class="column-title">最终评价人 </th>
+                          </tr>
+                        </thead>
+                        <notempty name="id">
+                        <tbody>
+                        <tr><td colspan='9' style="text-align:left; height:40px;"><label style="margin-left:5%;"><h3>科员：</h3></label></td></tr>
+                        <volist name="data[staff]" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                {$vo.name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.id_employee}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.department}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                             <td class=" ">
+                              <label>
+                                {$vo.grade_total}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_leader}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_last}
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        <tr><td colspan='9' style="text-align:left; height:40px;"><label style="margin-left:5%;"><h3>科长：</h3></label></td></tr>
+                        <volist name="data[chief]" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                {$vo.name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.id_employee}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.department}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                             <td class=" ">
+                              <label>
+                                {$vo.grade_total}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_leader}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_last}
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        </tbody>
+                        <else/>
+
+                        <tbody>
+                        <tr><td colspan='9' style="text-align:left; height:40px;"><label style="margin-left:5%;"><h3>科员：</h3></label></td></tr>
+                        <volist name="data[staff]" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                {$vo.staff_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.staff_id}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.staff_department}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.staff_office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                             <td class=" ">
+                              <label>
+                                {$vo.grade}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_leader}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_last}
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        <tr><td colspan='9' style="text-align:left; height:40px;"><label style="margin-left:5%;"><h3>科长：</h3></label></td></tr>
+                        <volist name="data[chief]" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                              <label>
+                                {$vo.chief_name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.chief_id}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.chief_department}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.chief_office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.month}
+                              </label>
+                            </td>
+                             <td class=" ">
+                              <label>
+                                {$vo.grade}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_leader}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_last}
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        </tbody>
+                        </notempty>
+                      </table>
+                      <a class="btn btn-success" href="{:U('Performance/GradesubmissionM')}" style="margin-left:40%;width:10%;">返回</a>
+                    </div>
+                    </div></div></div></div></div></div>
+
+
+<include file="Public/foot" /> 
