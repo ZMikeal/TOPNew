@@ -18,6 +18,22 @@ class LoginController extends Controller {
       
       if($admin['id_level']==2)
       {
+        $dat['id_employee']=$admin['id_employee'];
+        $dat['user_department']=$admin['user_department'];
+        $p = M('info_systime')->where($dat)->select();
+        //dump($p);
+        if($p!=null)
+        {
+         $admin['month']=$p[0]['month'];
+         $admin['year']=$p[0]['year'];
+        }
+        if($p==null)
+        {
+         $admin['month']=date('m');
+         $admin['year']=date('Y');
+        }
+         $admin['month_sys']=date('m');
+         $admin['year_sys']=date('Y');
          session('admin',$admin);
          //dump($admin);exit;
          $this->redirect('Planjhy/index');
@@ -51,7 +67,7 @@ class LoginController extends Controller {
         if($p==null)
         {
          $admin['month']=date('m');
-      $admin['year']=date('Y');
+         $admin['year']=date('Y');
         }
          $admin['month_sys']=date('m');
          $admin['year_sys']=date('Y');

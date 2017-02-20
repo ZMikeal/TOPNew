@@ -189,7 +189,7 @@
             <th>工作内容及目标:</th>
             <td><input type="text" id="text6" class="form-control"></td>
           </tr>
-          <if condition="$Think.session.admin.user_type eq '专业员工'">
+          <if condition="($Think.session.admin.user_type eq '专业员工') and ($Think.session.admin.id_level eq 3)">
           <tr>
             <th>VSE:</th>
             <td>

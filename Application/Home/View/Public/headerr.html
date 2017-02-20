@@ -79,7 +79,15 @@
                       </li>
                       <li><a href="{:U('index/index2')}">工作类别管理</a></li>
                       <li><a href="{:U('Planjhy/Plan_adjustment')}">清单调整</a></li>
-                      <li><a href="{:U('index/index2')}">成绩管理</a></li>
+                      <li><a>成绩管理<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a>
+                            </li>
+                            <li><a href="{:U('index/index2')}">年度成绩提交</a>
+                            </li>
+                        </ul>
+                      </li>
+
                       <li><a href="{:U('index/index2')}">季度评级</a></li>
                     </ul>
                   </li>

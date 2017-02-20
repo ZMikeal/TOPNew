@@ -47,17 +47,13 @@
                                     <option value=""> </option>
                                     <notempty name="list1">
                                     <volist name="list" id="vo">  
-                                   
-                                    <if condition="$Think.session.admin.username neq $vo[username]"> 
                                     <option value="{$vo.id_employee}" <if condition="$list1[$j-1]['id_employee'] eq $vo[id_employee]">selected</if>>{$vo.username}<!-- {$vo.id_employee} --></option>   
-                                    </if>
                                     </volist>
                                     </notempty>
 
                                     <empty name="list1">
                                     <volist name="list" id="vo">  
-                                    <if condition="$Think.session.admin.username neq $vo[username]">  <option value="{$vo.id_employee}">{$vo.username}</option>   
-                                    </if>
+                                    <option value="{$vo.id_employee}">{$vo.username}</option>   
                                     </volist>
                                     </empty>
                             </select>

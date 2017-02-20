@@ -10,11 +10,11 @@
 </style>
 <div class="right_col" role="main">
   <div class="row">
-<form id="subform" action="{:U('Performance/daihao1')}" method="post" class="form-horizontal">
+<form id="subform" action="{:U('Performance/')}" method="post" class="form-horizontal">
   <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{$Think.session.admin.user_department}:{$Think.session.admin.year}年{$month}月 正式版成绩</h2>
+                    <h2>{$Think.session.admin.user_department}:{$Think.session.admin.year}年{$quarter}季度 成绩评分</h2>
                     <input type="hidden" name="month" value="{$month}">
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -40,146 +40,47 @@
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title" width="5%">序号</th>
-                            <th class="column-title" width="5%">工号</th>
+                            <th class="column-title" width="5%">序号</th>     
                             <th class="column-title" style="text-align:center;" width="5%">姓名</th>
-                            <th class="column-title" width="8%">部门</th>
-                            <th class="column-title" width="8%">科室</th>
-                            <th class="column-title" width="8%">职位</th>
-                            <th class="column-title" width="10%" style="text-align:left;">岗位</th>
-                            <th class="column-title"width="8%">总分</th>
-                            <th class="column-title" style="width:10%;text-align:left;">评价人</th>
-                            <th class="column-title" style="width:10%;">最终评价人 </th>
+                            <th class="column-title" width="5%">工号</th>
+                            
+                            <switch name="quarter">
+                            <case value="1">
+                            <th class="column-title" width="8%">1月</th>
+                            <th class="column-title" width="8%">2月</th>
+                            <th class="column-title" width="8%">3月</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="8%">4月</th>
+                            <th class="column-title" width="8%">5月</th>
+                            <th class="column-title" width="8%">6月</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="8%">7月</th>
+                            <th class="column-title" width="8%">8月</th>
+                            <th class="column-title" width="8%">9月</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="8%">10月</th>
+                            <th class="column-title" width="8%">11月</th>
+                            <th class="column-title" width="8%">12月</th>
+                            </case>
+                            </switch>
+                            
+                            <th class="column-title" width="8%">平均分</th>
+                            <th class="column-title" width="8%">团队发展（5分）</th>
+                            <th class="column-title" width="8%">团队激励（5分）</th>
+                            <th class="column-title" width="8%">高效执行（5分）</th>
+                            <th class="column-title" width="8%">精通专业（3分）</th>
+                            <th class="column-title" width="8%">协作共赢（3分）</th>
+                            <th class="column-title" width="8%">使命必达（3分）</th>
+                            <th class="column-title" width="8%">廉洁奉公（3分）</th>
+                            <th class="column-title" width="8%">敢于担当（3分）</th>
+                            <th class="column-title" width="8%">总分</th>
                           </tr>
                         </thead>
-                        <notempty name="id">
-
                         <tbody>
-                        <volist name="data[chief]" id="vo">
-                          <tr class="even pointer">
-                          <td class=" ">
-                              <label>
-                                {$i}
-                              </label>
-                            </td>
-                          <td class=" ">
-                              <label>
-                                {$vo.id_employee}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.name}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.department}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.office}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                <switch name="vo.id_level">
-                                <case value="3">科员</case>
-                                <case value="4">科长</case>
-                                <case value="7">VSE</case>
-                                <case value="8">项目经理</case>
-                                </switch>
-                              </label>
-                            </td>
-                            <td class=" " style="text-align:left;">
-                              <label>
-                                {$vo.job}
-                              </label>
-                            </td>
-                             <td class=" ">
-                              <label>
-                                {$vo.grade_total}
-                              </label>
-                            </td>
-                            <td class=" " style="text-align:left;">
-                              <label>
-                                {$vo.grade_leader}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.grade_last}
-                              </label>
-                            </td>
-                          </tr>
-                        </volist>
-                        <volist name="data[staff]" id="vo">
-                          <tr class="even pointer">
-                          <td class=" ">
-                              <label>
-                                {$i}
-                              </label>
-                            </td>
-                          <td class=" ">
-                              <label>
-                                {$vo.id_employee}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.name}
-                              </label>
-                            </td>
-                            
-                            <td class=" ">
-                              <label>
-                                {$vo.department}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.office}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                <switch name="vo.id_level">
-                                <case value="3">科员</case>
-                                <case value="4">科长</case>
-                                <case value="7">VSE</case>
-                                <case value="8">项目经理</case>
-                                </switch>
-                              </label>
-                            </td>
-                            <td class=" " style="text-align:left;">
-                              <label>
-                                {$vo.job}
-                              </label>
-                            </td>
-                             <td class=" ">
-                              <label>
-                                {$vo.grade_total}
-                              </label>
-                            </td>
-                            <td class=" " style="text-align:left;">
-                              <label>
-                                {$vo.grade_leader}
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                                {$vo.grade_last}
-                              </label>
-                            </td>
-                          </tr>
-                        </volist>
-                        </tbody>
-                        
-                        <else/>
-
-                        <tbody>
-                        <volist name="data[chief]" id="vo">
+                        <volist name="data" id="vo">
                           <input type="hidden" name="chief[{$i}][id_employee]"   value="{$vo.chief_id}">
                           <input type="hidden" name="chief[{$i}][name]" value="{$vo.chief_name}">
                           <input type="hidden" name="chief[{$i}][department]" value="{$vo.chief_department}">
@@ -197,55 +98,85 @@
                                 {$i}
                               </label>
                             </td>
-                          <td class=" ">
+                            <td class=" ">
                               <label>
-                                {$vo.chief_id}
+                                {$vo.name}
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                                {$vo.chief_name}
+                                {$vo.id_employee}
                               </label>
                             </td>
                             
+
                             <td class=" ">
                               <label>
-                                {$vo.chief_department}
+                                <if condition="$vo.month.0 eq 1">
+                                {$vo.month.0}
+                                </if>
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                                {$vo.chief_office}
+                                {$vo.month.0}
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                                <switch name="vo.level">
-                                <case value="3">科员</case>
-                                <case value="4">科长</case>
-                                <case value="7">VSE</case>
-                                <case value="8">项目经理</case>
-                                </switch>
+                               
+                              </label>
+                            </td>
+                            
+
+                            <td class=" ">
+                              <label>
+                               
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               
                               </label>
                             </td>
                             <td class=" "  style="text-align:left;">
                               <label>
-                                {$vo.job}
+                                
                               </label>
                             </td>
                              <td class=" ">
                               <label>
-                                {$vo.grade}
+                               
                               </label>
                             </td>
                             <td class=" " style="text-align:left;">
                               <label>
-                                {$vo.grade_leader}
+                                
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                                {$vo.grade_last}
+                                
                               </label>
                             </td>
                           </tr>
@@ -322,18 +253,16 @@
                           </tr>
                         </volist>
                         </tbody>
-                        </else>
-                        </notempty>
                       </table>
-                      <empty name="id">
+                      <!-- <empty name="id">
 
                       <input class="btn btn-success" type="button" value="提交最终版成绩" id="bu" onclick="fom()" style="margin-left:30%;width:10%;">
                       <else/>
                       <a class="btn btn-success" onclick="return confirm('已提交过该月最终成绩！')" style="margin-left:30%;width:10%;">提交最终版成绩</a>
                       </else>
-                      </empty>
+                      </empty> -->
                       
-                      <a class="btn btn-success" href="{:U('Performance/GradesubmissionM')}" style="margin-left:10%;width:10%;">返回</a>
+                      <a class="btn btn-success" href="{:U('Performance/Gradequarter')}" style="margin-left:10%;width:10%;">返回</a>
                     </div>
                     </div></div></div></div></div></form></div>
 

@@ -7,10 +7,10 @@ class PerformanceController extends BaseController {
           $this->redirect('login/login');
           exit;
           }
-       if(session('admin.id_level')==2){
-          $this->redirect('index/index2');
-           exit;
-          }
+       // if(session('admin.id_level')==2){
+       //    $this->redirect('index/index2');
+       //     exit;
+       //    }
     }
     //月度计划确认列表
     public function Planconfirm(){
@@ -1062,7 +1062,7 @@ class PerformanceController extends BaseController {
     }
     //~
     public function GradesubmissionM(){
-      $tj['year']=session('admin.year_sys');
+      $tj['year']=session('admin.year');
       $tj['department']=session('admin.user_department');
       for($i=1;$i<=12;$i++){
         $tj['month']=$i;
@@ -1089,21 +1089,27 @@ class PerformanceController extends BaseController {
     }
     public function daihao(){
       $id="confirm";
+      $month=I('get.month');
       $tj['month']=I('get.month');
-      $tj['year']=session('admin.year_sys');
+      $tj['year']=session('admin.year');
       $tj['department']=session('admin.user_department');
       $data['staff']=M('grademonth_confirm')->where($tj)->where("id_level=3")->select();
       $data['chief']=M('grademonth_confirm')->where($tj)->where("id_level=4")->select();
-      if($data==null){
+      if($data['staff']==null&&$data['chief']==null){
         $id="";
         unset($tj['department']);
         $tj['chief_department']=session('admin.user_department');
-        $data['chief']=M('grademonth_chief')->where($tj)->select();
+        $data['chief']=M('grademonth_chief')->where($tj)->order('chief_office desc')->select();
         unset($tj['chief_department']);
         $tj['staff_department']=session('admin.user_department');
-        $data['staff']=M('grademonth_staff')->field("staff_id,staff_name,staff_department,staff_office,year,month,group_concat(grade) as grade,group_concat(grade_leader) as grade_leader,grade_last")->where($tj)->group('staff_name')->select();
+        $data['staff']=M('grademonth_staff')->field("staff_id,staff_name,staff_department,staff_office,year,month,group_concat(grade) as grade,group_concat(grade_leader) as grade_leader,grade_last")->where($tj)->order('staff_office desc')->group('staff_name')->select();
         
         foreach ($data['staff'] as $k => $v) {
+          
+          $info=M('info_admin')->where("username = '".$v['staff_name']."'")->getField('id_level,user_job');
+          $key=array_keys($info);
+          $data['staff'][$k]['level']=$key[0];
+          $data['staff'][$k]['job']=$info[$key[0]];
           $grade[$k]=explode(",", $data['staff'][$k]['grade']);
           $sum=0;
           foreach ($grade[$k] as $key => $value) {
@@ -1111,11 +1117,130 @@ class PerformanceController extends BaseController {
           }
           $data['staff'][$k]['grade']=$sum;
         }
+        foreach ($data['chief'] as $k => $v) {
+          $info=M('info_admin')->where("username = '".$v['chief_name']."'")->getField('id_level,user_job');
+          // dump(array_keys($info));exit;
+          $key=array_keys($info);
+          $data['chief'][$k]['level']=$key[0];
+          $data['chief'][$k]['job']=$info[$key[0]];
+        }
       }
       //dump($data);exit;
       $this->assign('data',$data);
       $this->assign('id',$id);
+      $this->assign('month',$month);
       $this->display();
+    }
+    public function daihao1(){
+      $data=I('post.');
+      //dump($data);exit;
+      foreach($data['chief'] as $k => $v){
+        $this->model=M('grademonth_confirm');
+        $v['grade_last']=session('admin.username');
+        if($this->model->create($v))
+             {
+                $this->model->add();
+             }
+      }
+      foreach($data['staff'] as $k => $v){
+        $this->model=M('grademonth_confirm');
+        $v['grade_last']=session('admin.username');
+        if($this->model->create($v))
+             {
+                $this->model->add();
+             }
+      }
+      $this->ajaxReturn(array('success'=>1),"json");
+    }
+    public function Gradequarter(){
+      $quarter = I('get.quarter');
+      $info=implode(',',M('info_admin')->where("user_leader = '".session('admin.username')."'")->getField('username',true));
+      $tj['grade_leader']=session('admin.username');
+      $tj['year']=session('admin.year');
+      if(session('admin.id_level')==4){
+        $level='3,7';
+      }
+      if(session('admin.id_level')==5){
+        $level='4,8';
+      } 
+      $info=str_replace(",","','",$info);
+      $data[1]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (1,2,3) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
+      $data[2]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (4,5,6) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
+      $data[3]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (7,8,9) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
+      $data[4]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (10,11,12) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
+      for($i=1;$i<=4;$i++){
+        $data1[$i]=count($data[$i]);
+      }
+      //显示季度内容
+      if($quarter!='')
+      {
+        $data=$data[$quarter];
+        foreach ($data as $key => $value) {
+        $data[$key]['month']=explode(",", $value['month']);
+        $data[$key]['grade']=explode(",", $value['grade']);  
+        }
+        foreach ($data as $k => $v) {
+          for($i=0;$i<3;$i++)
+          {
+          if($v['month'][$i]==1||$v['month'][$i]==4||$v['month'][$i]==7||$v['month'][$i]==10){$data[$k][0]=$v['grade'][$i];}
+          if($v['month'][$i]==2||$v['month'][$i]==5||$v['month'][$i]==8||$v['month'][$i]==11){$data[$k][1]=$v['grade'][$i];}
+          if($v['month'][$i]==3||$v['month'][$i]==6||$v['month'][$i]==9||$v['month'][$i]==12){$data[$k][2]=$v['grade'][$i];}
+          }
+
+        }
+        foreach ($data as $k => $v) {
+          $sum=0;
+          $count=count($v['grade']);
+          for($i=0;$i<$count;$i++)
+          {
+            $sum+=$v['grade'][$i];
+          }
+          $data[$k]['sum']=round(($sum/$count)*0.7,1);
+        }
+        //dump($data);exit;
+        $this->assign('data',$data);
+      }
+      $this->assign('quarter',$quarter);
+      $this->assign('data1',$data1);
+      $this->display();
+
+    }
+    public function quarterlist(){
+      $quarter = I('get.quarter');
+
+      $info=implode(',',M('info_admin')->where("user_leader = '".session('admin.username')."'")->getField('username',true));
+      $tj['grade_leader']=session('admin.username');
+      $tj['year']=session('admin.year');
+      if(session('admin.id_level')==4){
+        $level='3,7';
+      }
+      if(session('admin.id_level')==5){
+        $level='4,8';
+      } 
+      $info=str_replace(",","','",$info);
+      if($quarter==1){
+        $month='1,2,3';
+      }
+      if($quarter==2){
+        $month='4,5,6';
+      }
+      if($quarter==3){
+        $month='7,8,9';
+      }
+      if($quarter==4){
+        $month='10,11,12';
+      }
+      $data=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (".$month.") and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
+      
+      foreach ($data as $key => $value) {
+        $data[$key]['month']=explode(",", $value['month']);
+        $data[$key]['grade']=explode(",", $value['grade']);
+      }
+      //dump($data);exit;
+      $this->assign('data',$data);
+      $this->assign('quarter',$quarter);
+      $this->display();
+
     }
 
 }

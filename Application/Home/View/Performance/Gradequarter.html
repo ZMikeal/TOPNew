@@ -1,0 +1,251 @@
+<if condition="$Think.session.admin.id_level eq 2">
+<include file="Public/headerr" /> 
+<else/>
+<include file="Public/header" /> 
+</if>
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+  <div class="row">
+  <h3>&nbsp;&nbsp;<strong>{$Think.session.admin.user_department}季度成绩</strong></h3>
+  <hr/>
+  <div class="row top_tiles">
+         <for start='1' end='5'>
+              <div class="animated flipInY col-lg-3 col-md-4 col-sm-6 col-xs-12" style="width:24.2%;margin-left:0.6%;margin-top:1%;cursor:pointer;" onclick="location.href='{:U('Performance/Gradequarter',"quarter=$i")}'">
+                <div class="tile-stats" style="height:200px;">
+                  <div class="icon">
+                    <if condition="$data1[$i] eq ''">
+                    <i class="fa fa-car"></i></div>
+                    <div class="count">{$i}季度</div>
+                    <h3>还没有成绩</h3>
+                    <!-- <p>Lorem ipsum psdea itgum rixt.</p> -->
+                    <else/>
+                    <i class="fa fa-check-square-o"></i></div>
+                    <div class="count">{$i}季度</div>
+                    <h3>成绩人数：{$data1[$i]}</h3>
+                    <!-- <p>Lorem ipsum psdea itgum rixt.</p> -->
+                    </else>
+                    </if>
+                </div>
+             </div>
+         </for>
+  </div>
+  <notempty name="quarter">
+  <form id="subform" action="{:U('Performance/')}" method="post" class="form-horizontal">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}:{$Think.session.admin.year}年{$quarter}季度 成绩评分</h2>
+                    <input type="hidden" name="month" value="{$month}">
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="5%">序号</th>     
+                            <th class="column-title" style="text-align:center;" width="5%">姓名</th>
+                            <th class="column-title" width="5%">工号</th>
+                            
+                            <switch name="quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月</th>
+                            <th class="column-title" width="5%">2月</th>
+                            <th class="column-title" width="5%">3月</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月</th>
+                            <th class="column-title" width="5%">5月</th>
+                            <th class="column-title" width="5%">6月</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月</th>
+                            <th class="column-title" width="5%">8月</th>
+                            <th class="column-title" width="5%">9月</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月</th>
+                            <th class="column-title" width="5%">11月</th>
+                            <th class="column-title" width="5%">12月</th>
+                            </case>
+                            </switch>
+                            
+                            <th class="column-title" width="5%">平均分<br>(*70%)</th>
+                            <th class="column-title" width="8%">团队发展<br>（5分）</th>
+                            <th class="column-title" width="8%">团队激励<br>（5分）</th>
+                            <th class="column-title" width="8%">高效执行<br>（5分）</th>
+                            <th class="column-title" width="8%">精通专业<br>（3分）</th>
+                            <th class="column-title" width="8%">协作共赢<br>（3分）</th>
+                            <th class="column-title" width="8%">使命必达<br>（3分）</th>
+                            <th class="column-title" width="8%">廉洁奉公<br>（3分）</th>
+                            <th class="column-title" width="8%">敢于担当<br>（3分）</th>
+                            <th class="column-title" width="8%">总分</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="data" id="vo">
+                          <input type="hidden" name="chief[{$i}][id_employee]"   value="{$vo.chief_id}">
+                          <input type="hidden" name="chief[{$i}][name]" value="{$vo.chief_name}">
+                          <input type="hidden" name="chief[{$i}][department]" value="{$vo.chief_department}">
+                          <input type="hidden" name="chief[{$i}][office]" value="{$vo.chief_office}">
+                          <input type="hidden" name="chief[{$i}][id_level]"      value="{$vo.level}">
+                          <input type="hidden" name="chief[{$i}][job]"        value="{$vo.job}">
+                          <input type="hidden" name="chief[{$i}][grade_total]"      value="{$vo.grade}">
+                          <input type="hidden" name="chief[{$i}][grade_leader]" value="{$vo.grade_leader}">
+                          <input type="hidden" name="chief[{$i}][grade_last]" value="{$vo.grade_last}">
+                          <input type="hidden" name="chief[{$i}][year]" value="{$vo.year}">
+                          <input type="hidden" name="chief[{$i}][month]" value="{$vo.month}">
+                          <tr class="even pointer">
+                          <td class=" ">
+                              <label>
+                                {$i}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.id_employee}
+                              </label>
+                            </td>
+                            
+
+                            <td class=" ">
+                              <label>
+                              <empty name="vo.0">
+                              无成绩
+                              <else/>
+                                {$vo.0}
+                              </empty>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                              <empty name="vo.1">
+                              无成绩
+                              <else/>
+                                {$vo.1}
+                              </empty>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                              <empty name="vo.2">
+                              无成绩
+                              <else/>
+                                {$vo.2}
+                              </empty>
+                              </label>
+                            </td>
+                            
+
+                            <td class=" ">
+                              <label>
+                                {$vo.sum}
+                                <input type="hidden" id="fenshu[{$i}][8]" value="{$vo.sum}">
+                              </label>
+                            </td>
+                            <td class=" " >
+                              <label>
+                               <input type="text" id="fenshu[{$i}][0]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" " >
+                              <label>
+                               <input type="text" id="fenshu[{$i}][1]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][2]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][3]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][4]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][5]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][6]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][7]" style="width:25px" onchange="getGrade({$i})">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="sum[{$i}]" disabled="disabled" style="width:35px" >
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        </tbody>
+                      </table>
+                      <!-- <empty name="id">
+
+                      <input class="btn btn-success" type="button" value="提交最终版成绩" id="bu" onclick="fom()" style="margin-left:30%;width:10%;">
+                      <else/>
+                      <a class="btn btn-success" onclick="return confirm('已提交过该月最终成绩！')" style="margin-left:30%;width:10%;">提交最终版成绩</a>
+                      </else>
+                      </empty> -->
+                    </div>
+                    </div></div></div></div></div></form></notempty>
+</div></div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function getGrade(tt){
+    var fenshu=0;
+    for(var i=0;i<9;i++)
+    {
+      var o=document.getElementById('fenshu['+tt+']['+i+']').value;
+      if(o==""){
+        o=0;
+      }
+      fenshu+=parseFloat(o);
+    }
+    document.getElementById('sum['+tt+']').value = fenshu;
+    if(isNaN(fenshu)==true){
+      alert('请输入数字');
+    }
+    if(fenshu>100){
+      alert('评分分数已超100！请修改！');
+    }
+  }
+</script>

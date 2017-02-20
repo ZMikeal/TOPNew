@@ -99,7 +99,7 @@
                             <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
                             </li>
                             <if condition="($Think.session.admin.id_level eq 5) or ($Think.session.admin.id_level eq 4)">
-                            <li><a href="{:U('index/index1')}">季度计划评分</a>
+                            <li><a href="{:U('Performance/Gradequarter')}">季度计划评分</a>
                             </li>
                             </if>
                             <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
@@ -122,7 +122,7 @@
                             </li>
                           </ul>
                     </li>
-                    <if condition="$Think.session.admin.id_level eq 5"> 
+                    <if condition="($Think.session.admin.id_level eq 5) and ($Think.session.admin.user_type neq '副部长')"> 
                     <li><a>成绩提交<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a>
@@ -212,10 +212,7 @@
                   </if>
                   <!-- 科长兼职显示结束 -->
 
-                  <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{:U('index/index1')}">清单查询</a></li>
-                    </ul>
+                  <li><a href="javascript:void(0)"><i class="fa fa-desktop"></i> 综合查询 <span class="label label-success pull-right">Coming Soon</span></a>
                   </li>
                   <li><a><i class="fa fa-table"></i> 账户管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -223,16 +220,9 @@
                       <li><a href="{:U('User/index')}">修改个人信息</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> 扩展功能 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{:U('index/index1')}">供应商评价</a></li>
-                      <li><a href="{:U('index/index1')}">资料在线浏览</a></li>
-                    </ul>
+                  <li><a href="javascript:void(0)"><i class="fa fa-bar-chart-o"></i> 扩展功能 <span class="label label-success pull-right">Coming Soon</span></a>
                   </li>
-                  <li><a><i class="fa fa-clone"></i>帮助 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{:U('index/index1')}">使用帮助</a></li>
-                    </ul>
+                  <li><a href="javascript:void(0)"><i class="fa fa-clone"></i>帮助 <span class="label label-success pull-right">Coming Soon</span></a>
                   </li>
                 </ul>
               </div>
@@ -396,7 +386,7 @@
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">计划员设置时间为： {$Think.session.admin.year_sys} 年 {$Think.session.admin.month} 月 </a>
                 </li>
                 <li class="">
-                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.1.6</a>
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.1.7</a>
                 </li>
               </ul>
             </nav>

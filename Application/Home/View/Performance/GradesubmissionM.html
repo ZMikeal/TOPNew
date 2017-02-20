@@ -1,8 +1,13 @@
+<if condition="$Think.session.admin.id_level eq 2">
+<include file="Public/headerr" /> 
+<else/>
 <include file="Public/header" /> 
+</if>
+
 
 <div class="right_col" role="main">
   <div class="row">
-  <h3>{$Think.session.admin.user_department}月度成绩</h3>
+  <h3><strong>&nbsp;&nbsp;&nbsp;{$Think.session.admin.user_department}月度成绩</strong></h3>
   <hr/>
   <div class="row top_tiles">
          <for start='1' end='13'>
@@ -11,31 +16,32 @@
                   <div class="icon">
                     <if condition="$data[$i] eq ''">
                       <if condition="$Think.session.admin.month_sys eq $i">
-                      <i class="fa fa-sort-amount-desc" style="margin-top:30px; float:left; margin-left:-10px;"></i>
+                      <i class="fa fa-sort-amount-desc" style="margin-top:30px; float:left; margin-left:-10px; color: firebrick"></i>
                       </div>
                       <div class="count">{$i}月</div>
-                      <h3>请及时提交本月分数正式版</h3>
+                      <h3 style="margin-top: 20px;">请及时提交本月分数正式版</h3>
                       <hr>
-                      <p>部门总人数：{$all[$i]}</p>
-                      <p>已评分人数：{$sum[$i]}</p>
+                      <p style="font-size: larger; margin-top: -10px;"><strong>部门总人数：{$all[$i]}</strong></p>
+                      <p style="font-size: larger;"><strong>已评分人数：{$sum[$i]}</strong></p>
                       <else/>
                       <i class="fa fa-car" style="margin-top:30px; float:left; margin-left:-10px;"></i>
                       </div>
                       <div class="count">{$i}月</div>
-                      <h3>此月暂无分数正式版</h3>
+                      <h3 style="margin-top: 20px;">此月暂无分数正式版</h3>
+
                       <hr>
-                      <p>如需提交本月正式版请点击进行提交</p>
-                      <p>如本月暂无分数请等待此月到来</p>
+                      <p style="font-size: larger; margin-top: -10px;"><strong>如需提交本月正式版请点击提交</strong></p>
+                      <p style="font-size: larger;"><strong>如本月暂无分数请等待此月到来</strong></p>
                       </if>
                       </if>
                     <if condition="$data[$i] neq ''">
-                      <i class="fa fa-check-square-o" style="margin-top:30px; float:left; margin-left:-10px;"></i>   
+                      <i class="fa fa-check-square-o" style="margin-top:30px; float:left; margin-left:-10px; color: #169F85;"></i>
                       </div>
                       <div class="count">{$i}月</div>
-                      <h3>本月分数正式版已提交</h3>
+                      <h3 style="margin-top: 20px;">本月分数正式版已提交</h3>
                       <hr>
-                      <p>提交总人数：{$data[$i]}</p>
-                      <p>提交平均分：{$sum[$i]}</p>            
+                      <p style="font-size: larger; margin-top: -10px;"><strong>提交总人数：{$data[$i]}</strong></p>
+                      <p style="font-size: larger;"><strong>提交平均分：{$sum[$i]}</strong></p>
                     </if>
                   
                 </div>
