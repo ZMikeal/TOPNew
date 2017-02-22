@@ -12,6 +12,10 @@ class PlanController extends BaseController {
           $this->redirect('planjhy/index');
           exit;
         }
+     if(session('admin.id_level')==1){
+          $this->redirect('plansuper/index');
+          exit;
+        }
 	 }
    public function index(){
 
@@ -387,7 +391,10 @@ class PlanController extends BaseController {
       $id_employee=session('admin.id_employee');
       if($le==3||$le==7)
       {
+        $tjleader['user_department']=session('admin.user_department');
         $vse=M('info_item')->order('vse ASC')->getField('vse',true);
+        $leader=M('info_admin')->where($tjleader)->where("id_level in (4,5)")->order('username ASC')->getField('username',true);
+        $vse=array_merge($leader,$vse);
         $this->assign('vse',$vse);
         $this->model=D('planmonth_staff');
         $tj['staff_id']=session('admin.id_employee');

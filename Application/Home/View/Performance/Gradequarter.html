@@ -34,12 +34,12 @@
          </for>
   </div>
   <notempty name="quarter">
-  <form id="subform" action="{:U('Performance/')}" method="post" class="form-horizontal">
+  <form id="subform" action="{:U('Performance/quartersub')}" method="post" class="form-horizontal">
   <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>{$Think.session.admin.user_department}:{$Think.session.admin.year}年{$quarter}季度 成绩评分</h2>
-                    <input type="hidden" name="month" value="{$month}">
+                    <input type="hidden" name="quarter" value="{$quarter}">
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -92,30 +92,28 @@
                             </switch>
                             
                             <th class="column-title" width="5%">平均分<br>(*70%)</th>
-                            <th class="column-title" width="8%">团队发展<br>（5分）</th>
-                            <th class="column-title" width="8%">团队激励<br>（5分）</th>
-                            <th class="column-title" width="8%">高效执行<br>（5分）</th>
-                            <th class="column-title" width="8%">精通专业<br>（3分）</th>
-                            <th class="column-title" width="8%">协作共赢<br>（3分）</th>
-                            <th class="column-title" width="8%">使命必达<br>（3分）</th>
-                            <th class="column-title" width="8%">廉洁奉公<br>（3分）</th>
-                            <th class="column-title" width="8%">敢于担当<br>（3分）</th>
+                            <th class="column-title" width="8%">1团队发展<br>（5分）</th>
+                            <th class="column-title" width="8%">2团队激励<br>（5分）</th>
+                            <th class="column-title" width="8%">3高效执行<br>（5分）</th>
+                            <th class="column-title" width="8%">4精通专业<br>（3分）</th>
+                            <th class="column-title" width="8%">5协作共赢<br>（3分）</th>
+                            <th class="column-title" width="8%">6使命必达<br>（3分）</th>
+                            <th class="column-title" width="8%">7廉洁奉公<br>（3分）</th>
+                            <th class="column-title" width="8%">8敢于担当<br>（3分）</th>
                             <th class="column-title" width="8%">总分</th>
                           </tr>
                         </thead>
                         <tbody>
                         <volist name="data" id="vo">
-                          <input type="hidden" name="chief[{$i}][id_employee]"   value="{$vo.chief_id}">
-                          <input type="hidden" name="chief[{$i}][name]" value="{$vo.chief_name}">
-                          <input type="hidden" name="chief[{$i}][department]" value="{$vo.chief_department}">
-                          <input type="hidden" name="chief[{$i}][office]" value="{$vo.chief_office}">
-                          <input type="hidden" name="chief[{$i}][id_level]"      value="{$vo.level}">
-                          <input type="hidden" name="chief[{$i}][job]"        value="{$vo.job}">
-                          <input type="hidden" name="chief[{$i}][grade_total]"      value="{$vo.grade}">
-                          <input type="hidden" name="chief[{$i}][grade_leader]" value="{$vo.grade_leader}">
-                          <input type="hidden" name="chief[{$i}][grade_last]" value="{$vo.grade_last}">
-                          <input type="hidden" name="chief[{$i}][year]" value="{$vo.year}">
-                          <input type="hidden" name="chief[{$i}][month]" value="{$vo.month}">
+                          <input type="hidden" name="chief[{$i}][id_employee]"   value="{$vo.id_employee}">
+                          <input type="hidden" name="chief[{$i}][name]"          value="{$vo.name}">
+                          <input type="hidden" name="chief[{$i}][department]"    value="{$vo.department}">
+                          <input type="hidden" name="chief[{$i}][office]"        value="{$vo.office}">
+                          <input type="hidden" name="chief[{$i}][id_level]"      value="{$vo.id_level}">
+                          <!-- <input type="hidden" name="chief[{$i}][job]"           value="{$vo.job}"> -->
+                          <input type="hidden" name="chief[{$i}][grade_leader]"  value="{$vo.grade_leader}">
+                          <input type="hidden" name="chief[{$i}][grade_last]"    value="{$vo.grade_last}">
+                          <input type="hidden" name="chief[{$i}][year]"          value="{$vo.year}">
                           <tr class="even pointer">
                           <td class=" ">
                               <label>
@@ -141,6 +139,7 @@
                               <else/>
                                 {$vo.0}
                               </empty>
+                              <input type="hidden" name="chief[{$i}][grade_one]" value="{$vo.0}">
                               </label>
                             </td>
                             <td class=" ">
@@ -150,6 +149,7 @@
                               <else/>
                                 {$vo.1}
                               </empty>
+                              <input type="hidden" name="chief[{$i}][grade_two]" value="{$vo.1}">
                               </label>
                             </td>
                             <td class=" ">
@@ -159,6 +159,7 @@
                               <else/>
                                 {$vo.2}
                               </empty>
+                              <input type="hidden" name="chief[{$i}][grade_three]" value="{$vo.2}">
                               </label>
                             </td>
                             
@@ -166,58 +167,58 @@
                             <td class=" ">
                               <label>
                                 {$vo.sum}
-                                <input type="hidden" id="fenshu[{$i}][8]" value="{$vo.sum}">
+                                <input type="hidden" id="fenshu[{$i}][8]"  name="chief[{$i}][grade_avg]" value="{$vo.sum}">
                               </label>
                             </td>
                             <td class=" " >
                               <label>
-                               <input type="text" id="fenshu[{$i}][0]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][0]" name="chief[{$i}][grade_ability]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_ability]}">
                               </label>
                             </td>
                             <td class=" " >
                               <label>
-                               <input type="text" id="fenshu[{$i}][1]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][1]" name="chief[{$i}][grade_skill]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_skill]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][2]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][2]" name="chief[{$i}][grade_study]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_study]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][3]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][3]" name="chief[{$i}][grade_execute]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_execute]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][4]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][4]" name="chief[{$i}][grade_cooperate]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_cooperate]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][5]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][5]" name="chief[{$i}][grade_order]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_order]}">
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][6]" name="chief[{$i}][grade_proity]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_proity]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][6]" style="width:25px" onchange="getGrade({$i})">
+                               <input type="text" id="fenshu[{$i}][7]" name="chief[{$i}][grade_undertake]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_undertake]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][7]" style="width:25px" onchange="getGrade({$i})">
-                              </label>
-                            </td>
-                            <td class=" ">
-                              <label>
-                               <input type="text" id="sum[{$i}]" disabled="disabled" style="width:35px" >
+                               <input type="text" id="sum[{$i}]" disabled="disabled" style="width:35px" value="{$vo[grade_total]}">
+                               <input type="hidden" id="sum1[{$i}]" name="chief[{$i}][grade_total]" style="width:35px" value="{$vo[grade_total]}">
                               </label>
                             </td>
                           </tr>
                         </volist>
                         </tbody>
                       </table>
+                      <input class="btn btn-success" type="button" value="提交成绩" id="bu" onclick="fom()" style="margin-left:40%;width:10%;">
                       <!-- <empty name="id">
 
                       <input class="btn btn-success" type="button" value="提交最终版成绩" id="bu" onclick="fom()" style="margin-left:30%;width:10%;">
@@ -238,14 +239,54 @@
       if(o==""){
         o=0;
       }
+      if(o<0){
+        var w=i+1;
+        alert('第'+w+'项输入分数不能为负数');
+        document.getElementById('fenshu['+tt+']['+i+']').value = '';
+        return false;
+      }
+      if(i<3&&o>5)
+      {
+        var w=i+1;
+        alert('第'+w+'项输入分数不能大于5');
+        document.getElementById('fenshu['+tt+']['+i+']').value = '';
+        return false;
+      }
+      if(i>2&&i<8&&o>3)
+      {
+        var w=i+1;
+        alert('第'+w+'项输入分数不能大于3');
+        document.getElementById('fenshu['+tt+']['+i+']').value = '';
+        return false;
+      }
       fenshu+=parseFloat(o);
     }
     document.getElementById('sum['+tt+']').value = fenshu;
+    document.getElementById('sum1['+tt+']').value = fenshu;
     if(isNaN(fenshu)==true){
       alert('请输入数字');
     }
-    if(fenshu>100){
+    if(filenshu>100){
       alert('评分分数已超100！请修改！');
     }
+  }
+  function fom(){
+    document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Performance/quartersub",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
   }
 </script>

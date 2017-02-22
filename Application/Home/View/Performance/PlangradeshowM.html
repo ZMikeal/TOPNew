@@ -150,7 +150,7 @@
                         </volist>
                         </tbody>
                       </table>
-                      <a class="btn btn-success" onclick="form()" style="margin-left:30%;width:10%;">提交</a>
+                      <a class="btn btn-success" onclick="document.getElementById('subform').submit();return false" style="margin-left:30%;width:10%;">提交</a>
                       <!--document.getElementById('subform').submit();return false-->
                       <if condition="$hrf eq PlangradelistM">
                       <a class="btn btn-success" href="/TOPNew/Performance/PlangradelistM.html" style="margin-left:10%;width:10%;" onclick="">返回</a>

@@ -7,7 +7,7 @@ class UserController extends BaseController {
     public function index(){
      //    $groups_list=M('admin')->where()->order('id desc')->select();
     	// $this->assign('groups_list',$groups_list);
-       if(!session('?admin')){
+      if(!session('?admin')){
           $this->redirect('login/login');
           exit;
         }
@@ -15,6 +15,10 @@ class UserController extends BaseController {
           $this->redirect('planjhy/index');
           exit;
       }
+      if(session('admin.id_level')==1){
+          $this->redirect('plansuper/index');
+          exit;
+        }
 
       $tj['id_employee']=session('admin.id_employee');
       $list = M('info_admin')->where($tj)->find();

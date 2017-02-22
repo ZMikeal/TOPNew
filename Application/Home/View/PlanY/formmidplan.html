@@ -11,7 +11,7 @@
 <form id="postForm" name="postForm" action="{:U('PlanY/addmplan')}" method="post" class="form-horizontal">
 
 <empty name="time">
-                        年度计划创建时间为每年的 1.1 - 1.15 ,请在时间范围内创建计划！
+                        年度计划创建时间为 01-01 到 {$Year} ,请在时间范围内创建计划！
 </empty>
 <notempty name="time">
   <if condition="$Think.session.admin.id_level eq 5">
@@ -620,7 +620,7 @@
                   </div></div>
   </if>
 </notempty>
-</div>
+</div></div>
         
 <include file="Public/foot" /> 
               

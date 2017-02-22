@@ -12,6 +12,10 @@ class PlanYController extends BaseController {
           $this->redirect('planjhy/index');
           exit;
         }
+     if(session('admin.id_level')==1){
+          $this->redirect('plansuper/index');
+          exit;
+        }
 	 }
    public function index(){
       
@@ -57,8 +61,11 @@ class PlanYController extends BaseController {
       $tj['year']=session('admin.year');
       //$tj['month']=session('admin.month');
        $date=date('m-d');
+       $Year=session('admin.Year');
+       if($Year<10){$Year="0".$Year."-30";}
+        else{$Year=$Year."-30";}
        
-    if($date <= '06-15'&&$date > '01-01')
+    if($date <= $Year&&$date > '01-01')
     {
       //dump($date);exit;
       $time='可以创建计划';
@@ -107,7 +114,7 @@ class PlanYController extends BaseController {
       $this->assign('list',$list);// 赋值数据集
       $this->assign('time',$time);
       $this->assign('nljs',$nljs);
-      //$this->assign('list1',$list1);
+ 
       $this->model=D('info_item');
       $vse = $this->model->order('id desc')->select();
       $this->assign('vse',$vse);// 赋值数据集
@@ -116,7 +123,7 @@ class PlanYController extends BaseController {
 
       $this->shangji();
 
-
+      $this->assign('Year',$Year);
       $this->display();
     }
 

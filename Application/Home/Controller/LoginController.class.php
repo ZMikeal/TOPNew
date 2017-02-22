@@ -39,25 +39,24 @@ class LoginController extends Controller {
          $this->redirect('Planjhy/index');
       }
       
-      // $modal2 = M('class');
-      //   $parentlist = $modal2->where('lzh_fclass=0')->select();
-      //   //dump($parentlist);exit;
-      //   $catlist=array();
-      //   for($i=0;$i<count($parentlist);$i++){
-      //     $cat = array();
-      //     $cat['catid'] = $parentlist[$i]['lzh_cid'];
-      //     $cat['name'] = $parentlist[$i]['lzh_cname'];
-      //     $cat['subcat'] = $modal2->where('lzh_fclass='.$parentlist[$i]['lzh_cid'])->select();
-      //     $catlist[]=$cat;
-          
-        
-        //dump($admin);exit;
-        //session('catlist',$catlist);
-      if($admin['id_level']!=2)
+      if($admin['id_level']==1)
+      {
+        $dat['id_employee']=$admin['id_employee'];
+        $dat['user_department']=$admin['user_department'];
+        session('admin',$admin);
+         //dump($admin);exit;
+         $this->redirect('Plansuper/index');
+      }
+
+      if($admin['id_level']!=2&&$admin['id_level']!=1)
       {
         $dat['id_employee']=$admin['id_employee'];
         $dat['user_department']=$admin['user_department'];
         $p = M('info_systime')->where($dat)->select();
+        $Year=date('Y');
+        $m=M('info_systime')->where("username='人力管理员' and year='{$Year}'")->getField('month');
+        if($m==''){$m=1;}
+        $admin['Year']=$m;
         //dump($p);
         if($p!=null)
         {

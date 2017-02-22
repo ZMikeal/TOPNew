@@ -16,13 +16,13 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{$Think.session.admin.user_department} 清单调整</h2>
+                    <h2>{$Think.session.admin.user_department} 评分调整</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
                     <div class="table-responsive">
-                <form id="form1" action="{:U('Planjhy/Plan_adjustment')}" method="post" class="form-horizontal">
+                <form id="form1" action="{:U('Planjhy/Grade_adjustment')}" method="post" class="form-horizontal">
                       
                       年度：<select style="width:100px;" name="search[]">
                         <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
@@ -53,7 +53,7 @@
                       <button type="submit" id="bn">搜索</button>
                  </form>
                       <empty name="data">
-                      查询信息为空（此人月度计划信息中部门可能为空）！
+                      查询信息为空（此人月度评分信息中部门可能为空）！
                       <else/>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
@@ -63,12 +63,10 @@
                             <th class="column-title">月度</th>
                             <th class="column-title">姓名</th>
                             <th class="column-title">工号</th>
-                            <th class="column-title">项目名称</th>
-                            <th class="column-title">完成日期</th>
                             <th class="column-title">部门</th>
                             <th class="column-title">科室</th>
                             <th class="column-title">评价人</th>
-                            <th class="column-title">权重</th>
+                            <th class="column-title">评分</th>
                             <th class="column-title">操作</th>
                           </tr>
                         </thead>
@@ -106,23 +104,28 @@
                             <case value="5">{$vo.minister_id}</case>
                             </switch>
                             </td>
-                            <td class=" ">
-                            {$vo.plan_name}
+                            <td class=" " width="">
+                            <switch name="search[2]">
+                            <case value="3">{$vo.staff_department}</case>
+                            <case value="7">{$vo.staff_department}</case>
+                            <case value="4">{$vo.chief_department}</case>
+                            <case value="8">{$vo.chief_department}</case>
+                            <case value="5">{$vo.minister_department}</case>
+                            </switch>
                             </td>
                             <td class=" " width="">
-                            {$vo.plan_closingdate}
-                            </td>
-                            <td class=" " width="">
-                            {$vo.department}
-                            </td>
-                            <td class=" " width="">
-                            {$vo.office}
-                            </td>
-                            <td class=" ">
-                            {$vo.plan_leader}
+                            <switch name="search[2]">
+                            <case value="3">{$vo.staff_office}</case>
+                            <case value="7">{$vo.staff_office}</case>
+                            <case value="4">{$vo.chief_office}</case>
+                            <case value="8">{$vo.chief_office}</case>
+                            <case value="5">{$vo.minister_office}</case></switch>
                             </td>
                             <td class=" ">
-                            {$vo.plan_weight}
+                            {$vo.grade_leader}
+                            </td>
+                            <td class=" ">
+                            {$vo.grade}
                             </td>
                             <td>
                             [ <a class="" href="#" onclick="fn(this)" role="button" data-toggle="modal"  data-target="#bianji">调整</a> ]
@@ -152,7 +155,7 @@
             &times;
         </button>
         <h4 class="modal-title" id="myModalLabel">
-           计划调整项：
+           评分信息调整项：
         </h4>
        </div>
        <!--编辑主体 -->
@@ -170,7 +173,7 @@
           </tr>
           <tr>
             <th>部门:</th>
-            <td><input type="text" id="text6" name="text[]" class="form-control"></td>
+            <td><input type="text" id="text6" name="text[]" class="form-control" disabled="disabled"></td>
           </tr>
           <tr>
             <th>科室:</th>
@@ -178,19 +181,21 @@
           </tr>
           <tr>
             <th>评价人:</th>
-            <td><input type="text" id="text3" name="text[]" class="form-control"></td>
+            <td><input type="text" id="text3" name="text[]" class="form-control" disabled="disabled"></td>
           </tr>
           <tr>
             <th>月度:</th>
-            <td><input type="text" id="text4" name="text[]" class="form-control"></td>
+            <td><input type="text" id="text4" name="text[]" class="form-control" disabled="disabled"></td>
           </tr>
           <tr>
             <th>年度:</th>
-            <td><input type="text" id="text5" name="text[]" class="form-control"></td>
+            <td><input type="text" id="text5" name="text[]" class="form-control" disabled="disabled"></td>
           </tr>
          </table>
-         <input type="button" id="sub-mod" class="btn-block btn-lg btn-primary" value="提交">
-          
+         <div class="modal-footer">
+         <input type="button" id="sub-mod" class="btn btn-primary btn-lg" style="width:32%;float:left;margin-left:10%;" value="提交">
+         <input type="button" id="sub-delete" class="btn btn-primary btn-lg"style="width:32%;float:left;margin-left:10%;" value="删除该条成绩信息">
+        </div>
       </div>
       </div><!-- /.modal-content -->
       </div><!-- /.modal -->
@@ -204,23 +209,19 @@
        document.getElementById("text0").value = tr1.cells[0].innerText;
        document.getElementById("text2").value = tr1.cells[4].innerText;
        document.getElementById("text1").value = tr1.cells[3].innerText;
-       document.getElementById("text3").value = tr1.cells[9].innerText;
+       document.getElementById("text3").value = tr1.cells[7].innerText;
        document.getElementById("text4").value = tr1.cells[2].innerText;
        document.getElementById("text5").value = tr1.cells[1].innerText;
-       document.getElementById("text6").value = tr1.cells[7].innerText;
-       document.getElementById("text7").value = tr1.cells[8].innerText;
+       document.getElementById("text6").value = tr1.cells[5].innerText;
+       document.getElementById("text7").value = tr1.cells[6].innerText;
     }
   $(function(){
     $("#sub-mod").click(function(){
       var id = $("#text0").val();
       var level = $("#level").val();
-      var leader = $("#text3").val();
-      var month  = $("#text4").val();
-      var year = $("#text5").val();
-      var department = $("#text6").val();
       var office = $("#text7").val();
-      var action = "mod";
-      if(leader==""||month==""||year==""||department==""||office==""){
+      var action = "grademod";
+      if(office==""){
         alert("不能为空！");
         return false;
       }
@@ -228,7 +229,7 @@
         type:"POST",
         url:action,
         dataType:"json",
-        data:{"id":id,"leader":leader,"month":month,"year":year,"level":level,"department":department,"office":office},
+        data:{"id":id,"office":office,"level":level},
         success:function(data){
           if(data.success==1){
             alert('编辑成功!');
@@ -244,5 +245,31 @@
         }
       });
   });
+    $("#sub-delete").click(function(){
+      var id = $("#text0").val();var level = $("#level").val();
+      var action = "gradedelete";
+      if (confirm("确定要删除该成绩吗？")) {
+      $.ajax({
+        type:"POST",
+        url:action,
+        dataType:"json",
+        data:{"id":id,"level":level},
+        success:function(data){
+          if(data.success==1){
+            alert('删除成功!');
+            //alert(data.ss);
+            //location.href='Plan_adjustment.html';
+            document.getElementById('form1').submit();
+          }
+          if(data.success==0){ 
+          //alert(data.username);
+          alert("删除失败！");
+            return false;
+          }
+        }
+      });
+    }
   });
+});
+    
 </script>

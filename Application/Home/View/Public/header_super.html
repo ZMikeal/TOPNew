@@ -33,7 +33,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img src="__PUBLIC__/img/logo.png"><!--  <span>北汽集团</span> --></a>
+              <a href="index.html" class="site_title"><img src="__PUBLIC__/img/logo.png"><!-- <i class="fa fa-paw"></i> <span>北汽集团</span> --></a>
             </div>
 
             <div class="clearfix"></div>
@@ -44,7 +44,7 @@
                 <img src="__PUBLIC__/custom/images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>欢迎</span>
+                <span>欢迎,</span>
                 <empty name="Think.session.admin">
                 <else/><h2></h2>
                 </empty>
@@ -59,180 +59,60 @@
               <div class="menu_section">
                 <h3>{$Think.session.admin.username}</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> 计划管理 <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-home"></i> 超级管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a>月度计划<span class="fa fa-chevron-down"></span></a>
+                      <!-- <li><a>计划提交情况<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{:U('Plan/formmidplan')}">新建清单</a>
+                            <li><a href="{:U('Planjhy/Plan_submission')}">月度计划提交情况</a>
                             </li>
-                            <li><a href="{:U('Plan/modmidplan')}">总结清单</a>
+                            <li><a href="{:U('Planjhy/Plan_submissionY')}">年度计划提交情况</a>
                             </li>
-                            <li><a href="{:U('Plan/midplan')}">查看清单</a>
+                        </ul>
+                      </li>
+                      <li><a>计划总结情况<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Planjhy/Plan_evaluation')}">月度计划总结情况</a>
                             </li>
-                          </ul>
-                        </li>
-                        <li><a>年度计划<span class="fa fa-chevron-down"></span></a>
-                         <ul class="nav child_menu">
-                            <li><a href="{:U('PlanY/formmidplan')}">新建清单</a>
+                            <li><a href="{:U('Planjhy/Plan_evaluationY')}">年度计划总结情况</a>
                             </li>
-                            <li><a href="{:U('PlanY/modmidplan')}">总结清单</a>
+                        </ul>
+                      </li> -->
+                      <li><a href="{:U('Plansuper/controY')}">年度计划时间控制</a></li>
+                      <li><a href="{:U('Planjhy/Plan_adjustment')}">清单调整</a></li>
+                      <li><a href="{:U('Planjhy/Grade_adjustment')}">评分调整</a></li>
+                      <li><a href="{:U('Plansuper/withdrawlist')}">最终成绩撤回</a></li>
+
+                      <!-- <li><a>成绩管理<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a>
                             </li>
-                            <li><a href="{:U('PlanY/midplan')}">查看清单</a>
+                            <li><a href="{:U('index/index2')}">年度成绩提交</a>
                             </li>
-                          </ul>
-                        </li>
+                        </ul>
+                      </li>
+
+                      <li><a href="{:U('index/index2')}">季度评级</a></li>
                     </ul>
-                  </li>
-
-                    <!--加班管理模块-->
-                    <li><a><i class="fa fa-sitemap"></i> 加班管理 <span class="label label-success pull-right">Coming Soon</span><!-- <span class="fa fa-chevron-down"></span> --></a>
-                        <!-- <ul class="nav child_menu">
-                            <li><a href="{:U('Overwork/overwork_apply')}">加班预报</a>
-                        </ul> -->
-                    </li>
-                    <!--加班管理模块结束-->
-
-                  <if condition="$Think.session.admin.id_level neq 3">                
-                  <li><a><i class="fa fa-edit"></i> 绩效总评 <span class="fa fa-chevron-down"></span></a>
+                  </li> -->
+                  <!-- <li><a><i class="fa fa-desktop"></i> 人员管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
+                       <li><a>人员管理<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/Planconfirm')}">月度计划确认</a>
+                            <li><a href="{:U('Planjhy/vse')}">vse管理</a>
                             </li>
-                            <li><a href="{:U('Performance/PlanconfirmY')}">年度计划确认</a>
+                            <li><a href="{:U('Planjhy/user')}">人员管理</a>
                             </li>
-                          </ul>
-                    </li>
-                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
-                            </li>
-                            <if condition="($Think.session.admin.id_level eq 5) or ($Think.session.admin.id_level eq 4)">
-                            <li><a href="{:U('Performance/Gradequarter')}">季度计划评分</a>
-                            </li>
-                            </if>
-                            <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
-                            </li>
-                          </ul>
-                    </li>
-
-
-
-                   
-                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
-                            </li>
-                            <if condition="($Think.session.admin.id_level eq 5) or ($Think.session.admin.id_level eq 4)">
-                            <li><a href="{:U('index/index1')}">季度绩效</a>
-                            </li>
-                            </if>
-                            <li><a href="{:U('index/index1')}">年度绩效</a>
-                            </li>
-                          </ul>
-                    </li>
-                    <if condition="($Think.session.admin.id_level eq 5) and ($Think.session.admin.user_type neq '副部长')"> 
-                    <li><a>成绩提交<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a>
-                              </li>
-                          <!-- <ul class="nav child_menu">
-                              <li><a href="{:U('index/index1')}">月度绩效</a>
-                              </li>
-                              <li><a href="{:U('index/index1')}">年度绩效</a>
-                              </li>
-                            </ul> -->
+   
+                      </ul>
+                      </li>
+                      <li><a href="{:U('Planjhy/formmidplan')}">时间控制</a></li>
                     </ul>
-                    </li>
-                    </if>
-                  </ul>
-                  </li>
-                  </if>
-                  
-                  <!-- 项目经理兼职 -->
-                  <if condition="$Think.session.admin.if_authority eq 2">                
-                  <li><a><i class="fa fa-edit"></i> 绩效总评 [经理授权] <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/Planconfirm')}">月度计划确认</a>
-                            </li>
-                            <li><a href="{:U('Performance/PlanconfirmY')}">年度计划确认</a>
-                            </li>
-                          </ul>
-                    </li>
-                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
-                            </li>
-                            <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
-                            </li>
-                          </ul>
-                    </li>
-
-                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
-                            </li>
-                            <li><a href="{:U('index/index1')}">年度绩效</a>
-                            </li>
-                          </ul>
-                    </li>
-                    </ul>
-                  </li>
-                  </if>
-                  <!-- 经理兼职显示结束 -->
-                  
-                  <!-- 科长兼职 -->
-                  <if condition="$Think.session.admin.if_authority eq 3">                
-                  <li><a><i class="fa fa-edit"></i> 绩效总评 [科长授权] <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/Planconfirm')}">月度计划确认</a>
-                            </li>
-                            <li><a href="{:U('Performance/PlanconfirmY')}">年度计划确认</a>
-                            </li>
-                          </ul>
-                    </li>
-                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
-                            </li>
-                            <li><a href="{:U('index/index1')}">季度计划评分</a>
-                            </li>
-                            <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
-                            </li>
-                          </ul>
-                    </li>
-
-                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
-                            </li>
-                            <li><a href="{:U('index/index1')}">季度绩效</a>
-                            </li>
-                            <li><a href="{:U('index/index1')}">年度绩效</a>
-                            </li>
-                          </ul>
-                    </li>
-                    </ul>
-                  </li>
-                  </if>
-                  <!-- 科长兼职显示结束 -->
-
-                  <li><a href="javascript:void(0)"><i class="fa fa-desktop"></i> 综合查询 <span class="label label-success pull-right">Coming Soon</span></a>
                   </li>
                   <li><a><i class="fa fa-table"></i> 账户管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{:U('user/pass')}">修改密码</a></li>
-                      <li><a href="{:U('User/index')}">修改个人信息</a></li>
                     </ul>
-                  </li>
-                  <li><a href="javascript:void(0)"><i class="fa fa-bar-chart-o"></i> 扩展功能 <span class="label label-success pull-right">Coming Soon</span></a>
-                  </li>
-                  <li><a href="javascript:void(0)"><i class="fa fa-clone"></i>帮助 <span class="label label-success pull-right">Coming Soon</span></a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
          <!--      <div class="menu_section">
@@ -315,7 +195,7 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                   <!--  <li><a href="javascript:;"> Profile</a></li>
+                    <!-- <li><a href="javascript:;"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
@@ -327,7 +207,7 @@
                   </ul>
                 </li>
 
-               <!--  <li role="presentation" class="dropdown">
+                <!-- <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
                     <span class="badge bg-green">6</span>
@@ -391,12 +271,6 @@
                     </li>
                   </ul>
                 </li> -->
-                <li class="">
-                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">计划员设置时间为： {$Think.session.admin.year_sys} 年 {$Think.session.admin.month} 月 </a>
-                </li>
-                <li class="">
-                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.1.8</a>
-                </li>
               </ul>
             </nav>
           </div>

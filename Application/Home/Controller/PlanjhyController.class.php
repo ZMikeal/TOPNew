@@ -7,7 +7,7 @@ class PlanjhyController extends BaseController {
           $this->redirect('login/login');
           exit;
         }
-     if(session('admin.id_level')!=2){
+     if(session('admin.id_level')==3||session('admin.id_level')==4||session('admin.id_level')==5||session('admin.id_level')==7||session('admin.id_level')==8){
           $this->redirect('plan/index');
           exit;
         }
@@ -305,7 +305,7 @@ class PlanjhyController extends BaseController {
       //dump($vse);exit;
       $this->assign('vse1',$vse1);// 赋值数据集
       $leadertj['user_department']=session('admin.user_department');
-      $leader=$this->model->where($leadertj)->where("id_level in (4,5)")->getField('username',true);
+      $leader=$this->model->where($leadertj)->where("id_level in (4,5,8) or if_authority in (1,2,3,4)")->getField('username',true);
       $this->model=D('info_admin');
       $tj1['user_department']=session('admin.user_department');
       $form_vse = $this->model->where($tj1)->select();
@@ -761,6 +761,10 @@ class PlanjhyController extends BaseController {
     //清单调整
     public function Plan_adjustment(){
       $search=I('post.search');
+      if(session('admin.user_department')!='')
+      {
+        $tj['department']=session('admin.user_department');
+      }
       if($search[3]=='')
       {
         $data='';
@@ -780,17 +784,98 @@ class PlanjhyController extends BaseController {
       $this->display();
     }
     public function mod(){
-      $level=I('post.level');
-      $tj1['id']=I('post.id');
-      $tj['plan_leader']=I('post.leader');
-      $tj['month']=I('post.month');
-      $tj['year']=I('post.year');
-      if($level==3||$level==7){$this->model=M('planmonth_staff');}
-      if($level==4||$level==8){$this->model=M('planmonth_chief');}
-      if($level==5){$this->model=M('planmonth_miniter');}
+      $level=trim(I('post.level'));
+      $tj1['id']=trim(I('post.id'));
+      $tj['plan_leader']=trim(I('post.leader'));
+      $tj['month']=trim(I('post.month'));
+      $tj['year']=trim(I('post.year'));
+      $tj['department']=trim(I('post.department'));
+      $tj['office']=trim(I('post.office'));
+      if($level==3||$level==7){$this->model=D('planmonth_staff');}
+      if($level==4||$level==8){$this->model=D('planmonth_chief');}
+      if($level==5){$this->model=D('planmonth_miniter');}
       if($this->model->create($tj))
         {
           $this->model->where($tj1)->save();
+          $result['success']=1;
+          $this->ajaxReturn($result,"json");
+        }
+        else
+        {
+          $result['success']=0;
+          $this->ajaxReturn($result,"json");
+        }
+    }
+    //评分调整
+    public function Grade_adjustment(){
+      $search=I('post.search');
+      if($search[3]=='')
+      {
+        $data='';
+      }
+      else
+      {
+        if($search[2]==3||$search[2]==7)
+        {
+          $this->model=M('grademonth_staff');$tj['staff_id']=$search[3];
+          if(session('admin.user_department')!='')
+            {
+              $tj['staff_department']=session('admin.user_department');
+            }
+        }
+        if($search[2]==4||$search[2]==8)
+        {
+          $this->model=M('grademonth_chief');$tj['chief_id']=$search[3];
+          if(session('admin.user_department')!='')
+            {
+              $tj['chief_department']=session('admin.user_department');
+            }
+        }
+        if($search[2]==5)
+        {
+          $this->model=M('grademonth_minister');$tj['minister_id']=$search[3];
+          if(session('admin.user_department')!='')
+            {
+              $tj['minister_department']=session('admin.user_department');
+            }
+        }
+        $tj['year']=$search[0];
+        $tj['month']=$search[1];
+        //dump($tj);exit;
+        $data=$this->model->where($tj)->select();
+        $this->assign('data',$data);
+        //dump($data);exit;
+      }
+      $this->assign('search',$search);
+      $this->display();
+    }
+    public function grademod(){
+      $level=I('post.level');
+      $tj1['id']=I('post.id');
+      
+      if($level==3||$level==7){$this->model=D('grademonth_staff');$tj['staff_office']=trim(I('post.office'));}
+      if($level==4||$level==8){$this->model=D('grademonth_chief');$tj['chief_office']=trim(I('post.office'));}
+      if($level==5){$this->model=D('grademonth_miniter');$tj['miniter_office']=trim(I('post.office'));}
+      if($this->model->create($tj))
+        {
+          $this->model->where($tj1)->save();
+          $result['success']=1;
+          $this->ajaxReturn($result,"json");
+        }
+        else
+        {
+          $result['success']=0;
+          $this->ajaxReturn($result,"json");
+        }
+    }
+    public function gradedelete(){
+      $level=I('post.level');
+      $tj1['id']=I('post.id');
+      if($level==3||$level==7){$this->model=D('grademonth_staff');}
+      if($level==4||$level==8){$this->model=D('grademonth_chief');}
+      if($level==5){$this->model=D('grademonth_miniter');}
+      if( $this->model->where($tj1)->delete())
+        {
           $result['success']=1;
           $this->ajaxReturn($result,"json");
         }

@@ -11,6 +11,10 @@ class PerformanceController extends BaseController {
        //    $this->redirect('index/index2');
        //     exit;
        //    }
+       if(session('admin.id_level')==1){
+          $this->redirect('plansuper/index');
+          exit;
+        }
     }
     //月度计划确认列表
     public function Planconfirm(){
@@ -344,23 +348,23 @@ class PerformanceController extends BaseController {
         }
         else
         {
-        $depart=session('admin.user_department');
-        $search1=M('info_admin')->where("user_department='".$depart."'")->distinct(true)->getField('user_office',true);
-        //dump($department);exit;
-        if($search[2]=="")
-        {
-          unset($tj['plan_leader']);
-          $tj['department']=session('admin.user_department');
-        }
-        else
-        {
-          unset($tj['plan_leader']);
-          $tj['office']=$search[2];
-        }
-        $this->model=D('planmonth_chief');
-        $jh = $this->model->field("id,chief_id,office,chief_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->group('chief_name')->select();
-        $this->model=D('grademonth_chief');
-        //
+          $depart=session('admin.user_department');
+          $search1=M('info_admin')->where("user_department='".$depart."'")->distinct(true)->getField('user_office',true);
+          //dump($department);exit;
+          if($search[2]=="")
+          {
+            unset($tj['plan_leader']);
+            $tj['department']=session('admin.user_department');
+          }
+          else
+          {
+            unset($tj['plan_leader']);
+            $tj['office']=$search[2];
+          }
+          $this->model=D('planmonth_chief');
+          $jh = $this->model->field("id,chief_id,office,chief_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->group('chief_name')->select();
+          $this->model=D('grademonth_chief');
+          //
         }
       }
 
@@ -802,9 +806,10 @@ class PerformanceController extends BaseController {
     public function addgradeM(){
       $data=I('post.');
       $lev=$data['lev'];
-      //dump($lev);exit;
+      
       $ii=count($data['id']);
       $le=session('admin.id_level');
+
       for($i=0;$i<$ii;$i++)
       {
         $id=$data['id'][$i];
@@ -823,24 +828,22 @@ class PerformanceController extends BaseController {
             $this->model=D('planmonth_chief');
         }
         $this->model->where("id=$id")->setField('plan_grade',$grade);
-        //dump($id);
         $admin=$this->model->where("id=$id")->find();
       }
-        if($le==4||$le==7||$le==8||$le==3)
+      if($le==4||$le==7||$le==8||$le==3)
         {
-          $this->model=D('info_admin');         
+          $this->model=M('info_admin');         
           $tj['staff_id']=$admin['staff_id'];
           $tj['staff_name']=$admin['staff_name'];
           $tj['year']=$admin['year'];
           $tj['month']=$admin['month'];
           $admin=$this->model->where("id_employee=".$tj['staff_id'])->find();
           $tj['staff_department']=$admin['user_department'];
-          $tj['staff_office']=$admin['user_office'];
+          //$tj['staff_office']=$admin['user_office'];
           $tj['grade_leader']=session('admin.username');
           $this->model=D('grademonth_staff');
-
           $found=$this->model->where($tj)->find();
-          if($found=="")
+          if($found==null)
           {
              $tj['grade']=$data['sum'];
              $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
@@ -853,19 +856,18 @@ class PerformanceController extends BaseController {
               $this->model->where($tj)->setField('grade',$data['sum']);
           }
         }
-        //ump($lev);exit;
         if($le==5)
         {
           if($lev==3)
           {
           //dump($lev);exit;
-          $this->model=D('planmonth_staff');       
-          $tj['staff_id']=$admin['staff_id'];
-          $tj['staff_name']=$admin['staff_name'];
-          $tj['year']=$admin['year'];
-          $tj['month']=$admin['month'];
-          $tj['plan_leader']=session('admin.username');
-           $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
+            $this->model=D('planmonth_staff');       
+            $tj['staff_id']=$admin['staff_id'];
+            $tj['staff_name']=$admin['staff_name'];
+            $tj['year']=$admin['year'];
+            $tj['month']=$admin['month'];
+            $tj['plan_leader']=session('admin.username');
+            $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
            //dump($count);exit;
            foreach ($count as $k => $v) {   //  循环保存每一条值
                   //$map = array();
@@ -886,7 +888,7 @@ class PerformanceController extends BaseController {
                   //dump($admin);
                   //dump($k);
                  $tj['staff_id']=$v['staff_id'];$tj['staff_name']=$v['staff_name'];$tj['yaer']=$v['year'];$tj['month']=$v['month'];
-                 $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];$tj['staff_office']=$admin['office'];
+                 $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];//$tj['staff_office']=$admin['office'];
                  $this->model=D('grademonth_staff');
                  $found=$this->model->where($tj)->find();
                   //dump($found);
@@ -906,121 +908,110 @@ class PerformanceController extends BaseController {
                   $id=$found['id'];$tj['grade_last']=session('admin.username');
                   $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
                 }
-           }//dump($count);exit;
-          }
-          if($lev==5)
-          {
-          //dump($lev);exit;
-          $this->model=D('planmonth_minister');       
-          $tj['minister_id']=$admin['minister_id'];
-          $tj['minister_name']=$admin['minister_name'];
-          $tj['year']=$admin['year'];
-          $tj['month']=$admin['month'];
-          $tj['plan_leader']=session('admin.username');
-           $count = $this->model->field("id,minister_id,minister_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
-           foreach ($count as $k => $v) {   //  循环保存每一条值
-                  //$map = array();
-
-                  $count[$k]['plan_grade']=explode(",", $v['plan_grade']);
-                  $sum=0;
-                  foreach ($count[$k]['plan_grade'] as $key => $value) {
-                    $sum+=$value;
-                  }
-                  if($sum==0)
-                  {
-                    $count[$k]['plan_grade']="";
-                  }
-                  if($sum!=0)
-                  {
-                    $count[$k]['plan_grade']=$sum;
-                  }
-                  //dump($admin);
-                  //dump($k);
-                 $tj['minister_id']=$v['minister_id'];$tj['minister_name']=$v['minister_name'];$tj['yaer']=$v['year'];$tj['month']=$v['month'];
-                 $tj['grade_leader']=$v['plan_leader'];$tj['minister_department']=$admin['department'];$tj['minister_office']=$admin['office'];
-                 $this->model=D('grademonth_minister');
-                 $found=$this->model->where($tj)->find();
-                  //dump($found);
-                 
-                if($found=="")
-                 {
-                    $tj['grade']=$count[$k]['plan_grade'];
-                    $tj['grade_last']=session('admin.username');
-                    if($this->model->create($tj))
-                    {
-                      //dump($tj);
-                      $this->model->add();
-                    }
-                 }  
-               else
-                {
-                  $id=$found['id'];$tj['grade_last']=session('admin.username');
-                  $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
-                }
-           }//dump($count);exit;
-          }
-          if($lev=="")
-          {
-          // $this->model=D('info_admin');
-          // $tj['chief_id']=$admin['chief_id'];
-          // $tj['chief_name']=$admin['chief_name'];
-          // $tj['year']=$admin['year'];
-          // $tj['month']=$admin['month'];
-          // $admin=$this->model->where("id_employee=".$tj['chief_id'])->find();
-          // $tj['chief_department']=$admin['user_department'];
-          // $tj['chief_office']=$admin['user_office'];
-          // $tj['grade_leader']=session('admin.username');
-          // $this->model=D('grademonth_chief');
-
-
-          $this->model=D('planmonth_chief');       
-          $tj['chief_id']=$admin['chief_id'];
-          $tj['chief_name']=$admin['chief_name'];
-          $tj['year']=$admin['year'];
-          $tj['month']=$admin['month'];
-          $tj['plan_leader']=session('admin.username');
-           $count = $this->model->field("id,chief_id,chief_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
-                     //dump($count);exit;
-           foreach ($count as $k => $v) {   //  循环保存每一条值
-                  //$map = array();
-
-                  $count[$k]['plan_grade']=explode(",", $v['plan_grade']);
-                  $sum=0;
-                  foreach ($count[$k]['plan_grade'] as $key => $value) {
-                    $sum+=$value;
-                  }
-                  if($sum==0)
-                  {
-                    $count[$k]['plan_grade']="";
-                  }
-                  if($sum!=0)
-                  {
-                    $count[$k]['plan_grade']=$sum;
-                  }
-          }
-          $this->model=D('grademonth_chief');
-          $tj['chief_department']=$admin['department'];$tj['chief_office']=$admin['office'];
-          if($tj['chief_department']==''){unset($tj['chief_department']);}
-          if($tj['chief_office']==''){unset($tj['chief_office']);}
-          $found=$this->model->where($tj)->find();
-           if($found=="")
+              }//dump($count);exit;
+            }
+            if($lev==5)
             {
-             $tj['grade']=$data['sum'];
-             $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
-             if($this->model->create($tj))
-             {
-                $this->model->add();
-             }
-            }  
-          else
-           {
-              $id=$found['id'];$tj['grade_last']="";
-              $this->model->where($tj)->setField('grade',$data['sum']);
-           }
-        }    
+            //dump($lev);exit;
+            $this->model=D('planmonth_minister');       
+            $tj['minister_id']=$admin['minister_id'];
+            $tj['minister_name']=$admin['minister_name'];
+            $tj['year']=$admin['year'];
+            $tj['month']=$admin['month'];
+            $tj['plan_leader']=session('admin.username');
+             $count = $this->model->field("id,minister_id,minister_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
+             foreach ($count as $k => $v) {   //  循环保存每一条值
+                    //$map = array();
+
+                    $count[$k]['plan_grade']=explode(",", $v['plan_grade']);
+                    $sum=0;
+                    foreach ($count[$k]['plan_grade'] as $key => $value) {
+                      $sum+=$value;
+                    }
+                    if($sum==0)
+                    {
+                      $count[$k]['plan_grade']="";
+                    }
+                    if($sum!=0)
+                    {
+                      $count[$k]['plan_grade']=$sum;
+                    }
+                    //dump($admin);
+                    //dump($k);
+                   $tj['minister_id']=$v['minister_id'];$tj['minister_name']=$v['minister_name'];$tj['yaer']=$v['year'];$tj['month']=$v['month'];
+                   $tj['grade_leader']=$v['plan_leader'];$tj['minister_department']=$admin['department'];//$tj['minister_office']=$admin['office'];
+                   $this->model=D('grademonth_minister');
+                   $found=$this->model->where($tj)->find();
+                    //dump($found);
+                   
+                  if($found=="")
+                   {
+                      $tj['grade']=$count[$k]['plan_grade'];
+                      $tj['grade_last']=session('admin.username');
+                      if($this->model->create($tj))
+                      {
+                        //dump($tj);
+                        $this->model->add();
+                      }
+                   }  
+                 else
+                  {
+                    $id=$found['id'];$tj['grade_last']=session('admin.username');
+                    $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
+                  }
+             }//dump($count);exit;
+            }
+            if($lev=="")
+            {
+              $this->model=D('planmonth_chief');       
+              $tj['chief_id']=$admin['chief_id'];
+              $tj['chief_name']=$admin['chief_name'];
+              $tj['year']=$admin['year'];
+              $tj['month']=$admin['month'];
+              $tj['plan_leader']=session('admin.username');
+             $count = $this->model->field("id,chief_id,chief_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
+                       //dump($count);exit;
+             foreach ($count as $k => $v) {   //  循环保存每一条值
+                    //$map = array();
+
+                    $count[$k]['plan_grade']=explode(",", $v['plan_grade']);
+                    $sum=0;
+                    foreach ($count[$k]['plan_grade'] as $key => $value) {
+                      $sum+=$value;
+                    }
+                    if($sum==0)
+                    {
+                      $count[$k]['plan_grade']="";
+                    }
+                    if($sum!=0)
+                    {
+                      $count[$k]['plan_grade']=$sum;
+                    }
+              }
+              $this->model=D('grademonth_chief');
+              $tj['chief_department']=$admin['department'];$tj['chief_office']=$admin['office'];
+              if($tj['chief_department']==''){unset($tj['chief_department']);}
+              if($tj['chief_office']==''){unset($tj['chief_office']);}
+              $found=$this->model->where($tj)->find();
+               if($found=="")
+                {
+                 $tj['grade']=$data['sum'];
+                 $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
+                 if($this->model->create($tj))
+                 {
+                    $this->model->add();
+                 }
+                }  
+              else
+               {
+                  $id=$found['id'];$tj['grade_last']="";
+                  $this->model->where($tj)->setField('grade',$data['sum']);
+               }
+            }    
         //dump($tj);exit;   
+        
+        }
         $this->ajaxReturn(array('success'=>1),"json");
-       }
   }
 
     //年度评分列表查看
@@ -1161,13 +1152,13 @@ class PerformanceController extends BaseController {
         $level='3,7';
       }
       if(session('admin.id_level')==5){
-        $level='4,8';
+        $level='3,4,8,7';
       } 
       $info=str_replace(",","','",$info);
-      $data[1]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (1,2,3) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
-      $data[2]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (4,5,6) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
-      $data[3]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (7,8,9) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
-      $data[4]=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (10,11,12) and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
+      $data[1]=M('grademonth_confirm')->field("id_employee,grade_leader,grade_last,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (1,2,3) and name in ('".$info."') and id_level in (".$level.")")->order('id_level desc')->group('name')->select();
+      $data[2]=M('grademonth_confirm')->field("id_employee,grade_leader,grade_last,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (4,5,6) and name in ('".$info."') and id_level in (".$level.")")->order('id_level desc')->group('name')->select();
+      $data[3]=M('grademonth_confirm')->field("id_employee,grade_leader,grade_last,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (7,8,9) and name in ('".$info."') and id_level in (".$level.")")->order('id_level desc')->group('name')->select();
+      $data[4]=M('grademonth_confirm')->field("id_employee,grade_leader,grade_last,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (10,11,12) and name in ('".$info."') and id_level in (".$level.")")->order('id_level desc')->group('name')->select();
       for($i=1;$i<=4;$i++){
         $data1[$i]=count($data[$i]);
       }
@@ -1198,49 +1189,59 @@ class PerformanceController extends BaseController {
           $data[$k]['sum']=round(($sum/$count)*0.7,1);
         }
         //dump($data);exit;
+        //遍历分项分数据
+        foreach ($data as $k => $v) {
+          if($v['id_level']==3||$v['id_level']==7){$this->model=D('gradequarter_staff');}
+          if($v['id_level']==4||$v['id_level']==8){$this->model=D('gradequarter_chief');}
+          $tj['name']=$v['name'];$tj['year']=$v['year'];$tj['quarter']=$quarter;
+          $fen=$this->model->where($tj)->find();
+          if($fen!="")
+          {
+            $data[$k]['grade_ability']=$fen['grade_ability'];
+            $data[$k]['grade_skill']=$fen['grade_skill'];
+            $data[$k]['grade_study']=$fen['grade_study'];
+            $data[$k]['grade_execute']=$fen['grade_execute'];
+            $data[$k]['grade_cooperate']=$fen['grade_cooperate'];
+            $data[$k]['grade_order']=$fen['grade_order'];
+            $data[$k]['grade_proity']=$fen['grade_proity'];
+            $data[$k]['grade_undertake']=$fen['grade_undertake'];
+            $data[$k]['grade_total']=$fen['grade_total'];
+          }
+        }
         $this->assign('data',$data);
       }
+
       $this->assign('quarter',$quarter);
       $this->assign('data1',$data1);
       $this->display();
 
     }
-    public function quarterlist(){
-      $quarter = I('get.quarter');
-
-      $info=implode(',',M('info_admin')->where("user_leader = '".session('admin.username')."'")->getField('username',true));
-      $tj['grade_leader']=session('admin.username');
-      $tj['year']=session('admin.year');
-      if(session('admin.id_level')==4){
-        $level='3,7';
+    public function quartersub(){
+      $data=I('post.');
+      //dump($data);
+      foreach ($data['chief'] as $k => $v) {
+        if($v['id_level']==3||$v['id_level']==7){
+          $this->model=D('gradequarter_staff');
+        }
+        if($v['id_level']==4||$v['id_level']==8){
+          $this->model=D('gradequarter_chief');
+        }
+          $v['quarter']=$data['quarter'];
+          $tj['name']=$v['name'];$tj['year']=$v['year'];$tj['quarter']=$data['quarter'];
+          if($this->model->where($tj)->find()==''){
+            if($this->model->create($v))
+            {
+              $this->model->add();
+            }
+          }
+          else{
+            if($this->model->create($v))
+            {
+              $this->model->where($tj)->save();
+            }
+          }
       }
-      if(session('admin.id_level')==5){
-        $level='4,8';
-      } 
-      $info=str_replace(",","','",$info);
-      if($quarter==1){
-        $month='1,2,3';
-      }
-      if($quarter==2){
-        $month='4,5,6';
-      }
-      if($quarter==3){
-        $month='7,8,9';
-      }
-      if($quarter==4){
-        $month='10,11,12';
-      }
-      $data=M('grademonth_confirm')->field("id_employee,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (".$month.") and name in ('".$info."') and id_level in (".$level.")")->group('name')->select();
-      
-      foreach ($data as $key => $value) {
-        $data[$key]['month']=explode(",", $value['month']);
-        $data[$key]['grade']=explode(",", $value['grade']);
-      }
-      //dump($data);exit;
-      $this->assign('data',$data);
-      $this->assign('quarter',$quarter);
-      $this->display();
-
+      $this->ajaxReturn(array('success'=>1),"json");
     }
 
 }
