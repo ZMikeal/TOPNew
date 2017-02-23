@@ -601,7 +601,8 @@ class PerformanceController extends BaseController {
                     $jh[$k]['plan_grade']=$sum;
                   }                  
                 }
-     if($level==5)
+      $this->assign('jh',$jh);
+      if($level==5)
       {
         $this->model=D('planmonth_staff');
         $jh1 = $this->model->field("id,staff_id,staff_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->order('staff_name')->group('staff_name')->select();
@@ -650,11 +651,35 @@ class PerformanceController extends BaseController {
                   }                  
                 }
                 $this->assign('jh2',$jh2);
+       $this->special($tj);
        }
-      $this->assign('jh',$jh);
       $this->display();
     }
     //~
+    //特殊人员遍历方法
+    protected function special($tj){
+      $tj['user_department']=session('admin.user_department');
+      $tj['grade_leader']=session('admin.username');
+      $special_user=M('info_admin')->where($tj)->order('username desc')->getField('username',true);
+      $this->assign('special_user',$special_user);
+      $special1=M('grademonth_staff')->where($tj)->where("if_special = 1")->select();
+      foreach ($special1 as $k => $v) {
+        $special1[$k]['level']=3;
+        $special1[$k]['name']=$v['staff_name'];
+      }
+      $special2=M('grademonth_chief')->where($tj)->where("if_special = 1")->select();
+      foreach ($special2 as $k => $v) {
+        $special2[$k]['level']=4;
+        $special2[$k]['name']=$v['chief_name'];
+      }
+      $special3=M('grademonth_minister')->where($tj)->where("if_special = 1")->select();
+      foreach ($special3 as $k => $v) {
+        $special3[$k]['level']=5;
+        $special3[$k]['name']=$v['minister_name'];
+      }
+      $special=array_merge($special1,$special2,$special3);
+      $this->assign('special',$special);
+    } 
     //季度计划评分列表
     public function PlangradeQ(){
       $level=session('admin.id_level');

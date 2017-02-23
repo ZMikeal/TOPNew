@@ -1,4 +1,6 @@
 <include file="Public/headerr" /> 
+<script src="__PUBLIC__/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="__PUBLIC__/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <div class="right_col" role="main" style="">
   
           
@@ -31,16 +33,16 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>id</th>
-                          <th>用户名称</th>
-                          <th>工号</th>
-                          <th>科室</th>
-                          <th>岗位</th>
-                          <th>上级</th>
-                          <th>等级</th>
-                          <th>类型</th>
-                          <th>是否授权</th>
-                          <th>操作</th>
+                          <th width="5%">id</th>
+                          <th width="8%">用户名称</th>
+                          <th width="5%">工号</th>
+                          <th width="8%">科室</th>
+                          <th width="10%">岗位</th>
+                          <th width="8%">上级</th>
+                          <th width="8%">等级</th>
+                          <th width="10%">类型</th>
+                          <th width="10%">是否授权</th>
+                          <th width="4%">操作</th>
                         </tr>
                       </thead>
 
@@ -443,16 +445,6 @@ $(document).ready(function() {
        var action = "leader";
        var level=tr1.cells[6].innerText;
        var authority=tr1.cells[8].innerText;
-       if(authority=="已授权"){
-            $("input[name='radio']").eq(0).attr("checked","checked");
-            $("input[name='radio']").eq(1).removeAttr("checked");
-            $("input[name='radio']").eq(0).click();
-       }
-       else{
-            $("input[name='radio']").eq(1).attr("checked","checked");
-            $("input[name='radio']").eq(0).removeAttr("checked");
-            $("input[name='radio']").eq(1).click();
-       }
         $.ajax({
         type:"POST",
         url:action,
