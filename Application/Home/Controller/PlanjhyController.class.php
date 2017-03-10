@@ -849,9 +849,45 @@ class PlanjhyController extends BaseController {
         $this->assign('data',$data);
         //dump($data);exit;
       }
+      $this->special();
       $this->assign('search',$search);
       $this->display();
     }
+    //特殊人员遍历方法
+    protected function special(){
+      $tj['year']=session('admin.year');
+      $tj['month']=session('admin.month');
+      if($tj['month']==1){
+        $tj['month']=12;
+        $tj['year']=session('admin.year')-1;
+      }
+      else
+      {
+         $tj['month']=session('admin.month')-1;
+      }
+      $tj['user_department']=session('admin.user_department');
+      //$tj['grade_leader']=session('admin.username');
+      $special_user=M('info_admin')->where($tj)->order('username desc')->getField('username',true);
+      $this->assign('special_user',$special_user);
+      $special1=M('grademonth_staff')->where($tj)->where("if_special = 1 and staff_department='".$tj['user_department']."'")->select();
+      foreach ($special1 as $k => $v) {
+        $special1[$k]['level']=3;
+        $special1[$k]['name']=$v['staff_name'];
+      }
+      $special2=M('grademonth_chief')->where($tj)->where("if_special = 1 and chief_department='".$tj['user_department']."'")->select();
+      foreach ($special2 as $k => $v) {
+        $special2[$k]['level']=4;
+        $special2[$k]['name']=$v['chief_name'];
+      }
+      $special3=M('grademonth_minister')->where($tj)->where("if_special = 1 and minister_department='".$tj['user_department']."'")->select();
+      foreach ($special3 as $k => $v) {
+        $special3[$k]['level']=5;
+        $special3[$k]['name']=$v['minister_name'];
+      }
+      $special=array_merge($special1,$special2,$special3);
+      $this->assign('special',$special);
+      $this->assign('tj',$tj);
+    } 
     public function grademod(){
       $level=I('post.level');
       $tj1['id']=I('post.id');

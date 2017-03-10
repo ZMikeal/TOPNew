@@ -1,0 +1,240 @@
+<include file="Public/header_dq" /> 
+<style type="text/css">
+  .column-title{
+    text-align: center;
+  }
+</style>
+<div class="right_col" role="main" style="height:960px;">
+  <div class="row">
+              <div class="col-md-12 col-xs-13">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>党群评分</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <!-- <form class="form-horizontal form-label-left input_mask"> -->
+                    <form id="subform" action="{:U('Plandq/dqgradesub')}" method="post" class="form-horizontal">
+                    <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">id</th>
+                            <th class="column-title">年度</th>                     
+                            <th class="column-title">季度</th>
+                            <th class="column-title">工号</th>
+                            <th class="column-title">部门</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">姓名</th>
+                            <th class="column-title">加分</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          
+                          <for start="1" end="8">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$i}
+                            </td>
+                            <td class=" ">
+                            {$Think.session.admin.year_sys}
+                            </td>
+                           
+                            <td class=" ">
+                            <select name="{$i}[quarter]">
+                              <option value="1" <if condition="$Think.session.admin.quarter eq 1">selected</if>>1</option>
+                              <option value="2" <if condition="$Think.session.admin.quarter eq 2">selected</if>>2</option>
+                              <option value="3" <if condition="$Think.session.admin.quarter eq 3">selected</if>>3</option>
+                              <option value="4" <if condition="$Think.session.admin.quarter eq 4">selected</if>>4</option>
+                            </select>
+                            </td>
+                             
+                            <td class=" ">
+                            <input name="{$i}[id_employee]" id="employee[{$i}]" onchange="getinformation({$i})">
+                            </td>
+                            <td class=" " width="">
+                            <input name="{$i}[department]" id="department[{$i}]" onchange="getinformation({$i})">
+                            </td>
+                            <td class=" " width="">
+                            <input name="{$i}[office]" id="office[{$i}]" onchange="getinformation({$i})">
+                            </td>
+                            <td class=" ">
+                            <input name="{$i}[user_name]" id="name[{$i}]" onchange="getinformation({$i})">
+                            </td>
+                            <td class=" " width="">
+                            <input name="{$i}[grade]" id="grade[{$i}]">
+                            </td>
+                          </tr>
+                          </for>
+                        </tbody>
+                      </table>
+                      <input type="button" value="提交" onclick="dqgradesub()" id="bu">
+                    </form>
+                  </div>
+                </div>
+              </div>
+  </div>
+  <div class="row">
+              <div class="col-md-12 col-xs-13">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>党群评分列表</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <!-- <form class="form-horizontal form-label-left input_mask"> -->
+                    <form id="subform" action="{:U('Plandq/dqgrade')}" method="post" class="form-horizontal">
+                    <a>年度：</a><input name="search[year]" value="{$search[year]}">
+                    <a>季度：</a><input name="search[quarter]" value="{$search[quarter]}">
+                    <input type="submit" value="查询">
+                    </form>
+                    <empty name="data">
+                    <p style="margin-top:2%;">暂无信息结果！</p>
+                    <else/>
+                    <table class="table table-striped jambo_table bulk_action" style="text-align:center; margin-top:1%;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">id</th>
+                            <th class="column-title">年度</th>                     
+                            <th class="column-title">季度</th>
+                            <th class="column-title">工号</th>
+                            <th class="column-title">部门</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">姓名</th>
+                            <th class="column-title">加分</th>
+                            <th class="column-title">操作</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          
+                          <volist name="data" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$i}
+                            </td>
+                            <td class=" ">
+                            {$vo.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.quarter}
+                            </td>
+                             
+                            <td class=" ">
+                            {$vo.id_employee}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" ">
+                            {$vo.user_name}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade}
+                            </td>
+                            <td class=" " width="">
+                            [ <a href="javascript:void(0)" onclick="delet({$vo.id})">删除</a> ]
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      </else>
+                      </empty>
+                  </div>
+                </div>
+              </div>
+  </div>
+</div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function getinformation(tt){
+    var employee=document.getElementById('employee['+tt+']').value;
+    $.ajax({
+                cache: true,
+                type: "POST",
+                dataType:"json",
+                url:"/TOPNew/Plandq/getinformation",
+                data:{"employee":employee},// 你的formid
+                async: false,
+                success: function(data) {
+                    if(data.success==1){
+                    document.getElementById('department['+tt+']').value=data.department;
+                    document.getElementById('office['+tt+']').value=data.office;
+                    document.getElementById('name['+tt+']').value=data.nam;
+                  }
+                }
+            });
+  }
+  function dqgradesub(){
+    $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Plandq/dqgradesub",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                    window.location.reload();
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+  }
+  function delet(tt){
+    if (confirm("确定要删除？")) {
+      $.ajax({
+                cache: true,
+                type: "POST",
+                dataType:"json",
+                url:"/TOPNew/Plandq/delet_dqgrade",
+                data:{"id":tt},// 你的formid
+                async: false,
+                success: function(data) {
+                    if(data.success==1){
+                    alert('删除成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+    }
+  }
+</script>

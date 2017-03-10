@@ -1,0 +1,469 @@
+<switch name="Think.session.admin.id_level" >
+<case value="5"><include file="Public/header" /></case>
+<case value="2"><include file="Public/headerr" /></case>
+<default />默认情况
+</switch>
+<style type="text/css">
+  .column-title{
+    text-align: center;
+  }
+</style>
+<div class="right_col" role="main">
+  <div class="row">
+  <h3><strong>&nbsp;&nbsp;&nbsp;{$Think.session.admin.user_department}季度成绩</strong></h3>
+  <hr/>
+  <div class="row top_tiles">
+         <for start='1' end='5'>
+              <div class="animated flipInY col-lg-3 col-md-4 col-sm-6 col-xs-12" style="width:23.5%;margin-left:1.2%;margin-top:1%;cursor:pointer;" onclick="location.href='{:U('Performance/GradesubmissionQ',"quarter=$i")}'">
+                <div class="tile-stats" style="height:200px;">
+                  <div class="icon">
+                    <if condition="$data[$i] eq ''">
+                      <if condition="$Think.session.admin.quarter eq $i">
+                      <i class="fa fa-sort-amount-desc" style="margin-top:30px; float:left; margin-left:-10px; color: firebrick"></i>
+                      </div>
+                      <div class="count">{$i}季度</div>
+                      <h3 style="margin-top: 20px;">请及时提交本季分数正式版</h3>
+                      <hr>
+                      <p style="font-size: larger; margin-top: -10px;"><strong>部门总人数：{$all}</strong></p>
+                      <p style="font-size: larger;"><strong>已评分人数：{$sum[$i]}</strong></p>
+                      <else/>
+                      <i class="fa fa-car" style="margin-top:30px; float:left; margin-left:-10px;"></i>
+                      </div>
+                      <div class="count">{$i}季度</div>
+                      <h3 style="margin-top: 20px;">此季度暂无分数正式版</h3>
+
+                      <hr>
+                      <p style="font-size: larger; margin-top: -10px;"><strong>如需提交本季度正式版请点击提交</strong></p>
+                      <p style="font-size: larger;"><strong>如本季度暂无分数请等待此季度到来</strong></p>
+                      </if>
+                      </if>
+                    <if condition="$data[$i] neq ''">
+                      <i class="fa fa-check-square-o" style="margin-top:30px; float:left; margin-left:-10px; color: #169F85;"></i>
+                      </div>
+                      <div class="count">{$i}季度</div>
+                      <h3 style="margin-top: 20px;">本季度分数正式版已提交</h3>
+                      <hr>
+                      <p style="font-size: larger; margin-top: -10px;"><strong>提交总人数：{$data[$i]}</strong></p>
+                      <p style="font-size: larger;"><strong>提交平均分：{$sum[$i]}</strong></p>
+                    </if>
+                  
+                </div>
+              </div>
+         </for>
+  </div>
+  </div>
+
+  <div class="row">
+<form id="subform" action="{:U('Performance/finalgradeQ')}" method="post" class="form-horizontal">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.user_department}:{$Think.session.admin.year}年{$quarter}季度 正式版成绩</h2>
+                    <input type="hidden" name="quarter" value="{$quarter}">
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="4%">序号</th>
+                            <th class="column-title" width="4%">工号</th>
+                            <th class="column-title" style="text-align:center;" width="5%">姓名</th>
+                            
+                            <th class="column-title" width="5%" style="text-align:center;">科室</th>
+                            <th class="column-title" width="5%">职称</th>
+                            <switch name="quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月</th>
+                            <th class="column-title" width="5%">2月</th>
+                            <th class="column-title" width="5%">3月</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月</th>
+                            <th class="column-title" width="5%">5月</th>
+                            <th class="column-title" width="5%">6月</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月</th>
+                            <th class="column-title" width="5%">8月</th>
+                            <th class="column-title" width="5%">9月</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月</th>
+                            <th class="column-title" width="5%">11月</th>
+                            <th class="column-title" width="5%">12月</th>
+                            </case>
+                            </switch>
+                            <th class="column-title" width="5%">平均分<br>(*70%)</th>
+                            <th class="column-title" width="5%">团队发展</th>
+                            <th class="column-title" width="5%">团队激励</th>
+                            <th class="column-title" width="5%">高效执行</th>
+                            <th class="column-title" width="5%">精通专业</th>
+                            <th class="column-title" width="5%">协作共赢</th>
+                            <th class="column-title" width="5%">使命必达</th>
+                            <th class="column-title" width="8%">廉洁奉公</th>
+                            <th class="column-title" width="8%">敢于担当</th>
+                            <th class="column-title"width="5%">总分</th>
+                            <th class="column-title" style="width:8%;text-align:left;">评价人</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="data[chief]" id="vo">
+                          <input type="hidden" name="chief[{$i}][id_employee]"   value="{$vo.id_employee}">
+                          <input type="hidden" name="chief[{$i}][name]"          value="{$vo.name}">
+                          <input type="hidden" name="chief[{$i}][department]"    value="{$vo.department}">
+                          <input type="hidden" name="chief[{$i}][office]"        value="{$vo.office}">
+                          <input type="hidden" name="chief[{$i}][id_level]"      value="{$vo.id_level}">
+                          <input type="hidden" name="chief[{$i}][grade_total]"   value="{$vo.grade_total}">
+                          <input type="hidden" name="chief[{$i}][grade_leader]"  value="{$vo.grade_leader}">
+                          <input type="hidden" name="chief[{$i}][year]"          value="{$vo.year}">
+                          <input type="hidden" name="chief[{$i}][quarter]"       value="{$vo.quarter}">
+
+                          <input type="hidden" name="chief[{$i}][grade_one]"      value="{$vo.grade_one}">
+                          <input type="hidden" name="chief[{$i}][grade_two]"      value="{$vo.grade_two}">
+                          <input type="hidden" name="chief[{$i}][grade_three]"    value="{$vo.grade_three}">
+                          <input type="hidden" name="chief[{$i}][grade_avg]"      value="{$vo.grade_avg}">
+                          <input type="hidden" name="chief[{$i}][grade_ability]"  value="{$vo.grade_ability}">
+                          <input type="hidden" name="chief[{$i}][grade_skill]"    value="{$vo.grade_skill}">
+                          <input type="hidden" name="chief[{$i}][grade_study]"    value="{$vo.grade_study}">
+                          <input type="hidden" name="chief[{$i}][grade_execute]"  value="{$vo.grade_execute}">
+                          <input type="hidden" name="chief[{$i}][grade_cooperate]"value="{$vo.grade_cooperate}">
+                          <input type="hidden" name="chief[{$i}][grade_order]"    value="{$vo.grade_order}">
+                          <input type="hidden" name="chief[{$i}][grade_proity]"   value="{$vo.grade_proity}">
+                          <input type="hidden" name="chief[{$i}][grade_undertake]"value="{$vo.grade_undertake}">
+
+                          <tr class="even pointer">
+                          <td class=" ">
+                              <label>
+                                {$i}
+                              </label>
+                            </td>
+                          <td class=" ">
+                              <label>
+                                {$vo.id_employee}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.name}
+                              </label>
+                            </td>
+                            
+                           
+                            <td class=" ">
+                              <label>
+                                {$vo.office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                <switch name="vo.id_level">
+                                <case value="3">科员</case>
+                                <case value="4">科长</case>
+                                <case value="7">VSE</case>
+                                <case value="8">项目经理</case>
+                                </switch>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_one}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_two}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_three}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_avg}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_ability}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_skill}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_study}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_execute}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_cooperate}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_order}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_proity}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_undertake}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_total}
+                              </label>
+                            </td>
+                            <td class=" " style="text-align:left;">
+                              <label>
+                                {$vo.grade_leader}
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="4%">序号</th>
+                            <th class="column-title" width="5%">工号</th>
+                            <th class="column-title" style="text-align:center;" width="4%">姓名</th>
+                    
+                            <th class="column-title" width="8%" style="text-align:center;">科室</th>
+                            <th class="column-title" width="5%">职称</th>
+                            <switch name="quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月</th>
+                            <th class="column-title" width="5%">2月</th>
+                            <th class="column-title" width="5%">3月</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月</th>
+                            <th class="column-title" width="5%">5月</th>
+                            <th class="column-title" width="5%">6月</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月</th>
+                            <th class="column-title" width="5%">8月</th>
+                            <th class="column-title" width="5%">9月</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月</th>
+                            <th class="column-title" width="5%">11月</th>
+                            <th class="column-title" width="5%">12月</th>
+                            </case>
+                            </switch>
+                            <th class="column-title" width="5%">平均分<br>(*70%)</th>
+                            <th class="column-title" width="8%">解决问题能力</th>
+                            <th class="column-title" width="8%">专业技能</th>
+                            <th class="column-title" width="8%">学习创新能力</th>
+                            <th class="column-title" width="8%">高效执行力</th>
+                            <th class="column-title" width="8%">主动负债精神</th>
+                            <th class="column-title" width="8%">团队协作精神</th>
+                            <th width="5%"></th>
+                            <th width="5%"></th>
+                            <th class="column-title"width="5%">总分</th>
+                            <th class="column-title" style="width:10%;text-align:left;" width="8%">评价人</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="data[staff]" id="vo">
+                          <input type="hidden" name="staff[{$i}][id_employee]"   value="{$vo.id_employee}">
+                          <input type="hidden" name="staff[{$i}][name]"          value="{$vo.name}">
+                          <input type="hidden" name="staff[{$i}][department]"    value="{$vo.department}">
+                          <input type="hidden" name="staff[{$i}][office]"        value="{$vo.office}">
+                          <input type="hidden" name="staff[{$i}][id_level]"      value="{$vo.id_level}">
+                          <input type="hidden" name="staff[{$i}][grade_total]"   value="{$vo.grade_total}">
+                          <input type="hidden" name="staff[{$i}][grade_leader]"  value="{$vo.grade_leader}">
+                          <input type="hidden" name="staff[{$i}][year]"          value="{$vo.year}">
+                          <input type="hidden" name="staff[{$i}][quarter]"        value="{$vo.quarter}">
+
+                          <input type="hidden" name="staff[{$i}][grade_one]"      value="{$vo.grade_one}">
+                          <input type="hidden" name="staff[{$i}][grade_two]"      value="{$vo.grade_two}">
+                          <input type="hidden" name="staff[{$i}][grade_three]"    value="{$vo.grade_three}">
+                          <input type="hidden" name="staff[{$i}][grade_avg]"      value="{$vo.grade_avg}">
+                          <input type="hidden" name="staff[{$i}][grade_ability]"  value="{$vo.grade_ability}">
+                          <input type="hidden" name="staff[{$i}][grade_skill]"    value="{$vo.grade_skill}">
+                          <input type="hidden" name="staff[{$i}][grade_study]"    value="{$vo.grade_study}">
+                          <input type="hidden" name="staff[{$i}][grade_execute]"  value="{$vo.grade_execute}">
+                          <input type="hidden" name="staff[{$i}][grade_cooperate]"value="{$vo.grade_cooperate}">
+                          <input type="hidden" name="staff[{$i}][grade_order]"    value="{$vo.grade_order}">
+                          <tr class="even pointer">
+                          <td class=" ">
+                              <label>
+                                {$i}
+                              </label>
+                            </td>
+                          <td class=" ">
+                              <label>
+                                {$vo.id_employee}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.name}
+                              </label>
+                            </td>
+                            
+                           
+                            <td class=" ">
+                              <label>
+                                {$vo.office}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                <switch name="vo.id_level">
+                                <case value="3">科员</case>
+                                <case value="4">科长</case>
+                                <case value="7">VSE</case>
+                                <case value="8">项目经理</case>
+                                </switch>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_one}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_two}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_three}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_avg}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_ability}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_skill}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_study}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_execute}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_cooperate}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_order}
+                              </label>
+                            </td>
+                            <td class=" ">
+                             
+                            </td>
+                            <td class=" ">
+                              
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.grade_total}
+                              </label>
+                            </td>
+                            <td class=" " style="text-align:left;">
+                              <label>
+                                {$vo.grade_leader}
+                              </label>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        
+                      </table>
+                      <empty name="id">
+
+                      <input class="btn btn-success" type="button" value="提交最终版成绩" id="bu" onclick="fom()" style="margin-left:30%;width:10%;">
+                      <else/>
+                      <a class="btn btn-success" onclick="return confirm('已提交过该月最终成绩！')" style="margin-left:30%;width:10%;">提交最终版成绩</a>
+                      </else>
+                      </empty>
+                      
+                      <a class="btn btn-success" href="{:U('Performance/GradesubmissionQ')}" style="margin-left:10%;width:10%;">返回</a>
+                    </div>
+                    </div></div></div></div></div></form></div>
+</div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function fom(){
+    document.getElementById("bu").disabled = "disabled";
+    if (confirm("确定要提交？提交后无法更改.")) 
+    {  
+      document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Performance/finalgradeQ",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                    //window.location.reload();
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+    }
+  }
+</script>

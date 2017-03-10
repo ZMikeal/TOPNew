@@ -13,8 +13,6 @@
     <link href="__PUBLIC__/custom/css/green.css" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="__PUBLIC__/custom/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="__PUBLIC__/custom/css/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="__PUBLIC__/custom/css/daterangepicker.css" rel="stylesheet">
  
@@ -86,10 +84,12 @@
 
                     <!--加班管理模块-->
                     <li><a><i class="fa fa-sitemap"></i> 加班管理 <span class="label label-success pull-right">Coming Soon</span></a>
-                       <!--  <ul class="nav child_menu">
+                    <!--     <ul class="nav child_menu">
                             <li><a href="{:U('Overwork/overwork_apply')}">加班预报</a>
-                        </ul>
-                    </li> -->
+                            <li><a href="{:U('Overwork/overwork_show')}">预报历史</a>
+                            <li><a href="{:U('Overwork/overwork_chart')}">预报图表</a>
+                        </ul> -->
+                    </li>
                     <!--加班管理模块结束-->
 
                   <if condition="$Think.session.admin.id_level neq 3">                
@@ -134,14 +134,8 @@
                     <if condition="($Think.session.admin.id_level eq 5) and ($Think.session.admin.user_type neq '副部长')"> 
                     <li><a>成绩提交<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a>
-                              </li>
-                          <!-- <ul class="nav child_menu">
-                              <li><a href="{:U('index/index1')}">月度绩效</a>
-                              </li>
-                              <li><a href="{:U('index/index1')}">年度绩效</a>
-                              </li>
-                            </ul> -->
+                      <li><a href="{:U('Performance/GradesubmissionM')}">月度成绩提交</a></li>
+                      <li><a href="{:U('Performance/GradesubmissionQ')}">季度成绩提交</a></li>
                     </ul>
                     </li>
                     </if>
@@ -183,6 +177,40 @@
                   </if>
                   <!-- 经理兼职显示结束 -->
                   
+                  <!-- 组长兼职 -->
+                  <if condition="$Think.session.admin.if_authority eq 4">                
+                  <li><a><i class="fa fa-edit"></i> 绩效总评 [组长授权] <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    <li><a>确认计划<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/Planconfirm')}">月度计划确认</a>
+                            </li>
+                            <li><a href="{:U('Performance/PlanconfirmY')}">年度计划确认</a>
+                            </li>
+                          </ul>
+                    </li>
+                    <li><a>计划评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
+                            </li>
+                            <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
+                            </li>
+                          </ul>
+                    </li>
+
+                    <li><a>绩效查看<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('Performance/PlangradelistM')}">月度绩效</a>
+                            </li>
+                            <li><a href="{:U('index/index1')}">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
+                    </ul>
+                  </li>
+                  </if>
+                  <!-- 组长显示结束 -->
+
                   <!-- 科长兼职 -->
                   <if condition="$Think.session.admin.if_authority eq 3">                
                   <li><a><i class="fa fa-edit"></i> 绩效总评 [科长授权] <span class="fa fa-chevron-down"></span></a>
@@ -199,7 +227,7 @@
                         <ul class="nav child_menu">
                             <li><a href="{:U('Performance/PlangradeM')}">月度计划评分</a>
                             </li>
-                            <li><a href="{:U('index/index1')}">季度计划评分</a>
+                            <li><a href="{:U('Performance/Gradequarter')}">季度计划评分</a>
                             </li>
                             <li><a href="{:U('Performance/PlangradeY')}">年度计划评分</a>
                             </li>
@@ -220,8 +248,30 @@
                   </li>
                   </if>
                   <!-- 科长兼职显示结束 -->
-
-                  <li><a href="javascript:void(0)"><i class="fa fa-desktop"></i> 综合查询 <span class="label label-success pull-right">Coming Soon</span></a>
+                  
+                  
+                      <if condition="$Think.session.admin.id_level eq 5">
+                      <li><a><i class="fa fa-table"></i> 季度评级 <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu"> 
+                      <li><a href="{:U('Rate/rate_chief')}">科级季度评级</a></li>
+                      <li><a href="{:U('Rate/rate_allocation')}">科室季度分配</a></li>
+                      </ul>
+                      </li>
+                      </if>
+                      <if condition="$Think.session.admin.id_level eq 4"> 
+                      <li><a><i class="fa fa-table"></i> 季度评级 <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                      
+                      
+                      <li><a href="{:U('Rate/rate_staff')}">科员季度评级</a></li>
+                      <li><a href="{:U('Rate/rate_query')}">历史查询</a></li>
+                      </ul>
+                      </li>
+                    </if>
+                  <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{:U('Rate/quarter_query')}">季度评级查询</a></li>
+                    </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> 账户管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -395,12 +445,9 @@
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">计划员设置时间为： {$Think.session.admin.year_sys} 年 {$Think.session.admin.month} 月 </a>
                 </li>
                 <li class="">
-                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.1.8</a>
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.2.0</a>
                 </li>
               </ul>
             </nav>
           </div>
         </div>
-
-
-         

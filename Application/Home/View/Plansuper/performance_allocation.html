@@ -1,0 +1,163 @@
+<if condition="$Think.session.admin.id_level eq 2">
+<include file="Public/headerr" />
+<else/>
+<include file="Public/header_super" />
+</if>
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+              <div class="row">
+              
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>人员绩效分配调整</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                <form id="form1" action="{:U('Plansuper/performance_allocation')}" method="post" class="form-horizontal">
+                      
+                      年度：<select style="width:100px;" name="search[]">
+                        <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
+                        <option <if condition="$search[0] eq 2016">selected</if>>2016</option>
+                      </select>
+                      季度：<select style="width:100px;" name="search[]">
+                        <option <if condition="$search[1] eq 1">selected</if>>1</option>
+                        <option <if condition="$search[1] eq 2">selected</if>>2</option>
+                        <option <if condition="$search[1] eq 3">selected</if>>3</option>
+                        <option <if condition="$search[1] eq 4">selected</if>>4</option>
+                      </select>
+                      部门：<select style="width:100px;" name="search[]" id="depart">
+                      <volist name="depart" id="vo">
+                        <option value="{$vo}" <if condition="$search[2] eq $vo">selected</if>>{$vo}</option>
+                      </volist>
+                      </select>
+                      <button type="submit" id="bn">搜索</button>
+                 </form>
+                      <empty name="data">
+                      查询信息为空（此人月度计划信息中部门可能为空）！
+                      <else/>
+                      <form id="subform" action="{:U('Plansuper/PAsub')}" method="post" class="form-horizontal">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">id</th>
+                            <th class="column-title">年度</th>                     
+                            <th class="column-title">季度</th>
+                            <th class="column-title">姓名</th>
+                            <th class="column-title">工号</th>
+                            <th class="column-title">部门</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">岗级</th>
+                            <th class="column-title">季度总分</th>
+                            <th class="column-title">党工团加分</th>
+                            <th class="column-title">总分</th>
+                            <th class="column-title">是否参评</th>
+                            <th class="column-title">备注</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          
+                          <volist name="data" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$i}
+                            <input type="hidden" value="{$vo.id}" name="{$i}[id]">
+                            </td>
+                            <td class=" ">
+                            {$vo.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.quarter}
+                            </td>
+                             
+                            <td class=" ">
+                            {$vo.name}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.id_employee}
+                            </td>
+                            <td class=" ">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo[id_level]">
+                            <case value='3'>员工</case>
+                            <case value='4'>科长</case>
+                            <case value='5'>部长</case>
+                            <case value='7'>VSE</case>
+                            <case value='8'>项目经理</case>
+                            </switch>
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_total}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_other}
+                            <input type="hidden" value="{$vo.grade_other}" name="{$i}[grade_other]">
+                            </td>
+                            <td class=" ">
+                            {$vo.grade_end}
+                            <input type="hidden" value="{$vo.grade_end}" name="{$i}[grade_end]">
+                            </td>
+                            <td class=" ">
+                            <select name="{$i}[if_grade]">
+                            <option value="1" style="color:black;" <if condition="$vo[if_grade] eq 1">selected</if>>参评</option>
+                            <option value="0" style="color:red;" <if condition="$vo[if_grade] eq 0">selected</if>>不参评</option> 
+                            </select>
+                            </td>
+                            <td>
+                            <if condition="$vo[if_grade] eq 0">
+                            <input type="text" value="{$vo.grade_content}" name="{$i}[grade_content]">
+                            <else/>
+                            <input type="text" value="" name="{$i}[grade_content]">
+                            </if>
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      <input type="button" value="提交" onclick="fom()" id="bu">
+                      </form>
+                      </empty>
+                  </div>
+                </div>
+              </div>
+              </div>
+</div>
+
+
+
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function fom(){
+    document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Plansuper/PAsub",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                    //window.location.reload();
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+    }
+</script>

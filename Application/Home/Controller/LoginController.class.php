@@ -43,12 +43,29 @@ class LoginController extends Controller {
       {
         $dat['id_employee']=$admin['id_employee'];
         $dat['user_department']=$admin['user_department'];
+        $admin['month_sys']=date('m');
+        $admin['year_sys']=date('Y');
+         if($admin['month_sys']==1||$admin['month_sys']==2||$admin['month_sys']==3){$admin['quarter']=1;}
+         if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;}
+         if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;}
+         if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;}
         session('admin',$admin);
          //dump($admin);exit;
-         $this->redirect('Plansuper/index');
+        $this->redirect('Plansuper/index');
       }
 
-      if($admin['id_level']!=2&&$admin['id_level']!=1)
+      if($admin['id_level']==6)
+      {
+        $dat['id_employee']=$admin['id_employee'];
+        $dat['user_department']=$admin['user_department'];
+        $admin['month_sys']=date('m');
+         $admin['year_sys']=date('Y');
+        session('admin',$admin);
+         //dump($admin);exit;
+         $this->redirect('Plandq/index');
+      }
+
+      if($admin['id_level']!=2&&$admin['id_level']!=1&&$admin['id_level']!=6)
       {
         $dat['id_employee']=$admin['id_employee'];
         $dat['user_department']=$admin['user_department'];
@@ -70,6 +87,10 @@ class LoginController extends Controller {
         }
          $admin['month_sys']=date('m');
          $admin['year_sys']=date('Y');
+         if($admin['month_sys']==1||$admin['month_sys']==2||$admin['month_sys']==3){$admin['quarter']=1;}
+         if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;}
+         if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;}
+         if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;}
         session('admin',$admin);
         //dump(session('admin'));exit;
         $this->redirect('Plan/index');

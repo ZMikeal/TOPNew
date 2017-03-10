@@ -119,8 +119,7 @@
                             <case value="7">{$vo.staff_office}</case>
                             <case value="4">{$vo.chief_office}</case>
                             <case value="8">{$vo.chief_office}</case>
-                            <case value="5">{$vo.minister_office}</case></switch>
-                            </td>
+                            <case value="5">{$vo.minister_office}</case></switch></td>
                             <td class=" ">
                             {$vo.grade_leader}
                             </td>
@@ -139,6 +138,84 @@
                   </div>
                 </div>
               </div>
+              <if condition="$Think.session.admin.id_level eq 2">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>特殊科员月度计划评分</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style=" height:300px;">
+<form id="subform" action="{:U('performance/addspriceM')}" method="post" class="form-horizontal">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                       <thead>
+                          <tr class="headings"> 
+                            <th class="column-title">员工姓名</th>
+                            <th class="column-title">年</th>
+                            <th class="column-title">月</th>
+                            <th class="column-title">总分</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <for start="0" end="4" name="j">
+                          <tr class="even pointer">
+                            <td class=" " width="8%">
+                              <label>
+                               <select name="grade[{$j}][name]">
+                               <option value=""></option>
+                               <volist name="special_user" id="v">
+                                 <option value="{$v}" <if condition="$v eq $special[$j]['name']">selected</if>>{$v}</option>
+                               </volist>
+                               </select>                            
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+                                {$tj['year']}
+                                <input type="hidden" value="{$tj['year']}" name="grade[{$j}][year]">
+                                <input type="hidden" value="{$special[$j]['id']}" name="grade[{$j}][id]">
+                              </label>
+                            </td>
+                            <td class=" " width="8%">
+                              <label>
+                                {$tj['month']}
+                                <input type="hidden" value="{$tj['month']}" name="grade[{$j}][month]">
+                              </label>
+                            </td>
+                            <td class=" " width="25%">
+                              <label>
+                                <input type="text" value="{$special[$j]['grade']}" name="grade[{$j}][grade]">
+                              </label>
+                            </td>
+                          </tr>
+                        </for>
+                        </tbody>
+                        </table>
+                        <input class="btn btn-success" type="button" value="提交" onclick="fn1()" style="margin-left:40%;width:10%;">
+                    </form>
+                     <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div></if>
               </div>
 </div>
 
@@ -271,5 +348,22 @@
     }
   });
 });
-    
+   function fn1(){
+  $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Performance/addspriceM",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+} 
 </script>

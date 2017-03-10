@@ -4,9 +4,358 @@
   text-align: center;
 }
 </style>
-<div class="right_col" role="main">
-    
+<script type="text/javascript">
+// 点击按钮选择正确时间
+function selectTime(i, after18)
+{
+	var id=i;
+	var afterFlag = after18;
+	var overworkType = document.getElementsByName('overworkType[]');
+	var checkText = overworkType[i].value;
+	var dateFlag = new Date();
+	var dateHours= parseInt(dateFlag.getHours())*3600;
+	var dateMinutes = parseInt(dateFlag.getMinutes())*60;
+	var dateTime = dateHours+dateMinutes;
+	if (afterFlag == 0){
+		if (dateTime<=43200)
+		{
+			//判断当前的时间与12:00对比，早于12：00的话，可以选昨天的
+		
+			if (checkText=='平时')
+			{
+				WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-{%d-1} 18:30',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+			//判断当前的时间与12：00对比，晚于12：00的话，不能选昨天的
+		else
+		{
+			if (checkText=='平时')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-%d 18:30',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+	}
+	else {
+		if (dateTime<=43200)
+		{
+			//判断当前的时间与12:00对比，早于12：00的话，可以选昨天的				
+			if (checkText=='平时')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-{%d-1} 18:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+	//判断当前的时间与12：00对比，晚于12：00的话，不能选昨天的
+		else
+		{
+			if (checkText=='平时')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-%d 18:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+	}
+}
+///~
 
+//新建计算两者的时间
+function calTime(i, after18)
+{
+	var id = i;
+	var overworkStartTime = document.getElementsByName('overworkStartTime[]');
+	var overworkEndTime = document.getElementsByName('overworkEndTime[]');
+	
+	var start=overworkStartTime[i].value;
+	var end=overworkEndTime[i].value;
+	
+	var reg = /(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2})/;
+	
+	if (start == "" || end == "")
+		alert("请先选择开始和结束时间！");
+	
+	//增加一个功能提示一下平时加班的开始时间应该是从18:30开始的
+	var errorFlag = 0;
+	if (after18 == 0)
+	{
+		var overworkType = document.getElementsByName('overworkType[]');
+		var checkText = overworkType[i].value;
+		
+		if(checkText == "平时")
+		{
+			var time = start.split(" ");
+			var startTime = time[1].split(":");
+			var startTimeTotal = parseInt(startTime[0])*3600 + parseInt(startTime[1])*60;
+			if(startTimeTotal<=66540){	//18:29的秒数为66540
+				errorFlag = 1;
+				alert("平时加班开始时间应为18：30之后！请修改！");
+			}
+		}
+	}
+	else
+	{
+		var overworkType = document.getElementsByName('overworkType[]');
+		var checkText = overworkType[i].value;
+	
+		if(checkText == "平时")
+		{
+			var time = start.split(" ");
+			var startTime = time[1].split(":");
+			var startTimeTotal = parseInt(startTime[0])*3600 + parseInt(startTime[1])*60;
+			if(startTimeTotal<=64740){	//17:59的秒数为64740
+				errorFlag = 1;
+				alert("平时加班开始时间应为18：00之后！请修改！");
+			}
+		}
+
+	}
+	if (errorFlag == 0){
+		var result = document.getElementsByName('overworkTotalTime[]');
+		var match1 = start.match(reg);
+		var match2 = end.match(reg);
+		var month1 = parseInt(match1[2])-1;
+		var month2 = parseInt(match2[2])-1;
+		var date1 = new Date(match1[1],parseInt(match1[2])-1,match1[3],match1[4],parseInt(match1[5]));
+		var date2 = new Date(match2[1],parseInt(match2[2])-1,match2[3],match2[4],parseInt(match2[5]));
+		var chazhi = date2.getTime()-date1.getTime();
+		var hour = chazhi/(60*60*1000);
+		result[i].value = hour.toFixed(2);
+	}
+	else 
+		result[i].value = "错误";
+}
+// 新建判断提交是否为合法信息
+function checkFucAdd(){
+	var overworkTotalTime = document.getElementsByName('overworkTotalTime[]');
+	var overworkContent = document.getElementsByName('overworkContent[]');
+	for (var i = 0; i < 4; i++) {
+		if(overworkTotalTime[i].value!='')
+		{
+			if (overworkTotalTime[i].value<=0 || overworkTotalTime[i].value=='错误') {
+				alert("所提报的加班预报时间有误，请重新填写！");
+				return false;
+			}
+			else if(overworkContent[i].value==""){
+				alert("所提报的加班预报无加班内容，请重新填写！");
+				return false;
+			}
+		}
+	}
+	alert("加班预报成功！");
+	document.getElementById("postForm").submit();
+}
+///~ 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//修改时选择时间
+function selectTimeUpdate(i, after18)
+{
+	var id=i;
+	var afterFlag = after18;
+	var overworkType = document.getElementsByName('overworkTypeUpdate[]');
+	var checkText = overworkType[i].value;
+	var dateFlag = new Date();
+	var dateHours= parseInt(dateFlag.getHours())*3600;
+	var dateMinutes = parseInt(dateFlag.getMinutes())*60;
+	var dateTime = dateHours+dateMinutes;
+	if (afterFlag == 0){
+		if (dateTime<=43200)
+		{
+			//判断当前的时间与12:00对比，早于12：00的话，可以选昨天的
+		
+			if (checkText=='平时')
+			{
+				WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-{%d-1} 18:30',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+			//判断当前的时间与12：00对比，晚于12：00的话，不能选昨天的
+		else
+		{
+			if (checkText=='平时')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-%d 18:30',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+	}
+	else {
+		if (dateTime<=43200)
+		{
+			//判断当前的时间与12:00对比，早于12：00的话，可以选昨天的				
+			if (checkText=='平时')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-{%d-1} 18:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-{%d-1} 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+	//判断当前的时间与12：00对比，晚于12：00的话，不能选昨天的
+		else
+		{
+			if (checkText=='平时')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[0,6],minDate:'%y-%M-%d 18:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else if (checkText=='周末')
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',disabledDays:[1,2,3,4,5],minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+			else
+			{
+				WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm',minDate:'%y-%M-%d 00:00',maxDate:'%y-%M-{%d+7} 23:59',quickSel:['%y-%M-{%d-1} 18:30', '%y-%M-%d 18:30', '%y-%M-{%d+1} 18:30']})
+			}
+		}
+	}
+}
+///~
+//修改计算两者的时间
+function calTimeUpdate(i, after18)
+{
+	var id = i;
+	var overworkStartTime = document.getElementsByName('overworkStartTimeUpdate[]');
+	var overworkEndTime = document.getElementsByName('overworkEndTimeUpdate[]');
+	
+	var start=overworkStartTime[i].value;
+	var end=overworkEndTime[i].value;
+	
+	var reg = /(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2})/;
+	
+	if (start == "" || end == "")
+		alert("请先选择开始和结束时间！");
+	
+	//增加一个功能提示一下平时加班的开始时间应该是从18:30开始的
+	var errorFlag = 0;
+	if (after18 == 0)
+	{
+		var overworkType = document.getElementsByName('overworkTypeUpdate[]');
+		var checkText = overworkType[i].value;
+		
+		if(checkText == "平时")
+		{
+			var time = start.split(" ");
+			var startTime = time[1].split(":");
+			var startTimeTotal = parseInt(startTime[0])*3600 + parseInt(startTime[1])*60;
+			if(startTimeTotal<=66540){	//18:29的秒数为66540
+				errorFlag = 1;
+				alert("平时加班开始时间应为18：30之后！请修改！");
+			}
+		}
+	}
+	else
+	{
+		var overworkType = document.getElementsByName('overworkTypeUpdate[]');
+		var checkText = overworkType[i].value;
+	
+		if(checkText == "平时")
+		{
+			var time = start.split(" ");
+			var startTime = time[1].split(":");
+			var startTimeTotal = parseInt(startTime[0])*3600 + parseInt(startTime[1])*60;
+			if(startTimeTotal<=64740){	//17:59的秒数为64740
+				errorFlag = 1;
+				alert("平时加班开始时间应为18：00之后！请修改！");
+			}
+		}
+
+	}
+	if (errorFlag == 0){
+		var result = document.getElementsByName('overworkTotalTimeUpdate[]');
+		var match1 = start.match(reg);
+		var match2 = end.match(reg);
+		var month1 = parseInt(match1[2])-1;
+		var month2 = parseInt(match2[2])-1;
+		var date1 = new Date(match1[1],parseInt(match1[2])-1,match1[3],match1[4],parseInt(match1[5]));
+		var date2 = new Date(match2[1],parseInt(match2[2])-1,match2[3],match2[4],parseInt(match2[5]));
+		var chazhi = date2.getTime()-date1.getTime();
+		var hour = chazhi/(60*60*1000);
+		result[i].value = hour.toFixed(2);
+	}
+	else 
+		result[i].value = "错误";
+}
+///~
+// 判断修改是否为合法信息
+function checkFucUpdate(countlist){
+	var overworkTotalTime = document.getElementsByName('overworkTotalTimeUpdate[]');
+	var overworkContent = document.getElementsByName('overworkContentUpdate[]');
+	for (var i = 0; i < countlist; i++) {
+		if (overworkTotalTime[i].value<=0 || overworkTotalTime[i].value=='错误') {
+			alert("所修改的加班预报时间有误，请重新填写！");
+			return false;
+		}
+		else if(overworkContent[i].value==""){
+			alert("所修改的加班预报无加班内容，请重新填写！");
+			return false;
+		}
+	}
+	alert("加班预报修改成功！");
+	document.getElementById("postFormUpdate").submit();
+}
+///~
+
+//判断是否删除
+function checkFucDelete(){
+	if(confirm("是否确定删除此条加班预报")){
+		alert("加班预报删除成功！");
+		return true;
+	}
+	else
+		return false;
+}
+</script>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------ -->
+<div class="right_col" role="main">
+<!-- 加班新建 -->
     <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -32,58 +381,162 @@
                   </div>
                   <!-- 右侧栏结束 -->
 
-                  <div class="x_content">
-                    <div class="table-responsive"  style="">
-                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">   
-                       <!-- 加班表头 -->
-                       <thead>
-                          <tr class="headings">
-                          	<th class="column-title" width="5%">序号</th>
-                            <th class="column-title" width="8%">加班类别</th>
-                            <th class="column-title" width="8%">加班开始时间</th>
-                            <th class="column-title" width="8%">加班结束时间</th>
-                            <th class="column-title" width="8%">加班时长</th>
-                            <th class="column-title" width="20%">加班内容</th>
-                          </tr>
-                        </thead>
-                        <!--加班表头结束  -->
+              <div class="x_content">
+                <form id="postForm" name="postForm" action="{:U('Overwork/overwork_add')}" method="post" class="form-horizontal">
+                  <table class="table table-striped jambo_table bulk_action" style="text-align:center;height:50px;">   
+                   <!-- 加班表头 -->
+                   <thead>
+                      <tr class="headings">
+                      	<th class="column-title" width="5%">序号</th>
+                        <th class="column-title" width="8%">加班类别</th>
+                        <th class="column-title" width="8%">加班开始时间</th>
+                        <th class="column-title" width="8%">加班结束时间</th>
+                        <th class="column-title" width="8%">加班时长</th>
+                        <th class="column-title" width="20%">加班内容</th>
+                      </tr>
+                    </thead>
+                    <!--加班表头结束  -->
 
-                        <tbody>
-                        <for start="1" end="5"  step="1" name="i" >
-                          <tr class="even pointer">
-                            <td class=" ">
-                              <label>{$i}</label>
-                            </td>
-                            <td class=" ">
-                            	<select name="overwork_type[]">
-                            		<option value="平时" selected="selected">平时</option>
-                            		<option value="周末">周末</option>
-                            		<option value="节假日">节假日</option>
-                            	</select>
-                            </td>
-                            <td class=" ">
-                              	<input type="" name="">
-                            </td>
-                            <td class=" ">
-                              <input type="" name="">
-                            </td>
-                            <td class=" ">
-                              <input type="" name="">
-                            </td>
-	                        <td class=" ">
-	                          <textarea></textarea>
-	                        </td>
-                          </tr>
-                        </for>
-                        </tbody>
-         
-                      </table>
-                     <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
-                    </div>
-                  </div>
+                    <tbody>
+                    <for start="1" end="5"  step="1" name="i" >
+                      <tr class="even pointer">
+                        <td class=" ">
+                          <label>{$i}</label>
+                        </td>
+                        <td class=" ">
+                        	<select name="overworkType[]">
+                        		<option value="平时" selected="selected">平时</option>
+                        		<option value="周末">周末</option>
+                        		<option value="节假日">节假日</option>
+                        	</select>
+                        </td>
+                        <td class=" ">
+                          	<input type="" name="overworkStartTime[]" readonly="readonly" onfocus="selectTime({$i}-1,0)">
+                        </td>
+                        <td class=" ">
+                          <input type="" name="overworkEndTime[]" readonly="readonly" onfocus="selectTime({$i}-1,0)">
+                        </td>
+                        <td class=" ">
+                          <input type="" name="overworkTotalTime[]" readonly="readonly" onclick="calTime({$i}-1,0)">
+                        </td>
+                        <td class=" ">
+                          <textarea name="overworkContent[]" id="overworkContent[]"></textarea>
+                        </td>
+                      </tr>
+                    </for>
+                    </tbody>
+                  </table>
+                  <input class="btn btn-success" type="button" value="提交" id="bu1" onclick="checkFucAdd()" style="margin-left:40%;width:10%;">
+                  </form>            
                 </div>
+            </div>
+		</div>
+	</div>
+<!-- 加班新建结束 -->
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------ -->
+<!-- 加班修改 -->
+    <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><if condition="$Think.session.admin.id_level eq 3">加班预报：修改</if></h2>
+                    <!-- 右侧设置栏 -->
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <!-- 右侧栏结束 -->
 
+            <div class="x_content">
+                <form id="postFormUpdate" name="postFormUpdate" action="{:U('Overwork/overwork_update')}" method="post" class="form-horizontal">
+                    <table class="table table-striped jambo_table bulk_action" style="text-align:center;height:100%;">   
+                    <!-- 加班表头 -->
+                    <thead>
+                        <tr class="headings">
+	                      	<th class="column-title" width="5%">序号</th>
+	                        <th class="column-title" width="8%">加班类别</th>
+	                        <th class="column-title" width="8%">加班开始时间</th>
+	                        <th class="column-title" width="8%">加班结束时间</th>
+	                        <th class="column-title" width="8%">加班时长</th>
+	                        <th class="column-title" width="20%">加班内容</th>
+	                        <th class="column-title" width="8%">科级审批</th>
+	                        <th class="column-title" width="8%">科级退回意见</th>
+	                        <th class="column-title" width="8%">部级审批</th>
+	                        <th class="column-title" width="8%">部级退回意见</th>
+	                        <th class="column-title" width="8%">操作</th>
+                      	</tr>
+                    </thead>
+                    <!--加班表头结束  -->
+
+	                    <tbody>
+	                    	<volist name="list" id="vo">
+	                      		<tr class="even pointer">
+	                      			<input type="hidden" name="id[]" id="id[]" value="{$vo.id}">
+	                        		<td class=" ">
+	                          			<label>{$i}</label>
+	                        		</td>
+	                        		<td class=" ">
+			                        	<select name="overworkTypeUpdate[]">
+			                        		<option value="平时" <if condition="$vo.overworktype eq '平时'">selected="selected"</if>>平时</option>
+			                        		<option value="周末" <if condition="$vo.overworktype eq '周末'">selected="selected"</if>>周末</option>
+			                        		<option value="节假日" <if condition="$vo.overworktype eq '节假日'">selected="selected"</if>>节假日</option>
+			                        	</select>
+	                        		</td>
+	                        		<td class=" ">
+	                          			<input type="" name="overworkStartTimeUpdate[]" readonly="readonly" onfocus="selectTimeUpdate({$i}-1,0)" value="{$vo.overworkstarttime}">
+	                        		</td>
+	                        		<td class=" ">
+	                          			<input type="" name="overworkEndTimeUpdate[]" readonly="readonly" onfocus="selectTimeUpdate({$i}-1,0)" value="{$vo.overworkendtime}">
+	                        		</td>
+	                        		<td class=" ">
+	                          			<input type="" name="overworkTotalTimeUpdate[]" readonly="readonly" onclick="calTimeUpdate({$i}-1,0)" value="{$vo.overworktotaltime}">
+	                        		</td>
+	                        		<td class=" ">
+	                          			<textarea name="overworkContentUpdate[]" id="overworkContentUpdate[]">{$vo.overworkcontent}</textarea>
+	                        		</td>
+	                        		<td class=" ">
+	                          			<label>{$vo.chief_confirm}</label>
+	                        		</td>
+	                        		<td class=" ">
+	                          			<label>{$vo.chief_suggestion}</label>
+	                        		</td>
+	                        		<td class=" ">
+	                          			<label>{$vo.minister_confirm}</label>
+	                        		</td>
+	                        		<td class=" ">
+	                          			<label>{$vo.minister_suggestion}</label>
+	                        		</td>
+	                        		<td class=" ">
+	                        			<label>
+	            							<a href="{:U('Overwork/overwork_delete',array('id'=>$vo['id']))}" onclick="return checkFucDelete();">[ 删除 ]</a>
+	                            		</label>
+	                        		</td>
+	                      		</tr>
+	                    	</volist>
+	                    </tbody>
+                	</table>
+                	<input class="btn btn-success" type="button" value="修改" id="bu2" onclick="checkFucUpdate({$countlist})" style="margin-left:40%;width:10%;">
+                </form>          
+            </div>
+            </div>
+		</div>
+	</div>
+<!-- 加班修改结束 -->
 </div>
-</div>
-</div>
-<include file="Public/foot" /> 
+
+
+
+<include file="Public/foot" />

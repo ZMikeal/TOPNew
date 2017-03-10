@@ -1,0 +1,244 @@
+<if condition="$Think.session.admin.id_level eq 2">
+<include file="Public/headerr" />
+<else/>
+<include file="Public/header_super" />
+</if>
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+<div class="right_col" role="main">
+              <div class="row">
+              
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>组织绩效分配调整</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                <form id="form1" action="{:U('Plansuper/organization_allocation')}" method="post" class="form-horizontal">
+                      
+                      年度：<select style="width:100px;" name="search[]">
+                        <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
+                        <option <if condition="$search[0] eq 2016">selected</if>>2016</option>
+                      </select>
+                      季度：<select style="width:100px;" name="search[]">
+                        <option <if condition="$search[1] eq 1">selected</if>>1</option>
+                        <option <if condition="$search[1] eq 2">selected</if>>2</option>
+                        <option <if condition="$search[1] eq 3">selected</if>>3</option>
+                        <option <if condition="$search[1] eq 4">selected</if>>4</option>
+                      </select>
+                      部门：<select style="width:100px;" name="search[]" id="depart">
+                      <option selected="selected"></option>
+                      <volist name="department" id="vo">
+                        <option value="{$vo}" <if condition="$search[2] eq $vo">selected</if>>{$vo}</option>
+                      </volist>
+                      </select>
+                      <button type="submit" id="bn">搜索</button>
+                 </form>
+                      <form id="subform" action="{:U('Plansuper/OAsub')}" method="post" class="form-horizontal">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="2%">序号</th>
+                            <th class="column-title" width="5%">部门</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">部门<br>总人数</th>
+                            <th class="column-title" width="3%">不参<br>评人数</th>
+                            <th class="column-title" width="3%">参评人数</th>
+                            <th class="column-title" width="3%">科级<br>参评人数</th>
+                            <th class="column-title" width="3%">员工<br>参评人数</th>
+                            <th class="column-title" width="3%">S总数</th>
+                            <th class="column-title" width="3%">A总数</th>
+                            <th class="column-title" width="3%">B总数</th>
+                            <th class="column-title" width="3%">C+D总数</th>
+                            <th class="column-title" width="3%">组织<br>绩效等级</th>
+                            <th class="column-title" width="3%">操作</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <volist name="data" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$i}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.department}
+                            <input type="hidden" value="{$vo.department}" name="{$i}[department]">
+                            </td>
+                            <td class=" ">
+                            {$search[0]}
+                            <input type="hidden" value="{$search[0]}"  name="{$i}[year]">
+                            </td>
+
+                            <td class=" ">
+                            {$search[1]}
+                            <input type="hidden" value="{$search[1]}"  name="{$i}[quarter]">
+                            </td>
+                             
+                            <td class=" ">
+                            {$vo.all_grade}
+                            <input type="hidden" value="{$vo.all_grade}"  name="{$i}[all_grade]">
+                            </td>
+                            
+                            <td class=" ">
+                            {$vo.not_grade}
+                            <input type="hidden" value="{$vo.not_grade}"  name="{$i}[not_grade]">
+                            </td>
+
+                            <td class=" ">
+                            {$vo.yes_grade}
+                            <input type="hidden" id="yes[{$i}]" value="{$vo.yes_grade}" name="{$i}[yes_grade]">
+                            </td>
+
+                            <td class=" ">
+                            {$vo.chief}
+                            <input type="hidden" value="{$vo.chief}"  name="{$i}[chief]">
+                            </td>
+
+                            <td class=" ">
+                            {$vo.staff}
+                            <input type="hidden" value="{$vo.staff}"  name="{$i}[staff]">
+                            </td>
+
+                            <td class=" ">
+                            <input id="S[{$i}]" value="{$vo.s}" name="{$i}[s]"  style="width:100%;">
+                            </td>
+                            <td class=" ">
+                            <input id="A[{$i}]" value="{$vo.a}" name="{$i}[a]" style="width:100%;">
+                            </td>
+                            <td class=" ">
+                            <input id="B[{$i}]" value="{$vo.b}" name="{$i}[b]" style="width:100%;">
+                            </td>
+                            <td>
+                            <input id="C[{$i}]" value="{$vo.c}" name="{$i}[c]" style="width:100%;">
+                            </td>
+                            <td>
+                            <empty name="vo[level]">
+                            <select id="level[{$i}]" onchange="change({$i})" name="{$i}[level]">
+                              <option value="1" >S</option>
+                              <option value="2" >A</option>
+                              <option value="3" selected="selected">B</option>
+                              <option value="4" >C</option>
+                            </select>
+                            <else/>
+                            <select id="level[{$i}]" onchange="change({$i})" name="{$i}[level]">
+                              <option value="1" <if condition="$vo[level] eq 1">selected</if>>S</option>
+                              <option value="2" <if condition="$vo[level] eq 2">selected</if>>A</option>
+                              <option value="3" <if condition="$vo[level] eq 3">selected</if>>B</option>
+                              <option value="4" <if condition="$vo[level] eq 4">selected</if>>C</option>
+                            </select>
+                            </else>
+                            </empty>
+                            </td>
+                            <td>
+                            <a id="{$vo.id}" class="btn btn-default btn-sm active" onclick="delet(this)">删除</a>
+                            </td>
+                           </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      <input type="button" value="提交" onclick="fom({$count})" id="bu">
+                  </div>
+                </div>
+              </div>
+              </div>
+</div>
+
+
+
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function change(tt){
+    var people=document.getElementById("yes["+tt+"]").value;
+    var level=document.getElementById("level["+tt+"]").value;
+    if(level==1){
+      document.getElementById("S["+tt+"]").value=Math.floor(people*0.06);
+      document.getElementById("A["+tt+"]").value=Math.round(people*0.27);
+      document.getElementById("B["+tt+"]").value=Math.round(people*0.4);
+      document.getElementById("C["+tt+"]").value=Math.round(people*0.27);
+    }
+    if(level==2){
+      document.getElementById("S["+tt+"]").value=Math.floor(people*0.06);
+      document.getElementById("A["+tt+"]").value=Math.round(people*0.26);
+      document.getElementById("B["+tt+"]").value=Math.round(people*0.4);
+      document.getElementById("C["+tt+"]").value=Math.round(people*0.28);
+    }
+    if(level==3){
+      document.getElementById("S["+tt+"]").value=Math.floor(people*0.05);
+      document.getElementById("A["+tt+"]").value=Math.round(people*0.25);
+      document.getElementById("B["+tt+"]").value=Math.round(people*0.4);
+      document.getElementById("C["+tt+"]").value=Math.round(people*0.3);
+    }
+    if(level==4){
+      document.getElementById("S["+tt+"]").value=Math.floor(people*0.04);
+      document.getElementById("A["+tt+"]").value=Math.round(people*0.24);
+      document.getElementById("B["+tt+"]").value=Math.round(people*0.4);
+      document.getElementById("C["+tt+"]").value=Math.round(people*0.32);
+    }
+  }
+  function fom(tt){
+    for(var i=1;i<=tt;i++){
+      var s=document.getElementById("S["+i+"]").value;
+      var a=document.getElementById("A["+i+"]").value;
+      var b=document.getElementById("B["+i+"]").value;
+      var c=document.getElementById("C["+i+"]").value;
+      var sum=document.getElementById("yes["+i+"]").value;
+      if(sum!=(parseInt(s)+parseInt(a)+parseInt(b)+parseInt(c)))
+      {
+        alert("第"+i+"行分配人数不正确！");
+        return false;
+      }
+    }
+    document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Plansuper/OAsub",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                    //window.location.reload();
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+    }
+    
+</script>
+<script type="text/javascript">
+  function delet(nn){
+       var re=nn.id;
+       //alert(re);
+       var action = "OAdelete";
+    if (confirm("确定要删除吗？")) 
+             {      
+      $.ajax({
+        type:"GET",
+        url:action,
+        data:{"id":re},
+        dataType:"json",
+        success:function(data){
+          if(data.success==1){  
+             alert("删除成功!");
+             window.location.reload();
+          }
+          else{
+          alert("删除失败！");
+          }
+        }
+      });
+    }
+  }
+</script>

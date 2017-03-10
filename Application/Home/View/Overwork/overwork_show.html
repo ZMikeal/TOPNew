@@ -1,0 +1,180 @@
+<include file="Public/header" />
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+
+<div class="right_col" role="main">
+
+<!-- 加班图表 -->
+	<div class="row">
+	  	<div class="col-md-12 col-sm-12 col-xs-12">
+	    	<div class="dashboard_graph x_panel">
+	      		<div class="row x_title">
+	        		<div class="col-md-6">
+	          			<h3>近两周加班时长波动图<small>  {$overworkFlotBeforeTime} - {$overworkFlotNowTime}</small></h3>
+	        		</div>
+	        
+	      		</div>
+	      		<div class="x_content">
+	        		<div class="demo-container" style="height:250px">
+	          			<div id="overworkFlot" class="demo-placeholder" style="width: 100%; height:250px;"></div>
+	        		</div>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+<!-- 加班图表结束 -->
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{$Think.session.admin.username} 加班预报信息</h2>
+                	<div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive">
+                		<form id="form1" action="{:U('Overwork/overwork_show')}" method="post" class="form-horizontal">   
+	                    	查询起始时间：<input type='text' class="select_date" style="width:100px;" name="startTime" value="{$startTime}"></input>
+	                    	查询结束时间：<input type='text' class="select_date" style="width:100px;" name="endTime" value="{$endTime}"></input>
+                      		<button type="submit" id="bn">搜索</button>
+                 		</form>
+                      <empty name="data">
+                      查询信息为空（此时间节点可能没有加班预报）！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                            <tr class="headings">
+	                            <th class="column-title">序号</th>
+	                            <th class="column-title">加班类型</th>
+	                            <th class="column-title">加班开始时间</th>
+	                            <th class="column-title">加班结束时间</th>
+	                            <th class="column-title">加班时长</th>
+	                            <th class="column-title">加班内容</th>
+	                            <th class="column-title">科长确认</th>
+	                            <th class="column-title">部长确认</th>    
+                          	</tr>
+                        </thead>
+
+                        <tbody>
+                          
+                        <volist name="data" id="vo">
+	                        <tr class="even pointer">
+	                            <td class=" ">{$i}</td>
+	                            <td class=" ">{$vo.overworktype}</td>
+	                            <td class=" ">{$vo.overworkstarttime}</td>
+	                            <td class=" ">{$vo.overworkendtime}</td>
+	                            <td class=" ">{$vo.overworktotaltime}</td>
+	                            <td class=" "  style="text-align: left;">{$vo.overworkcontent}</td>
+	                            <td class=" ">{$vo.chief_confirm}</td>
+	                            <td class=" ">{$vo.minister_confirm}</td>
+	                        </tr>
+                        </volist>
+                        </tbody>
+                      </table>
+                      </empty>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+</div>
+
+
+
+
+
+<include file="Public/foot" />
+
+ <!-- jQuery -->
+    <script src="__PUBLIC__/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="__PUBLIC__/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+   
+    <!-- Flot -->
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="__PUBLIC__/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="__PUBLIC__/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="__PUBLIC__/vendors/flot.curvedlines/curvedLines.js"></script>
+  
+    <!-- Flot -->
+    <script>
+      $(document).ready(function() {
+        //random data10
+        var action = "overwork_show";
+        $.ajax({
+        type:"GET",
+        url:action,
+        dataType:"json",
+        success:function(data){
+          if(data.success==1){  
+             alert(data.success);
+              
+          }
+          else{
+          alert(data.success);
+          }
+        }
+      });
+        var d1 = [
+          [0, 1],
+          [1, 1],
+          [2, 1],
+          [3, 1],
+          [4, 1],
+          [5, 1],
+          [6, 1],
+          [7, 1],
+          [8, 1],
+          [9, 1],
+          [10, 1],
+          [11, 1],
+          [12, 1.99],
+          [13, 1.56],
+          [14, 1.87],
+          [15, 4.6],
+        ];
+
+        //flot options
+        var options = {
+          series: {
+            curvedLines: {
+              apply: true,
+              active: true,
+              monotonicFit: true
+            }
+          },
+          colors: ["#26B99A"],
+          grid: {
+            borderWidth: {
+              top: 0,
+              right: 0,
+              bottom: 1,
+              left: 1
+            },
+            borderColor: {
+              bottom: "#7F8790",
+              left: "#7F8790"
+            }
+          }
+        };
+        var plot = $.plot($("#overworkFlot"), [{
+          label: "加班时长",
+          data: d1,
+          lines: {
+            fillColor: "rgba(150, 202, 89, 0.12)"
+          }, //#96CA59 rgba(150, 202, 89, 0.42)
+          points: {
+            fillColor: "#fff"
+          }
+        }], options);
+      });
+    </script>
+    <!-- /Flot -->

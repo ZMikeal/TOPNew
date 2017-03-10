@@ -1,13 +1,15 @@
-<if condition="$Think.session.admin.id_level eq 2">
-<include file="Public/headerr" /> 
-<else/>
-<include file="Public/header" /> 
-</if>
+
+
+<switch name="Think.session.admin.id_level" >
+<case value="5"><include file="Public/header" /></case>
+<case value="2"><include file="Public/headerr" /></case>
+<default />默认情况
+</switch>
 
 
 <div class="right_col" role="main">
   <div class="row">
-  <h3><strong>&nbsp;&nbsp;&nbsp;{$Think.session.admin.user_department}月度成绩</strong></h3>
+  <h3><strong>&nbsp;&nbsp;&nbsp;{$Think.session.admin.user_department}月度成绩{$Think.session.admin.id_level}</strong></h3>
   <hr/>
   <div class="row top_tiles">
          <for start='1' end='13'>
@@ -32,6 +34,7 @@
                       <hr>
                       <p style="font-size: larger; margin-top: -10px;"><strong>如需提交本月正式版请点击提交</strong></p>
                       <p style="font-size: larger;"><strong>如本月暂无分数请等待此月到来</strong></p>
+                      </else>
                       </if>
                       </if>
                     <if condition="$data[$i] neq ''">
@@ -47,32 +50,8 @@
                 </div>
               </div>
          </for>
-              <!-- <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-comments-o"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                  <div class="count">179</div>
-                  <h3>New Sign ups</h3>
-                  <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-              </div> -->
+              
    </div>
-
 
 </div>
 </div>

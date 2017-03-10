@@ -338,8 +338,8 @@
 
                   <div class="x_content">
 
-                    <div class="table-responsive"  style="">
-
+                    <div class="table-responsive"  style=" height:300px;">
+<form id="subform" action="{:U('performance/addspriceM')}" method="post" class="form-horizontal">
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                        <thead>
                           <tr class="headings"> 
@@ -354,7 +354,7 @@
                           <tr class="even pointer">
                             <td class=" " width="8%">
                               <label>
-                               <select>
+                               <select name="grade[{$j}][name]">
                                <option value=""></option>
                                <volist name="special_user" id="v">
                                  <option value="{$v}" <if condition="$v eq $special[$j]['name']">selected</if>>{$v}</option>
@@ -364,25 +364,28 @@
                             </td>
                             <td class=" " width="8%">
                               <label>
-                                {$special[$j]['year']}
+                                {$tj['year']}
+                                <input type="hidden" value="{$tj['year']}" name="grade[{$j}][year]">
+                                <input type="hidden" value="{$special[$j]['id']}" name="grade[{$j}][id]">
                               </label>
                             </td>
                             <td class=" " width="8%">
                               <label>
-                                {$special[$j]['month']}
+                                {$tj['month']}
+                                <input type="hidden" value="{$tj['month']}" name="grade[{$j}][month]">
                               </label>
                             </td>
                             <td class=" " width="25%">
                               <label>
-                                {$special[$j]['grade']}
+                                <input type="text" value="{$special[$j]['grade']}" name="grade[{$j}][grade]">
                               </label>
                             </td>
                           </tr>
                         </for>
                         </tbody>
                         </table>
-                        <input class="btn btn-success" type="button" value="提交" id="bu1" onclick="fn1()" style="margin-left:40%;width:10%;">
-                    
+                        <input class="btn btn-success" type="button" value="提交" id="bu1" onclick="fn()" style="margin-left:40%;width:10%;">
+                    </form>
                      <!--  <a class="btn btn-success" href="{:U('Plan/midplan')}" style="margin-left:40%;width:10%;">返回</a> -->
                     </div>
                   </div>
@@ -393,3 +396,23 @@
 
 </div>
 <include file="Public/foot" /> 
+<script type="text/javascript">
+function fn(){
+  $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Performance/addspriceM",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+}
+</script>

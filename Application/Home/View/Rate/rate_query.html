@@ -1,0 +1,145 @@
+<include file="Public/header" /> 
+<style type="text/css">
+	.column-title{
+		text-align: center;
+	}
+</style>
+
+<div class="right_col" role="main">
+  <div class="row">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>历史查询</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <form action="{:U('Rate/rate_query')}" method="post" >  
+                     年：<select name="search[]">
+                         <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
+                         <option <if condition="$search[0] eq 2018">selected</if>>2018</option>
+                     </select>
+                     季度：<select name="search[]">
+                         <option <if condition="$search[1] eq 1">selected</if>>1</option>
+                         <option <if condition="$search[1] eq 2">selected</if>>2</option>
+                         <option <if condition="$search[1] eq 3">selected</if>>3</option>
+                         <option <if condition="$search[1] eq 4">selected</if>>4</option>
+                     </select>
+                     <input type="submit" value="提交">
+                     </form>
+                     <empty name="data">
+                      信息为空！
+                      <else/>
+                      <form id="subform" action="{:U('Rate/ratesub')}" method="post" >
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="3%">序号</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">员工编号</th>
+                            <th class="column-title" width="3%">姓名</th>
+                            <th class="column-title" width="3%">部门</th>
+                            <th class="column-title" width="3%">科室</th>
+                            <th class="column-title" width="3%">岗级</th>
+                            <switch name="Think.session.admin.quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月得分</th>
+                            <th class="column-title" width="5%">2月得分</th>
+                            <th class="column-title" width="5%">3月得分</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月得分</th>
+                            <th class="column-title" width="5%">5月得分</th>
+                            <th class="column-title" width="5%">6月得分</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月得分</th>
+                            <th class="column-title" width="5%">8月得分</th>
+                            <th class="column-title" width="5%">9月得分</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月得分</th>
+                            <th class="column-title" width="5%">11月得分</th>
+                            <th class="column-title" width="5%">12月得分</th>
+                            </case>
+                            </switch>
+                            <th class="column-title" width="3%">最终得分</th>
+                            <th class="column-title" width="3%">绩效等级</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="data" id="vo">
+                          <tr class="even pointer"> 
+                            <td class=" ">
+                            {$i}
+                            <input name="{$i}[id]" value="{$vo.id}" type="hidden">
+                            </td>
+                            <td class=" ">
+                            {$vo.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.quarter}
+                            </td>
+                             
+                            <td class=" " width="">
+                            {$vo.id_employee}
+                            </td>
+                            <td class=" ">
+                            {$vo.name}
+                            </td>
+                            <td class=" ">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo.id_level">
+                            <case value="4">科长</case>
+                            <case value="8">项目经理</case>
+                            <case value="3">科员</case>
+                            <case value="7">VSE</case>
+                            </switch>
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_one}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_two}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_three}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_total}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo.leader_rate">
+                            <case value="1">S</case>
+                            <case value="2">A</case>
+                            <case value="3">B</case>
+                            <case value="4">C</case>
+                            <case value="5">D</case>
+                            <default>暂无评级</default>
+                            </switch>
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                        
+                      </table></form>
+                      </empty>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+  </div>
+</div>
+<include file="Public/foot" /> 

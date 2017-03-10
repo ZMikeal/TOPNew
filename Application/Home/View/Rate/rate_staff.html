@@ -1,0 +1,419 @@
+<include file="Public/header" /> 
+<style type="text/css">
+	.column-title{
+		text-align: center;
+	}
+</style>
+
+<div class="right_col" role="main">
+  <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>部门及科室评级分配</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">        
+                     <empty name="rate">
+                      信息为空！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="3%">部门（科室）</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">部门（科室）<br>总人数</th>
+                            <th class="column-title" width="3%">不参<br>评人数</th>
+                            <th class="column-title" width="3%">参评人数</th>
+                            <th class="column-title" width="3%">科级<br>参评人数</th>
+                            <th class="column-title" width="3%">员工<br>参评人数</th>
+                            <th class="column-title" width="3%">S总数</th>
+                            <th class="column-title" width="3%">A总数</th>
+                            <th class="column-title" width="3%">B总数</th>
+                            <th class="column-title" width="3%">C+D总数</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <if condition="$Thinkphp.session.admin.id_level eq 4">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$rate.department}
+                            </td>
+                            <td class=" ">
+                            {$rate.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$rate.quarter}
+                            </td>
+                             
+                            <td class=" ">
+                            {$rate.all_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.not_grade}
+                            </td>
+                            <td class=" ">
+                            {$rate.yes_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.chief}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.staff}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.s}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.a}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.b}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.c}
+                            </td>
+                          </tr>
+                          </if>
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$rate_chief.office}
+                            </td>
+                            <td class=" ">
+                            {$rate_chief.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$rate_chief.quarter}
+                            </td>
+                             
+                            <td class=" ">
+                            {$rate_chief.all_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.not_grade}
+                            </td>
+                            <td class=" ">
+                            {$rate_chief.yes_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.chief}
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.staff}
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.s}
+                            <input type="hidden" id="ss" value="{$rate_chief.s}">
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.a}
+                            <input type="hidden" id="aa" value="{$rate_chief.a}">
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.b}
+                            <input type="hidden" id="bb" value="{$rate_chief.b}">
+                            </td>
+                            <td class=" " width="">
+                            {$rate_chief.c}
+                            <input type="hidden" id="cc" value="{$rate_chief.c}">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </empty>
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>科员评级</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">         
+                     <empty name="data">
+                      信息为空！
+                      <else/>
+                      <form id="subform" action="{:U('Rate/ratesub')}" method="post" class="form-horizontal">
+                      
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="3%">序号</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">员工编号</th>
+                            <th class="column-title" width="3%">姓名</th>
+                            <th class="column-title" width="3%">部门</th>
+                            <th class="column-title" width="3%">科室</th>
+                            <th class="column-title" width="3%">岗级</th>
+                            <switch name="Think.session.admin.quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月得分</th>
+                            <th class="column-title" width="5%">2月得分</th>
+                            <th class="column-title" width="5%">3月得分</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月得分</th>
+                            <th class="column-title" width="5%">5月得分</th>
+                            <th class="column-title" width="5%">6月得分</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月得分</th>
+                            <th class="column-title" width="5%">8月得分</th>
+                            <th class="column-title" width="5%">9月得分</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月得分</th>
+                            <th class="column-title" width="5%">11月得分</th>
+                            <th class="column-title" width="5%">12月得分</th>
+                            </case>
+                            </switch>
+                            <th class="column-title" width="3%">最终得分</th>
+                            <th class="column-title" width="3%">绩效等级</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="data" id="vo">
+                          <tr class="even pointer"> 
+                            <td class=" ">
+                            {$i}
+                            <input name="{$i}[id]" value="{$vo.id}" type="hidden">
+                            </td>
+                            <td class=" ">
+                            {$vo.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.quarter}
+                            </td>
+                             
+                            <td class=" " width="">
+                            {$vo.id_employee}
+                            </td>
+                            <td class=" ">
+                            {$vo.name}
+                            </td>
+                            <td class=" ">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo.id_level">
+                            <case value="4">科长</case>
+                            <case value="8">项目经理</case>
+                            <case value="3">科员</case>
+                            <case value="7">VSE</case>
+                            </switch>
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_one}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_two}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_three}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_total}
+                            </td>
+                            <td>
+                            <input type="hidden" name="{$i}[leader_rate]" id="{$i}[leader_rate]" value="{$vo[leader_rate]}">
+                            <empty name="vo[confirm_rate]">
+                            <select id="{$i}[confirm_rate]">
+                            <option value="1" <if condition="$vo[leader_rate] eq 1">selected</if>>S</option>
+                            <option value="2" <if condition="$vo[leader_rate] eq 2">selected</if>>A</option>
+                            <option value="3" <if condition="$vo[leader_rate] eq 3">selected</if>>B</option>
+                            <option value="4" <if condition="$vo[leader_rate] eq 4">selected</if>>C</option>
+                            <option value="5" <if condition="$vo[leader_rate] eq 5">selected</if>>D</option>
+                            </select>
+                            <else/>
+                            <select id="{$i}[confirm_rate]">
+                            <option value="1" <if condition="$vo[confirm_rate] eq 1">selected</if>>S</option>
+                            <option value="2" <if condition="$vo[confirm_rate] eq 2">selected</if>>A</option>
+                            <option value="3" <if condition="$vo[confirm_rate] eq 3">selected</if>>B</option>
+                            <option value="4" <if condition="$vo[confirm_rate] eq 4">selected</if>>C</option>
+                            <option value="5" <if condition="$vo[confirm_rate] eq 5">selected</if>>D</option>
+                            </sele>
+                            </else>
+                            </empty>
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      <input class="btn btn-success" type="button" onclick="fom({$count})" value="提交成绩" id="bu" style="margin-left:40%;width:10%;">
+                      </empty>
+                      </form>
+                    </div>
+                  </div>
+
+              </div>
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>不参评科员</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">         
+                     <empty name="data_no">
+                      信息为空！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="3%">序号</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">员工编号</th>
+                            <th class="column-title" width="3%">姓名</th>
+                            <th class="column-title" width="3%">部门</th>
+                            <th class="column-title" width="3%">科室</th>
+                            <th class="column-title" width="3%">岗级</th>
+                            <switch name="Think.session.admin.quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月得分</th>
+                            <th class="column-title" width="5%">2月得分</th>
+                            <th class="column-title" width="5%">3月得分</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月得分</th>
+                            <th class="column-title" width="5%">5月得分</th>
+                            <th class="column-title" width="5%">6月得分</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月得分</th>
+                            <th class="column-title" width="5%">8月得分</th>
+                            <th class="column-title" width="5%">9月得分</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月得分</th>
+                            <th class="column-title" width="5%">11月得分</th>
+                            <th class="column-title" width="5%">12月得分</th>
+                            </case>
+                            </switch>
+                            <th class="column-title" width="3%">最终得分</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="data_no" id="vo">
+                          <tr class="even pointer"> 
+                            <td class=" ">
+                            {$i}
+                            </td>
+                            <td class=" ">
+                            {$vo.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.quarter}
+                            </td>
+                             
+                            <td class=" " width="">
+                            {$vo.id_employee}
+                            </td>
+                            <td class=" ">
+                            {$vo.name}
+                            </td>
+                            <td class=" ">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo.id_level">
+                            <case value="4">科长</case>
+                            <case value="8">项目经理</case>
+                            <case value="3">科员</case>
+                            <case value="7">VSE</case>
+                            </switch>
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_one}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_two}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_three}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_total}
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      </empty>
+                    </div>
+                  </div>
+
+              </div>
+  </div>
+</div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+	function fom(tt){
+        var sss=0,aaa=0,bbb=0,ccc=0,ddd=0;
+    for(var i=1;i<=tt;i++){
+        var leader_rate=document.getElementById(i+"[leader_rate]").value;
+        var confirm_rate=document.getElementById(i+"[confirm_rate]").value;
+        if(confirm_rate<=(parseInt(leader_rate)+1)&&confirm_rate>=(parseInt(leader_rate)-1)){
+            document.getElementById(i+"[leader_rate]").value=confirm_rate;
+        }
+        else{
+            alert("第"+i+"行评级超出范围");
+            return false;
+        }
+        if(confirm_rate==1){sss++;}
+        if(confirm_rate==2){aaa++;}
+        if(confirm_rate==3){bbb++;}
+        if(confirm_rate==4){ccc++;}
+        if(confirm_rate==5){ddd++;}
+    }
+    ccc=ccc+ddd;
+    var ss=document.getElementById("ss").value;
+    var aa=document.getElementById("aa").value;
+    var bb=document.getElementById("bb").value;
+    var cc=document.getElementById("cc").value;
+    if(sss==ss&&aa==aaa&&bb==bbb&&cc==ccc){
+    }
+    else{
+        alert("数量不对！");
+        return false;
+    }
+    document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Rate/ratesub",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+  }
+</script>

@@ -1,0 +1,149 @@
+<include file="Public/header_super" />
+<style type="text/css">
+  .column-title{
+    text-align: center;
+  }
+</style>
+<div class="right_col" role="main">
+  <div class="row">
+  <h3><strong>&nbsp;&nbsp;&nbsp;绩效发布</strong></h3>
+  <hr/>
+  <div class="row top_tiles">
+         <for start='1' end='5'>
+              <div class="animated flipInY col-lg-3 col-md-4 col-sm-6 col-xs-12" style="width:23.5%;margin-left:1.2%;margin-top:1%;cursor:pointer;" onclick="location.href='{:U('Plansuper/performance_release',"quarter=$i")}'">
+                <div class="tile-stats" style="height:200px;">
+                  <div class="icon">
+                      <i class="fa fa-car" style="margin-top:30px; float:left; margin-left:-10px;"></i>
+                      </div>
+                      <div class="count">{$i}季度</div>
+                      <h3 style="margin-top: 20px;"></h3>
+                      <hr>
+                      <p style="font-size: larger; margin-top: -10px;"><strong></strong></p>
+                      <p style="font-size: larger;"><strong></strong></p>
+                  
+                </div>
+              </div>
+         </for>
+  </div>
+  </div>
+
+  <div class="row">
+<form id="subform" action="{:U('')}" method="post" class="form-horizontal">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2></h2>
+                    <input type="hidden" name="quarter" value="{$quarter}">
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive"  style="">
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="4%">序号</th>
+                            <th class="column-title" width="4%">部门</th>
+                            
+                            
+                            <th class="column-title" width="5%">年</th>
+                            <th class="column-title" width="5%">季度</th>
+                            <th class="column-title" width="5%" style="text-align:center;">科室</th>
+                            <th class="column-title" width="5%">是否提交</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        <volist name="data" id="vo" key="i">
+                          <tr class="even pointer">
+                          <td class=" ">
+                              <label>
+                                {$i}
+                              </label>
+                            </td>
+                          <td class=" ">
+                              <label>
+                                {$vo.department}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.year}
+                              </label>
+                            </td>
+                            
+                           
+                            <td class=" ">
+                              <label>
+                                {$vo.quarter}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <volist name="vo[office]" id="office" key="j">
+                              {$office}<br>
+                              </volist>
+                            </td>
+                            <td class=" ">
+                              <volist name="vo[if_query]" id="if_query" key="q">
+                              <switch name="if_query">
+                              <case value="1">已发布</case>
+                              <case value="0">未发布</case>
+                              </switch><br>
+                              </volist>
+                            </td>
+                            
+                          </tr>
+                        </volist>
+                        </tbody>
+                        
+                        
+                      </table>
+                    </div>
+                    </div>
+                    </div></div>
+          </form>
+  </div>
+</div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function fom(){
+    document.getElementById("bu").disabled = "disabled";
+    if (confirm("确定要提交？提交后无法更改.")) 
+    {  
+      document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Performance/finalgradeQ",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                    //window.location.reload();
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+    }
+  }
+</script>

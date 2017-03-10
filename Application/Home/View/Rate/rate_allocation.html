@@ -1,0 +1,250 @@
+<include file="Public/header" /> 
+<style type="text/css">
+	.column-title{
+		text-align: center;
+	}
+</style>
+
+<div class="right_col" role="main">
+  <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>部门评级分配</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div class="table-responsive">          
+                     <empty name="rate">
+                      信息为空！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="3%">部门</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">部门<br>总人数</th>
+                            <th class="column-title" width="3%">不参<br>评人数</th>
+                            <th class="column-title" width="3%">参评人数</th>
+                            <th class="column-title" width="3%">科级<br>参评人数</th>
+                            <th class="column-title" width="3%">员工<br>参评人数</th>
+                            <th class="column-title" width="3%">S总数</th>
+                            <th class="column-title" width="3%">A总数</th>
+                            <th class="column-title" width="3%">B总数</th>
+                            <th class="column-title" width="3%">C+D总数</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$rate.department}
+                            </td>
+                            <td class=" ">
+                            {$rate.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$rate.quarter}
+                            </td>
+                             
+                            <td class=" ">
+                            {$rate.all_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.not_grade}
+                            </td>
+                            <td class=" ">
+                            {$rate.yes_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.chief}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.staff}
+                            </td>
+                            <td class=" " width="">
+                            {$rate.s}
+                            <input type="hidden" id="ss1" value="{$rate.s}">
+                            </td>
+                            <td class=" " width="">
+                            {$rate.a}
+                            <input type="hidden" id="ss2" value="{$rate.a}">
+                            </td>
+                            <td class=" " width="">
+                            {$rate.b}
+                            <input type="hidden" id="ss3" value="{$rate.b}">
+                            </td>
+                            <td class=" " width="">
+                            {$rate.c}
+                            <input type="hidden" id="ss4" value="{$rate.c}">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </empty>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>科室等级分配</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <form id="subform" action="{:U('Rate/ratequarter_chief')}" method="post" class="form-horizontal">          
+                     <empty name="data">
+                      信息为空！
+                      <else/>
+                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="5%">科室</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">科室总人数</th>
+                            <th class="column-title" width="3%">不参评人数</th>
+                            <th class="column-title" width="3%">参评总人数</th>
+
+                            <th class="column-title" width="3%">科级参评人数</th>
+                            <th class="column-title" width="3%">科级参评等级</th>
+                            <th class="column-title" width="3%">员工参评人数</th>
+                            <th class="column-title" width="3%">员工S总数</th>
+                            <th class="column-title" width="3%">员工A总数</th>
+                            <th class="column-title" width="3%">员工B总数</th>
+                            <th class="column-title" width="3%">员工C+D总数</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="data" id="vo">
+                          <tr class="even pointer"> 
+                            <td class=" ">
+                            {$office[$i]}
+                            <input name="{$i}[id]" value="{$vo.id}" type="hidden">
+                            <input name="{$i}[office]" value="{$office[$i]}" type="hidden">
+                            </td>
+                            <td class=" ">
+                            {$Think.session.admin.year_sys}
+                            </td>
+                           
+                            <td class=" ">
+                            {$Think.session.admin.quarter}
+                            </td>
+                             
+                            <td class=" " width="">
+                            {$vo.all_grade}
+                            <input name="{$i}[all_grade]" value="{$vo.all_grade}" type="hidden">
+                            </td>
+                            <td class=" ">
+                            {$vo.not_grade}
+                            <input name="{$i}[not_grade]" value="{$vo.not_grade}" type="hidden">
+                            </td>
+                            <td class=" ">
+                            {$vo.yes_grade}
+                            <input name="{$i}[yes_grade]" value="{$vo.yes_grade}" type="hidden">
+                            </td>
+                            <td class=" " width="">
+                            {$vo.chief}
+                            <input name="{$i}[chief]" value="{$vo.chief}" type="hidden">
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo[chief_rate]">
+                            <case value="1">S</case>
+                            <case value="2">A</case>
+                            <case value="3">B</case>
+                            <case value="4">C+D</case>
+                            <case value="">暂无评级</case>
+                            </switch>
+                            <input id="level{$i}" value="{$vo[chief_rate]}" type="hidden">
+                            </td>
+                            <td class=" " width="">
+                            {$vo.staff}
+                            <input id="staff[{$i}]"  name="{$i}[staff]" value="{$vo.staff}" type="hidden">
+                            </td>
+                            <td class=" " width="">
+                            <input id="s[{$i}][1]" name="{$i}[s]" value="{$vo[s]}">
+                            </td>
+                            <td class=" " width="">
+                            <input id="s[{$i}][2]" name="{$i}[a]" value="{$vo[a]}">
+                            </td>
+                            <td class=" " width="">
+                            <input id="s[{$i}][3]" name="{$i}[b]" value="{$vo[b]}">
+                            </td>
+                            <td>
+                            <input id="s[{$i}][4]" name="{$i}[c]" value="{$vo[c]}">
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                     <input type="button" value="提交" onclick="sub({$officecount})" id="bu">
+                     </else>
+                     </empty></form>
+                  </div>
+                </div>
+              </div>
+  </div>
+</div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+        function sub(officecount){
+            for(var i=1;i<=officecount;i++)
+            {
+                var sum=0;
+                for(var j=1;j<=4;j++)
+                {
+                    var o=document.getElementById('s['+i+']['+j+']').value;
+                    if(o==''){document.getElementById('s['+i+']['+j+']').value=0;o=0;}
+                    sum+=parseInt(o);
+                    var staff=document.getElementById('staff['+i+']').value;
+                }
+                if(sum!=parseInt(staff)){
+                        alert("第"+i+"行的员工人数不等于规定人数！");
+                        return false;
+                }
+            }
+            for(var i=1;i<=4;i++)
+            {
+                var sum=0;
+                var getgrade=0;//记录每一列等级的科长数量
+                for(var j=1;j<=officecount;j++)
+                {
+                    var o=document.getElementById('s['+j+']['+i+']').value;
+                    sum+=parseInt(o);  
+                    var level=document.getElementById('level'+j).value;
+                    if(level==i){
+                        getgrade+=1;
+                    }
+                }
+                
+                var s=document.getElementById('ss'+i).value;
+                s=parseInt(s)-getgrade;
+                if(sum!=parseInt(s)){
+                        alert("第"+i+"列的员工人数不等于规定人数！");
+                        return false;
+                }
+            }
+      document.getElementById("bu").disabled = "disabled";
+      $.ajax({
+                cache: true,
+                type: "POST",
+                url:"/TOPNew/Rate/ratequarter_chief",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+  }
+</script>

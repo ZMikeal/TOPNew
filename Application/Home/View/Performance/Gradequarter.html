@@ -17,7 +17,7 @@
               <div class="animated flipInY col-lg-3 col-md-4 col-sm-6 col-xs-12" style="width:24.2%;margin-left:0.6%;margin-top:1%;cursor:pointer;" onclick="location.href='{:U('Performance/Gradequarter',"quarter=$i")}'">
                 <div class="tile-stats" style="height:200px;">
                   <div class="icon">
-                    <if condition="$data1[$i] eq ''">
+                    <if condition="$datacount[$i] eq ''">
                     <i class="fa fa-car"></i></div>
                     <div class="count">{$i}季度</div>
                     <h3>还没有成绩</h3>
@@ -25,7 +25,7 @@
                     <else/>
                     <i class="fa fa-check-square-o"></i></div>
                     <div class="count">{$i}季度</div>
-                    <h3>成绩人数：{$data1[$i]}</h3>
+                    <h3>成绩人数：{$datacount[$i]}</h3>
                     <!-- <p>Lorem ipsum psdea itgum rixt.</p> -->
                     </else>
                     </if>
@@ -62,6 +62,7 @@
 
                     <div class="table-responsive"  style="">
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <if condition="$Think.session.admin.id_level eq 5">
                         <thead>
                           <tr class="headings">
                             <th class="column-title" width="5%">序号</th>     
@@ -89,8 +90,7 @@
                             <th class="column-title" width="5%">11月</th>
                             <th class="column-title" width="5%">12月</th>
                             </case>
-                            </switch>
-                            
+                            </switch>              
                             <th class="column-title" width="5%">平均分<br>(*70%)</th>
                             <th class="column-title" width="8%">1团队发展<br>（5分）</th>
                             <th class="column-title" width="8%">2团队激励<br>（5分）</th>
@@ -104,7 +104,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                        <volist name="data" id="vo">
+                        <volist name="datanew['chief']" id="vo">
                           <input type="hidden" name="chief[{$i}][id_employee]"   value="{$vo.id_employee}">
                           <input type="hidden" name="chief[{$i}][name]"          value="{$vo.name}">
                           <input type="hidden" name="chief[{$i}][department]"    value="{$vo.department}">
@@ -162,50 +162,52 @@
                               <input type="hidden" name="chief[{$i}][grade_three]" value="{$vo.2}">
                               </label>
                             </td>
-                            
+                            <input type="hidden" id="id_level" value="{$Think.session.admin.id_level}">
 
                             <td class=" ">
                               <label>
                                 {$vo.sum}
-                                <input type="hidden" id="fenshu[{$i}][8]"  name="chief[{$i}][grade_avg]" value="{$vo.sum}">
+                                <input type="hidden" id="fenshu[{$i}][0]"  name="chief[{$i}][grade_avg]" value="{$vo.sum}">
                               </label>
                             </td>
                             <td class=" " >
                               <label>
-                               <input type="text" id="fenshu[{$i}][0]" name="chief[{$i}][grade_ability]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_ability]}">
+                               <input type="text" id="fenshu[{$i}][1]" name="chief[{$i}][grade_ability]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_ability]}">
                               </label>
                             </td>
                             <td class=" " >
                               <label>
-                               <input type="text" id="fenshu[{$i}][1]" name="chief[{$i}][grade_skill]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_skill]}">
+                               <input type="text" id="fenshu[{$i}][2]" name="chief[{$i}][grade_skill]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_skill]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][2]" name="chief[{$i}][grade_study]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_study]}">
+                               <input type="text" id="fenshu[{$i}][3]" name="chief[{$i}][grade_study]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_study]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][3]" name="chief[{$i}][grade_execute]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_execute]}">
+                               <input type="text" id="fenshu[{$i}][4]" name="chief[{$i}][grade_execute]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_execute]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][4]" name="chief[{$i}][grade_cooperate]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_cooperate]}">
+                               <input type="text" id="fenshu[{$i}][5]" name="chief[{$i}][grade_cooperate]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_cooperate]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][5]" name="chief[{$i}][grade_order]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_order]}">
-                            <td class=" ">
-                              <label>
-                               <input type="text" id="fenshu[{$i}][6]" name="chief[{$i}][grade_proity]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_proity]}">
+                               <input type="text" id="fenshu[{$i}][6]" name="chief[{$i}][grade_order]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_order]}">
                               </label>
                             </td>
                             <td class=" ">
                               <label>
-                               <input type="text" id="fenshu[{$i}][7]" name="chief[{$i}][grade_undertake]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_undertake]}">
+                               <input type="text" id="fenshu[{$i}][7]" name="chief[{$i}][grade_proity]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_proity]}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshu[{$i}][8]" name="chief[{$i}][grade_undertake]" style="width:25px" onchange="getGrade({$i})" value="{$vo[grade_undertake]}">
                               </label>
                             </td>
                             <td class=" ">
@@ -217,8 +219,157 @@
                           </tr>
                         </volist>
                         </tbody>
+                        </if>
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="5%">序号</th>     
+                            <th class="column-title" style="text-align:center;" width="5%">姓名</th>
+                            <th class="column-title" width="5%">工号</th>
+                            
+                            <switch name="quarter">
+                            <case value="1">
+                            <th class="column-title" width="5%">1月</th>
+                            <th class="column-title" width="5%">2月</th>
+                            <th class="column-title" width="5%">3月</th>
+                            </case>
+                            <case value="2">
+                            <th class="column-title" width="5%">4月</th>
+                            <th class="column-title" width="5%">5月</th>
+                            <th class="column-title" width="5%">6月</th>
+                            </case>
+                            <case value="3">
+                            <th class="column-title" width="5%">7月</th>
+                            <th class="column-title" width="5%">8月</th>
+                            <th class="column-title" width="5%">9月</th>
+                            </case>
+                            <case value="4">
+                            <th class="column-title" width="5%">10月</th>
+                            <th class="column-title" width="5%">11月</th>
+                            <th class="column-title" width="5%">12月</th>
+                            </case>
+                            </switch>
+                            <th class="column-title" width="5%">平均分<br>(*70%)</th>                       
+                            <th class="column-title" width="8%">1解决问题能力<br>（5分）</th>
+                            <th class="column-title" width="8%">2专业技能<br>（5分）</th>
+                            <th class="column-title" width="8%">3学习创新能力<br>（5分）</th>
+                            <th class="column-title" width="8%">4高效执行力<br>（5分）</th>
+                            <th class="column-title" width="8%">5主动负责精神<br>（5分）</th>
+                            <th class="column-title" width="8%">6团队协作精神<br>（5分）</th>
+                            <th class="column-title" width="8%"></th>
+                            <th class="column-title" width="8%"></th>
+                            <th class="column-title" width="8%">总分</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="datanew['staff']" id="vo" >
+                          <input type="hidden" name="staff[{$i}][id_employee]"   value="{$vo.id_employee}">
+                          <input type="hidden" name="staff[{$i}][name]"          value="{$vo.name}">
+                          <input type="hidden" name="staff[{$i}][department]"    value="{$vo.department}">
+                          <input type="hidden" name="staff[{$i}][office]"        value="{$vo.office}">
+                          <input type="hidden" name="staff[{$i}][id_level]"      value="{$vo.id_level}">
+                          <!-- <input type="hidden" name="chief[{$i}][job]"           value="{$vo.job}"> -->
+                          <input type="hidden" name="staff[{$i}][grade_leader]"  value="{$vo.grade_leader}">
+                          <input type="hidden" name="staff[{$i}][grade_last]"    value="{$vo.grade_last}">
+                          <input type="hidden" name="staff[{$i}][year]"          value="{$vo.year}">
+                          <tr class="even pointer">
+                          <td class=" ">
+                              <label>
+                                {$i}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.name}
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.id_employee}
+                              </label>
+                            </td>
+                            
+
+                            <td class=" ">
+                              <label>
+                              <empty name="vo.0">
+                              无成绩
+                              <else/>
+                                {$vo.0}
+                              </empty>
+                              <input type="hidden" name="staff[{$i}][grade_one]" value="{$vo.0}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                              <empty name="vo.1">
+                              无成绩
+                              <else/>
+                                {$vo.1}
+                              </empty>
+                              <input type="hidden" name="staff[{$i}][grade_two]" value="{$vo.1}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                              <empty name="vo.2">
+                              无成绩
+                              <else/>
+                                {$vo.2}
+                              </empty>
+                              <input type="hidden" name="staff[{$i}][grade_three]" value="{$vo.2}">
+                              </label>
+                            </td>
+                            <input type="hidden" id="id_level" value="{$Think.session.admin.id_level}">
+
+                            <td class=" ">
+                              <label>
+                                {$vo.sum}
+                                <input type="hidden" id="fenshustaff[{$i}][0]"  name="staff[{$i}][grade_avg]" value="{$vo.sum}">
+                              </label>
+                            </td>
+                            <td class=" " >
+                              <label>
+                               <input type="text" id="fenshustaff[{$i}][1]" name="staff[{$i}][grade_ability]" style="width:25px" onchange="getGradestaff({$i})" value="{$vo[grade_ability]}">
+                              </label>
+                            </td>
+                            <td class=" " >
+                              <label>
+                               <input type="text" id="fenshustaff[{$i}][2]" name="staff[{$i}][grade_skill]" style="width:25px" onchange="getGradestaff({$i})" value="{$vo[grade_skill]}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshustaff[{$i}][3]" name="staff[{$i}][grade_study]" style="width:25px" onchange="getGradestaff({$i})" value="{$vo[grade_study]}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshustaff[{$i}][4]" name="staff[{$i}][grade_execute]" style="width:25px" onchange="getGradestaff({$i})" value="{$vo[grade_execute]}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshustaff[{$i}][5]" name="staff[{$i}][grade_cooperate]" style="width:25px" onchange="getGradestaff({$i})" value="{$vo[grade_cooperate]}">
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="fenshustaff[{$i}][6]" name="staff[{$i}][grade_order]" style="width:25px" onchange="getGradestaff({$i})" value="{$vo[grade_order]}">
+                              </label>
+                            </td>
+                            <td class=" "></td>
+                            <td class=" "></td>
+                            <td class=" ">
+                              <label>
+                               <input type="text" id="sumstaff[{$i}]" disabled="disabled" style="width:35px" value="{$vo[grade_total]}">
+                               <input type="hidden" id="sumstaff1[{$i}]" name="staff[{$i}][grade_total]" style="width:35px" value="{$vo[grade_total]}">
+                              </label>
+                            </td>
+                          </tr>
+                        </volist>
+                        </tbody>
                       </table>
-                      <input class="btn btn-success" type="button" value="提交成绩" id="bu" onclick="fom()" style="margin-left:40%;width:10%;">
+                      <input class="btn btn-success" type="button" onclick="fom()" value="提交成绩" id="bu" style="margin-left:40%;width:10%;">
                       <!-- <empty name="id">
 
                       <input class="btn btn-success" type="button" value="提交最终版成绩" id="bu" onclick="fom()" style="margin-left:30%;width:10%;">
@@ -233,43 +384,74 @@
 <script type="text/javascript">
   function getGrade(tt){
     var fenshu=0;
-    for(var i=0;i<9;i++)
-    {
-      var o=document.getElementById('fenshu['+tt+']['+i+']').value;
-      if(o==""){
-        o=0;
+    var id_level=document.getElementById('id_level').value;
+          for(var i=0;i<9;i++)
+          {
+            var o=document.getElementById('fenshu['+tt+']['+i+']').value;
+            if(o==""){
+              o=0;
+            }
+            if(o<0){
+              var w=i+1;
+              alert('第'+i+'项输入分数不能为负数');
+              document.getElementById('fenshu['+tt+']['+i+']').value = '';
+              return false;
+            }
+            if(i<=3&&o>5&&i>0)
+            {
+              var w=i+1;
+              alert('第'+i+'项输入分数不能大于5');
+              document.getElementById('fenshu['+tt+']['+i+']').value = '';
+              return false;
+            }
+            if(i>3&&i<9&&o>3)
+            {
+              var w=i+1;
+              alert('第'+i+'项输入分数不能大于3');
+              document.getElementById('fenshu['+tt+']['+i+']').value = '';
+              return false;
+            }
+            fenshu+=parseFloat(o);
+          }
+          document.getElementById('sum['+tt+']').value = fenshu;
+          document.getElementById('sum1['+tt+']').value = fenshu;
+          if(isNaN(fenshu)==true){
+            alert('请输入数字');
+          }
+          if(filenshu>100){
+            alert('评分分数已超100！请修改！');
+          }
       }
-      if(o<0){
-        var w=i+1;
-        alert('第'+w+'项输入分数不能为负数');
-        document.getElementById('fenshu['+tt+']['+i+']').value = '';
-        return false;
+  function getGradestaff(tt){
+    var fenshu=0;
+        for(var i=0;i<7;i++)
+          {
+            var o=document.getElementById('fenshustaff['+tt+']['+i+']').value;
+            if(o==""){
+              o=0;
+            }
+            if(o<0){
+              alert('第'+i+'项输入分数不能为负数');
+              document.getElementById('fenshustaff['+tt+']['+i+']').value = '';
+              return false;
+            }
+            if(i<7&&o>5&&i>0)
+            {
+              alert('第'+i+'项输入分数不能大于5');
+              document.getElementById('fenshustaff['+tt+']['+i+']').value = '';
+              return false;
+            }
+            fenshu+=parseFloat(o);
+          }
+          document.getElementById('sumstaff['+tt+']').value = fenshu;
+          document.getElementById('sumstaff1['+tt+']').value = fenshu;
+          if(isNaN(fenshu)==true){
+            alert('请输入数字');
+          }
+          if(fenshu>100){
+            alert('评分分数已超100！请修改！');
+          }
       }
-      if(i<3&&o>5)
-      {
-        var w=i+1;
-        alert('第'+w+'项输入分数不能大于5');
-        document.getElementById('fenshu['+tt+']['+i+']').value = '';
-        return false;
-      }
-      if(i>2&&i<8&&o>3)
-      {
-        var w=i+1;
-        alert('第'+w+'项输入分数不能大于3');
-        document.getElementById('fenshu['+tt+']['+i+']').value = '';
-        return false;
-      }
-      fenshu+=parseFloat(o);
-    }
-    document.getElementById('sum['+tt+']').value = fenshu;
-    document.getElementById('sum1['+tt+']').value = fenshu;
-    if(isNaN(fenshu)==true){
-      alert('请输入数字');
-    }
-    if(filenshu>100){
-      alert('评分分数已超100！请修改！');
-    }
-  }
   function fom(){
     document.getElementById("bu").disabled = "disabled";
       $.ajax({
