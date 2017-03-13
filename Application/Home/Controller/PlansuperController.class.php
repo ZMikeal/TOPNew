@@ -232,8 +232,22 @@ class PlansuperController extends BaseController {
             $data[$k]['if_query'][$key]=$this->model->where($tj)->where("office = '{$value}'")->getField('if_query');
           }
         }
+        $count=count($data);
+        //dump($data);
         $this->assign('data',$data);
+        $this->assign('count',$count);
+        $this->assign('quarter',$tj['quarter']);
       }
       $this->display();
+    }
+    public function release(){
+      $data=I('post.');
+      $department=explode(",", $data['department']);
+      $tj['quarter']=$data['quarter'];
+      $tj['year']=session('admin.year_sys');
+      foreach ($department as $k => $v) {
+        $re=M('gradequarter_confirm')->where($tj)->where("department = '{$v}'")->setField('if_query','1');
+      }
+      $this->ajaxReturn(array('success'=>1),"json");
     }
 }

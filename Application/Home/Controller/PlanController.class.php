@@ -369,7 +369,7 @@ class PlanController extends BaseController {
           $tj['minister_id']=$list1['id_employee'];
           $list2 = M('planmonth_minister')->where($tj)->select();
         }
-        else if($list1['id_level']==3)
+        else if($list1['id_level']==3||$list1['id_level']==7)
         {
           $tj['staff_id']=$list1['id_employee'];
           $list2 = M('planmonth_staff')->where($tj)->select();

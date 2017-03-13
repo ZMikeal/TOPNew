@@ -37,12 +37,27 @@ class OverworkController extends Controller {
     	//将ISO Date 转成 Timestamp
     	$dt_start = strtotime($overworkFlotBeforeTime);
     	$dt_end   = strtotime($overworkFlotNowTime);
+    	$i=0;
     do { 
         //将 Timestamp 转成 ISO Date 输出
-        echo date('Y-m-d', $dt_start).PHP_EOL;
+        
+        $temp  =  date('Y-m-d', $dt_start);
+        echo $temp.'<br>';
+	        if($flot['overworkStartTime']!=$temp){
+	        	$temp_arr = array('overworkStartTime' => $temp,'overworkTotalTime' => 0 );
+	        	dump($temp_arr);
+	        	array_splice($flot,0,0,$temp_arr);
+
+	        }
+	        
+	        else if ($flot['overworkStartTime']==$temp) {
+	        	# code...
+	        	$flot = next($flot);
+	        }
+	        $i++;
     	}while (($dt_start += 86400) <= $dt_end);// 重复 Timestamp + 1 天(86400), 直至大于结束日期中止
 
-
+    	dump($flot);
 
     	if($flot)
       {

@@ -370,6 +370,7 @@
       if (!keep && state == _checked && node[_type] == _radio && node.name) {
         var form = input.closest('form'),
           inputs = 'input[name="' + node.name + '"]';
+        
 
         inputs = form.length ? form.find(inputs) : $(inputs);
 

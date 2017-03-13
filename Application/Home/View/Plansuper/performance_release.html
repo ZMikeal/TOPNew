@@ -4,6 +4,7 @@
     text-align: center;
   }
 </style>
+<!-- <link href="__PUBLIC__/vendors/iCheck/skins/flat/green.css" rel="stylesheet"> -->
 <div class="right_col" role="main">
   <div class="row">
   <h3><strong>&nbsp;&nbsp;&nbsp;绩效发布</strong></h3>
@@ -28,12 +29,12 @@
   </div>
 
   <div class="row">
-<form id="subform" action="{:U('')}" method="post" class="form-horizontal">
+<form id="subform" action="{:U('Plansuper/release')}" method="get" class="form-horizontal">
   <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2></h2>
-                    <input type="hidden" name="quarter" value="{$quarter}">
+                    <h2>{$quarter}季度发布情况</h2>
+                    <input type="hidden" id="quarter" value="{$quarter}">
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -55,9 +56,10 @@
                   <div class="x_content">
 
                     <div class="table-responsive"  style="">
-                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                      <table id="datatable-checkbox" class="table table-striped table-bordered jambo_table bulk_action">
                         <thead>
-                          <tr class="headings">
+                        <tr>
+                            <th width="4%"><input type="checkbox" id="check-all" class="flat"></th>
                             <th class="column-title" width="4%">序号</th>
                             <th class="column-title" width="4%">部门</th>
                             
@@ -66,12 +68,16 @@
                             <th class="column-title" width="5%">季度</th>
                             <th class="column-title" width="5%" style="text-align:center;">科室</th>
                             <th class="column-title" width="5%">是否提交</th>
-                          </tr>
+                            <th class="bulk-actions" colspan="7">
+                              <a class="antoo" style="color:#fff; font-weight:500;">已选项 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                            </th>
+                        </tr>
                         </thead>
 
                         <tbody>
                         <volist name="data" id="vo" key="i">
                           <tr class="even pointer">
+                          <td><input type="checkbox" class="flat" name="table_records" id="records{$i}" value="{$vo.department}"></td>
                           <td class=" ">
                               <label>
                                 {$i}
@@ -100,8 +106,8 @@
                               </volist>
                             </td>
                             <td class=" ">
-                              <volist name="vo[if_query]" id="if_query" key="q">
-                              <switch name="if_query">
+                              <volist name="vo[if_query]" id="query" key="q">
+                              <switch name="query">
                               <case value="1">已发布</case>
                               <case value="0">未发布</case>
                               </switch><br>
@@ -110,28 +116,43 @@
                             
                           </tr>
                         </volist>
-                        </tbody>
                         
-                        
+                        </tbody>   
                       </table>
                     </div>
+                    <input type="button" value="发布" onclick="fom({$count})" id="bu">
                     </div>
                     </div></div>
           </form>
   </div>
 </div>
-<include file="Public/foot" /> 
+
+<include file="Public/foot" />
+ <!-- iCheck -->
+<script src="__PUBLIC__/vendors/iCheck/icheck.min.js"></script> 
 <script type="text/javascript">
-  function fom(){
-    document.getElementById("bu").disabled = "disabled";
-    if (confirm("确定要提交？提交后无法更改.")) 
+  function fom(tt){
+    //document.getElementById("bu").disabled = "disabled";
+    var department='';
+    for(var i=1;i<=tt;i++){
+      var aa = document.getElementById("records"+i+"").checked;
+      if(aa==true){
+        department=department+","+document.getElementById("records"+i+"").value;
+      }
+    }
+    if(department==''){
+      alert("暂无可发布信息！");
+      return(false);
+    }
+    var quarter = document.getElementById("quarter").value;
+    if (confirm("确定要提交？")) 
     {  
       document.getElementById("bu").disabled = "disabled";
       $.ajax({
                 cache: true,
                 type: "POST",
-                url:"/TOPNew/Performance/finalgradeQ",
-                data:$('#subform').serialize(),// 你的formid
+                url:"/TOPNew/Plansuper/release",
+                data:{"department":department,"quarter":quarter},
                 async: false,
                 error: function(request) {
                     alert("Connection error");
@@ -147,3 +168,5 @@
     }
   }
 </script>
+   
+
