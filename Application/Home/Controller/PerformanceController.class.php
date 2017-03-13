@@ -980,7 +980,7 @@ class PerformanceController extends BaseController {
                else
                 {
                   $id=$found['id'];$tj['grade_last']=session('admin.username');
-                  $this->model->where($tj)->setField(array('grade','staff_office'),array($count[$k]['plan_grade'],,$tj['staff_office']));
+                  $this->model->where($tj)->setField(array('grade','staff_office'),array($count[$k]['plan_grade'],$tj['staff_office']));
                 }
               }//dump($count);exit;
             }
