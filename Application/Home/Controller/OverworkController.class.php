@@ -33,7 +33,7 @@ class OverworkController extends Controller {
     	$overworkFlotNowTime           = date("Y-m-d");
     	$overworkFlotBeforeTime        = date('Y-m-d', strtotime('-15 days'));
     	$flot=$this->model->where("overworkStartTime>='$overworkFlotBeforeTime' AND overworkStartTime<='$overworkFlotNowTime'")->where($tj)->order("overworkStartTime ASC")->field('overworkStartTime,overworkTotalTime')->select();
-
+    	
     	//将ISO Date 转成 Timestamp
     	$dt_start = strtotime($overworkFlotBeforeTime);
     	$dt_end   = strtotime($overworkFlotNowTime);
@@ -43,10 +43,12 @@ class OverworkController extends Controller {
         
         $temp  =  date('Y-m-d', $dt_start);
         echo $temp.'<br>';
-	        if($flot['overworkStartTime']!=$temp){
-	        	$temp_arr = array('overworkStartTime' => $temp,'overworkTotalTime' => 0 );
+	        if(substr($flot['overworkStartTime'], 0,10)!=$temp){
+	        	echo substr($flot['overworkStartTime'], 0,10);
+	        	$temp_arr = array(array('overworkStartTime' => $temp,'overworkTotalTime' => "0" ));
 	        	dump($temp_arr);
-	        	array_splice($flot,0,0,$temp_arr);
+	        	array_splice($flot,$i,0,$temp_arr);
+	        	dump($flot);
 
 	        }
 	        

@@ -913,10 +913,11 @@ class PerformanceController extends BaseController {
           $tj['month']=$admin['month'];
           $admin=$this->model->where("id_employee=".$tj['staff_id'])->find();
           $tj['staff_department']=$admin['user_department'];
-          $tj['staff_office']=$admin['user_office'];
+          
           $tj['grade_leader']=session('admin.username');
           $this->model=D('grademonth_staff');
           $found=$this->model->where($tj)->find();
+          $tj['staff_office']=$admin['user_office'];
           if($found==null)
           {
              $tj['grade']=$data['sum'];
@@ -926,7 +927,7 @@ class PerformanceController extends BaseController {
           }  
          else
           {
-              $id=$found['id'];$tj['grade_last']="";
+              $tj['id']=$found['id'];$tj['grade_last']="";
               $this->model->where($tj)->setField(array('grade','staff_office'),array($data['sum'],$tj['staff_office']));
           }
         }
@@ -962,9 +963,10 @@ class PerformanceController extends BaseController {
                   //dump($admin);
                   //dump($k);
                  $tj['staff_id']=$v['staff_id'];$tj['staff_name']=$v['staff_name'];$tj['yaer']=$v['year'];$tj['month']=$v['month'];
-                 $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];$tj['staff_office']=$admin['office'];
+                 $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];
                  $this->model=D('grademonth_staff');
                  $found=$this->model->where($tj)->find();
+                 $tj['staff_office']=$admin['user_office'];
                   //dump($found);
                  
                 if($found=="")
@@ -979,8 +981,10 @@ class PerformanceController extends BaseController {
                  }  
                else
                 {
-                  $id=$found['id'];$tj['grade_last']=session('admin.username');
-                  $this->model->where($tj)->setField(array('grade','staff_office'),array($count[$k]['plan_grade'],$tj['staff_office']));
+                  $tj1['id']=$found['id'];$tj1['grade_last']=session('admin.username');
+                  $tj2['grade']=$count[$k]['plan_grade'];
+                  $tj2['staff_office']=$admin['user_office'];
+                  $this->model->where($tj1)->save($tj2);
                 }
               }//dump($count);exit;
             }
@@ -1013,9 +1017,10 @@ class PerformanceController extends BaseController {
                     //dump($admin);
                     //dump($k);
                    $tj['minister_id']=$v['minister_id'];$tj['minister_name']=$v['minister_name'];$tj['yaer']=$v['year'];$tj['month']=$v['month'];
-                   $tj['grade_leader']=$v['plan_leader'];$tj['minister_department']=$admin['department'];$tj['minister_office']=$admin['office'];
+                   $tj['grade_leader']=$v['plan_leader'];$tj['minister_department']=$admin['department'];
                    $this->model=D('grademonth_minister');
                    $found=$this->model->where($tj)->find();
+                   $tj['minister_office']=$admin['user_office'];
                     //dump($found);
                    
                   if($found=="")
@@ -1030,8 +1035,10 @@ class PerformanceController extends BaseController {
                    }  
                  else
                   {
-                    $id=$found['id'];$tj['grade_last']=session('admin.username');
-                    $this->model->where($tj)->setField(array('grade','minister_office'),array($count[$k]['plan_grade'],$tj['minister_office']));
+                    $tj1['id']=$found['id'];$tj1['grade_last']=session('admin.username');
+                    $tj2['grade']=$count[$k]['plan_grade'];
+                    $tj2['minister_office']=$admin['user_office'];
+                    $this->model->where($tj1)->save($tj2);
                   }
              }//dump($count);exit;
             }
@@ -1063,10 +1070,12 @@ class PerformanceController extends BaseController {
                     }
               }
               $this->model=D('grademonth_chief');
-              $tj['chief_department']=$admin['department'];$tj['chief_office']=$admin['office'];
+              $tj['chief_department']=$admin['department'];
               if($tj['chief_department']==''){unset($tj['chief_department']);}
-              if($tj['chief_office']==''){unset($tj['chief_office']);}
+              
               $found=$this->model->where($tj)->find();
+              $tj['chief_office']=$admin['user_office'];
+              if($tj['chief_office']==''){unset($tj['chief_office']);}
                if($found=="")
                 {
                  $tj['grade']=$data['sum'];
@@ -1078,11 +1087,12 @@ class PerformanceController extends BaseController {
                 }  
               else
                {
-                  $id=$found['id'];$tj['grade_last']="";
-                  $this->model->where($tj)->setField(array('grade','chief_office'),array($data['sum'],$tj['chief_office']));
+                  $tj1['id']=$found['id'];$tj1['grade_last']="";
+                  $tj2['grade']=$count[$k]['plan_grade'];
+                  $tj2['chief_office']=$admin['user_office'];
+                  $this->model->where($tj1)->save($tj2);
                }
             }    
-        //dump($tj);exit;   
         
         }
         $this->ajaxReturn(array('success'=>1),"json");

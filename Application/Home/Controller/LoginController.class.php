@@ -65,6 +65,17 @@ class LoginController extends Controller {
          $this->redirect('Plandq/index');
       }
 
+      if($admin['id_level']==10)
+      {
+        $dat['id_employee']=$admin['id_employee'];
+        $dat['user_department']=$admin['user_department'];
+        $admin['month_sys']=date('m');
+         $admin['year_sys']=date('Y');
+        session('admin',$admin);
+         //dump($admin);exit;
+         $this->redirect('Planpresident/index');
+      }
+
       if($admin['id_level']!=2&&$admin['id_level']!=1&&$admin['id_level']!=6)
       {
         $dat['id_employee']=$admin['id_employee'];
