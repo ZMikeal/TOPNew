@@ -107,20 +107,14 @@
     <!-- Flot -->
     <script>
       $(document).ready(function() {
-        //random data10
         var action = "overwork_show";
         $.ajax({
         type:"GET",
         url:action,
-        dataType:"json",
+        // dataType:"json",
         success:function(data){
-          if(data.success==1){  
-             alert(data.success);
-              
-          }
-          else{
-          alert(data.success);
-          }
+          
+           alert(data);
         }
       });
         var d1 = [

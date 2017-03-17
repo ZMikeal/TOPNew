@@ -232,7 +232,13 @@
                           </volist>
                         </tbody>
                       </table>
-                      <input type="button" value="确认并上传" onclick="sub({$count})" id="bu" class="btn btn-success" style="margin-left:40%;width:10%;">
+                      <empty name="id">
+
+                      <input class="btn btn-success" type="button" value="确认并上传" id="bu" onclick="sub({$count})" style="margin-left:30%;width:10%;">
+                      <else/>
+                      <a class="btn btn-success" onclick="return confirm('已提交过该季度最终成绩！')" style="margin-left:30%;width:10%;">确认并上传</a>
+                      </else>
+                      </empty>
                       </else>
                       </empty>
                       </form>
@@ -246,7 +252,7 @@
   function sub(tt){
     var ss=0,aa=0,bb=0,cc=0,dd=0;
     for(var i=1;i<=tt;i++){
-        var rate=document.getElementById('leader_rate'+tt).value;
+        var rate=document.getElementById('leader_rate'+i).value;
         if(rate==1){ss++;}
         if(rate==2){aa++;}
         if(rate==3){bb++;}
@@ -274,7 +280,6 @@
                     window.location.reload();
                 },
                 success: function(data) {
-                  alert(data.success);
                     if(data.success==1){
                     alert('提交成功!');
                     window.location.reload();

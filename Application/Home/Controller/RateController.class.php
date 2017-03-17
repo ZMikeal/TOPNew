@@ -78,9 +78,21 @@ class RateController extends BaseController {
       $tj['office']=session('admin.user_office');
       $rate_chief=M('ratequarter_chief')->where($tj)->find();
     }
-    else{
+    if(session('admin.id_level')==5){
       $rate_chief=$rate;
-      $rate_chief['office']=$rate['department'];
+      $depart=session('admin.user_department');
+      $office=array_unique(M('info_admin')->where("user_department = '{$depart}'")->getField('user_office',true));
+      $this->assign('office',$office);
+      $search=I('post.search');
+      if($search!=null){
+        $tj['office']=$search;
+        $rate_chief=M('ratequarter_chief')->where($tj)->find();
+        $this->assign('search',$search);
+      }
+      else{
+        $tj['office']='无';
+        $rate_chief['office']=$rate['department'];
+      }
     }
     $this->assign('rate',$rate);
     $this->assign('rate_chief',$rate_chief);
@@ -205,13 +217,15 @@ class RateController extends BaseController {
         if($quarter==2){$month="4,5,6";}
         if($quarter==3){$month="7,8,9";}
         if($quarter==4){$month="10,11,12";}
-        $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7) and confirm_rate_minister != '无'")->select();
-        $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8) and confirm_rate_minister != '无'")->select();
+        $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7) and confirm_rate_minister != '无' and if_grade =1")->select();
+        $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8) and confirm_rate_minister != '无' and if_grade =1")->select();
+        $data['no']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8,3,7) and confirm_rate_minister != '无' and if_grade =0")->select();
         $id=1;
         if($data['staff']==null&&$data['chief']==null)
         {
-          $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7) and confirm_rate_minister = '无'")->select();
-          $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8) and confirm_rate_minister = '无'")->select();
+          $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7) and confirm_rate_minister = '无' and if_grade =1")->select();
+          $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8) and confirm_rate_minister = '无' and if_grade =1")->select();
+          $data['no']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8,3,7) and confirm_rate_minister = '无' and if_grade =0")->select();
           $id='';
         }
         $this->assign('quarter',$quarter);
@@ -226,17 +240,23 @@ class RateController extends BaseController {
    //提交最终版
    public function finalgradeQ(){
       $data=I('post.');
-      foreach ($data['chief'] as $k => $v) {
-       //$v['grade_last']=session('admin.username');
+      foreach ($data['chief1'] as $k => $v) {
+       $m['confirm_rate_minister']=session('admin.username');
        $this->model=D('gradequarter_confirm');
-       if($this->model->create($v))
-        $this->model->add();
+       if($this->model->create($m))
+        $this->model->where($v)->save();
       }
-      foreach ($data['staff'] as $k => $v) {
-       //$v['grade_last']=session('admin.username');
+      foreach ($data['staff1'] as $k => $v) {
+       $m['confirm_rate_minister']=session('admin.username');
        $this->model=D('gradequarter_confirm');
-       if($this->model->create($v))
-        $this->model->add();
+       if($this->model->create($m))
+        $this->model->where($v)->save();
+      }
+      foreach ($data['no'] as $k => $v) {
+       $m['confirm_rate_minister']=session('admin.username');
+       $this->model=D('gradequarter_confirm');
+       if($this->model->create($m))
+        $this->model->where($v)->save();
       }
       $this->ajaxReturn(array('success'=>1),"json");
   }

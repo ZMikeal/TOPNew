@@ -22,7 +22,7 @@
                   <div class="x_content">
 
                     <div class="table-responsive">
-                <form id="form1" action="{:U('Plansuper/performance_allocation')}" method="post" class="form-horizontal">
+                <form id="form1" action="{:U('Planpresident/')}" method="post" class="form-horizontal">
                       
                       年度：<select style="width:100px;" name="search[]">
                         <option <if condition="$search[0] eq 2017">selected</if>>2017</option>
@@ -127,7 +127,13 @@
                           </volist>
                         </tbody>
                       </table>
-                      <input type="button" value="提交" onclick="fom()" id="bu">
+                      <empty name="id">
+
+                      <input class="btn btn-success" type="button" value="提交最终版成绩" id="bu" onclick="fom()" style="margin-left:30%;width:10%;">
+                      <else/>
+                      <a class="btn btn-success" onclick="return confirm('已提交过该季度最终成绩！')" style="margin-left:30%;width:10%;">提交最终版成绩</a>
+                      </else>
+                      </empty>
                       </form>
                       </empty>
                     </div>
@@ -146,7 +152,7 @@
       $.ajax({
                 cache: true,
                 type: "POST",
-                url:"/TOPNew/Plansuper/PAsub",
+                url:"/TOPNew/Planpresident/",
                 data:$('#subform').serialize(),// 你的formid
                 async: false,
                 error: function(request) {

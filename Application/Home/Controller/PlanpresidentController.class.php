@@ -27,13 +27,20 @@ class PlanpresidentController extends BaseController {
         $tj['year']=$search[0];
         $tj['quarter']=$search[1];
         $tj['department']=$search[2];
-        $data['yes']=M('gradequarter_confirm')->where($tj)->where("if_grade = 1")->order('id')->select();
-        $data['no']=M('gradequarter_confirm')->where($tj)->where("if_grade = 0")->order('id')->select();
+        $data['yes']=M('gradequarter_confirm')->where($tj)->where("if_grade = 1 and confirm_rate_minister != '无' and confirm_rate_president = '无'")->order('id')->select();
+        $data['no']=M('gradequarter_confirm')->where($tj)->where("if_grade = 0 and confirm_rate_minister != '无' and confirm_rate_president = '无'")->order('id')->select();
+        $id='';
+        if($data['yes']==null){
+           $data['yes']=M('gradequarter_confirm')->where($tj)->where("if_grade = 1 and confirm_rate_minister != '无' and confirm_rate_president != '无'")->order('id')->select();
+           $data['no']=M('gradequarter_confirm')->where($tj)->where("if_grade = 0 and confirm_rate_minister != '无' and confirm_rate_president != '无'")->order('id')->select();
+           $id=1;
+        }
         $sum=M('ratequarter_minister')->where($tj)->find();
         $count=count($data['yes']);
         $this->assign('search',$search);
         $this->assign('data',$data);
         $this->assign('count',$count);
+        $this->assign('id',$id);
         $this->assign('sum',$sum);
       }
       $this->assign('department',$department);
@@ -47,11 +54,11 @@ class PlanpresidentController extends BaseController {
       $data=I('post.');
       $this->model=D('gradequarter_confirm');
       foreach ($data as $key => $value) {
-        $value['confirm_rate']=session('admin.username');
+        $value['confirm_rate_president']=session('admin.username');
         if($this->model->create($value)){
           $this->model->save();
         }
       }
-      $this->ajaxReturn(array('success'=>$value['confirm_rate']),"json");
+      $this->ajaxReturn(array('success'=>1),"json");
     }
 }

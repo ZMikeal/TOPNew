@@ -286,7 +286,7 @@ class PerformanceController extends BaseController {
    }
    //~
    //月度绩效查看列表
-    public function PlangradelistM(){
+   public function PlangradelistM(){
       $search=I('post.search');        
       $searchh=I('post.searchh');
       $searchhh=I('post.searchhh');
@@ -304,7 +304,6 @@ class PerformanceController extends BaseController {
       }
       $tj['plan_leader']=session('admin.username');
       $search1=session('admin.user_office');
-
       $level=session('admin.id_level');
       //决定了是只检索自己的评价人还是所有评价人的list
       //dump($tj);exit();
@@ -367,7 +366,6 @@ class PerformanceController extends BaseController {
           //
         }
       }
-
       foreach ($jh as $k => $v) {   //  循环保存每一条值
                   //$map = array();
                   $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
@@ -399,7 +397,6 @@ class PerformanceController extends BaseController {
         $tjh['year']=$searchh[0];
         $tjh['month']=$searchh[1];    
         }
-
         if($searchhh==""){
         $tjhh['year']=session('admin.year');
         $tjhh['month']=session('admin.month');
@@ -411,7 +408,6 @@ class PerformanceController extends BaseController {
         $tjhh['year']=$searchhh[0];
         $tjhh['month']=$searchhh[1];    
         }
-
         if(session('admin.user_job')=="副部长")
         {
           $tjh['plan_leader']=session('admin.username');
@@ -784,6 +780,15 @@ class PerformanceController extends BaseController {
       $tj=I('get.id');
       $tj=explode(",", $tj);
       $hrf=I('get.hrf');
+      if($hrf=='PlangradelistM'){
+        $search1=I('get.search1');        
+        $searchh1=I('get.searchh1');
+        $searchhh1=I('get.searchhh1');
+        //dump($searchh1);dump($searchh1);dump($searchh1);
+        $this->assign('search1',$search1);
+        $this->assign('searchh1',$searchh1);
+        $this->assign('searchhh1',$searchhh1);
+      }
       $this->assign('hrf',$hrf);
       $le=session('admin.id_level');
        //dump($tj);exit;
@@ -813,7 +818,7 @@ class PerformanceController extends BaseController {
         $name1['staff_id']=$name['staff_id'];
         $name1['year']=$name['year'];
         $name1['month']=$name['month'];
-        $name1['grade_leader']=$name['plan_leader'];
+        //$name1['grade_leader']=$name['plan_leader'];
         $sum=$this->model->where($name1)->getField('grade');
         //dump($name);exit;
         $name[1]=$name['staff_name'];
@@ -883,7 +888,6 @@ class PerformanceController extends BaseController {
       
       $ii=count($data['id']);
       $le=session('admin.id_level');
-
       for($i=0;$i<$ii;$i++)
       {
         $id=$data['id'][$i];
@@ -941,9 +945,8 @@ class PerformanceController extends BaseController {
             $tj['staff_name']=$admin['staff_name'];
             $tj['year']=$admin['year'];
             $tj['month']=$admin['month'];
-            $tj['plan_leader']=session('admin.username');
-            $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->group('plan_leader')->select();
-           //dump($count);exit;
+            //$tj['plan_leader']=session('admin.username');
+            $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(plan_grade) as plan_grade,plan_leader")->where($tj)->select();
            foreach ($count as $k => $v) {   //  循环保存每一条值
                   //$map = array();
 
@@ -963,12 +966,13 @@ class PerformanceController extends BaseController {
                   //dump($admin);
                   //dump($k);
                  $tj['staff_id']=$v['staff_id'];$tj['staff_name']=$v['staff_name'];$tj['yaer']=$v['year'];$tj['month']=$v['month'];
-                 $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];
+                 //$tj['grade_leader']=$v['plan_leader'];
+                 $tj['staff_department']=$admin['department'];
                  $this->model=D('grademonth_staff');
                  $found=$this->model->where($tj)->find();
                  $tj['staff_office']=$admin['user_office'];
-                  //dump($found);
-                 
+                 if($tj['staff_office']==''){unset($tj['staff_office']);}
+                
                 if($found=="")
                  {
                     $tj['grade']=$count[$k]['plan_grade'];
@@ -981,9 +985,11 @@ class PerformanceController extends BaseController {
                  }  
                else
                 {
-                  $tj1['id']=$found['id'];$tj1['grade_last']=session('admin.username');
+                  $tj1['id']=$found['id'];
+                  $tj2['grade_last']=session('admin.username');
                   $tj2['grade']=$count[$k]['plan_grade'];
                   $tj2['staff_office']=$admin['user_office'];
+                  if($tj2['staff_office']==''){unset($tj2['staff_office']);}
                   $this->model->where($tj1)->save($tj2);
                 }
               }//dump($count);exit;
