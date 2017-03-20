@@ -38,6 +38,25 @@ class LoginController extends Controller {
          //dump($admin);exit;
          $this->redirect('Planjhy/index');
       }
+
+      // 66 代表交付物信息管理员
+      if($admin['id_level'] == 66)
+      {
+        session('admin', $admin);
+        $this->redirect('GLY/JFWindex');
+      }
+      // 77 代表技术文件管理员
+      if($admin['id_level'] == 77)
+      {
+        session('admin', $admin);
+        $this->redirect('GLY/JSindex');
+      }
+      // 88 代表样车管理员
+      if($admin['id_level'] == 88)
+      {
+        session('admin', $admin);
+        $this->redirect('GLY/YCindex');
+      }
       
       if($admin['id_level']==1)
       {
@@ -65,7 +84,7 @@ class LoginController extends Controller {
          $this->redirect('Plandq/index');
       }
 
-      if($admin['id_level']!=2&&$admin['id_level']!=1&&$admin['id_level']!=6)
+      if($admin['id_level']!=2&&$admin['id_level']!=1&&$admin['id_level']!=6&& $admin['id_level']!=66 && $admin['id_level']!=77)
       {
         $dat['id_employee']=$admin['id_employee'];
         $dat['user_department']=$admin['user_department'];

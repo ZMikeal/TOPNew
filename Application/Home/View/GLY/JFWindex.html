@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>汽车研究院TOP清单系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="__PUBLIC__/custom/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="__PUBLIC__/custom/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="__PUBLIC__/custom/css/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="__PUBLIC__/custom/css/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="__PUBLIC__/custom/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="__PUBLIC__/custom/css/daterangepicker.css" rel="stylesheet">
+ 
+    <link href="__PUBLIC__/custom/css/custom.min.css" rel="stylesheet">
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="index.html" class="site_title"><img src="__PUBLIC__/img/logo.png"><!--  <span>北汽集团</span> --></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile">
+              <div class="profile_pic">
+                <img src="__PUBLIC__/custom/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>欢迎</span>
+                <empty name="Think.session.admin">
+                <else/><h2></h2>
+                </empty>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>{$Think.session.admin.username}</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-home"></i>交付物信息管理 <span class="fa fa-chevron-down"></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{:U('GLY/JFWindex')}">交付物信息管理</a></li>
+                    </ul>
+                  
+                  </li>
+                  
+
+
+                    <!-- <if condition="$Think.session.admin.id_level neq 8"> 
+                    <li><a>绩效评分<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{:U('index/index1')}">月度绩效</a>
+                            </li>
+                            <li><a href="{:U('index/index1')}">年度绩效</a>
+                            </li>
+                          </ul>
+                    </li>
+                    </if> -->
+
+
+                  
+                  <li><a><i class="fa fa-table"></i> 账户管理 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{:U('user/pass')}">修改密码</a></li>
+                      <li><a href="{:U('User/index')}">修改个人信息</a></li>
+                    </ul>
+                  </li>
+<!--                   <li><a><i class="fa fa-bar-chart-o"></i> 扩展功能 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{:U('index/index1')}">供应商评价</a></li>
+                      <li><a href="{:U('index/index1')}">资料在线浏览</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-clone"></i>帮助 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{:U('index/index1')}">使用帮助</a></li>
+                    </ul>
+                  </li> -->
+                </ul>
+              </div>
+         <!--      <div class="menu_section">
+                <h3>Live On</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="e_commerce.html">E-commerce</a></li>
+                      <li><a href="projects.html">Projects</a></li>
+                      <li><a href="project_detail.html">Project Detail</a></li>
+                      <li><a href="contacts.html">Contacts</a></li>
+                      <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="page_403.html">403 Error</a></li>
+                      <li><a href="page_404.html">404 Error</a></li>
+                      <li><a href="page_500.html">500 Error</a></li>
+                      <li><a href="plain_page.html">Plain Page</a></li>
+                      <li><a href="login.html">Login Page</a></li>
+                      <li><a href="pricing_tables.html">Pricing Tables</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="#level1_1">Level One</a>
+                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="level2.html">Level Two</a>
+                            </li>
+                            <li><a href="#level2_1">Level Two</a>
+                            </li>
+                            <li><a href="#level2_2">Level Two</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li><a href="#level1_2">Level One</a>
+                        </li>
+                    </ul>
+                  </li>                  
+                  <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
+                </ul>
+              </div> -->
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="{:U('Login/loginout')}">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="__PUBLIC__/custom/images/img.jpg" alt=""><empty name="Think.session.admin"><else/>{$Think.session.admin.username}</empty>
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                   <!--  <li><a href="javascript:;"> Profile</a></li>
+                    <li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                    </li>
+                    <li><a href="javascript:;">Help</a></li> -->
+                    <li><a href="{:U('Login/loginout')}"><i class="fa fa-sign-out pull-right"></i> 注销</a></li>
+                  </ul>
+                </li>
+
+               <!--  <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span class="image"><img src="__PUBLIC__/custom/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="__PUBLIC__/custom/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="__PUBLIC__/custom/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="__PUBLIC__/custom/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li> -->
+                <li class="">
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">计划员设置时间为： {$Think.session.admin.year_sys} 年 {$Think.session.admin.month} 月 </a>
+                </li>
+                <li class="">
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.1.4</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+<div class="right_col" role="main" style="">
+  <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="height:100%;">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>交付物信息管理<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>编号</th>
+                          <th>模板版本</th>
+                          <th>名称</th>
+                          <th>分线</th>
+                          <th>级别</th>
+                          <th>来源</th>
+                          <th>部门</th>
+                          
+                          <th>操作</th>
+
+
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                       <volist name="jiaofus" id="vo">
+                       <tr>
+                       <td>{$vo.bianhao}</td>
+                       <td>{$vo.version}</td>
+                       <td>{$vo.mingcheng}</td>
+                       <td>{$vo.fenxian}</td>
+                       <td>{$vo.fenlei}</td>
+                       <td>{$vo.laiyuan}</td>
+                       <td>{$vo.bumen}</td>
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.jiazhi}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.mudi}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.shuru_up}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.shuchu_down}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.biaozhun}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.pingshen_jibie}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.pingshen_fangshi}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.xingshi}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng_bianzhi}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng_shenhe}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng_biaoshen}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng_huiqian}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng_shending}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.liucheng_pizhun}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.address}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.cunfang_address}">
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.moban_cunfang_address}">
+
+                       <input type="hidden" class="content{$vo.id}" value="{$vo.id}">
+                       <!--<td><switch name="vo.id_level">
+                            <case value="2">计划管理员</case>
+                            <case value="3">科员</case>
+                            <case value="4">科长</case>
+                            <case value="5">部长</case>
+                            <case value="7">VSE</case>
+                            <case value="8">项目经理</case></default>
+                            </switch></td>
+                       <td><switch name="vo.user_type">
+                            <case value="专业员工">专业员工</case>
+                            <case value="职能员工">职能员工</case>
+                            <case value="科长">科长</case>
+                            <case value="院长">院长</case>
+                            <case value="VSE">VSE</case> 
+                            <case value="项目经理">项目经理</case>
+                            <case value="副部长">副部长</case>                            
+                            </default>
+                           </switch></td>
+                      <td><switch name="vo.if_authority">
+                            <case value="1">已授权VSE</case>
+                            <case value="2">已授权项目经理</case>
+                            <case value="3">已授权科长</case>
+                            <case value="0">未授权</case>
+                            </default>
+                            </switch></td>-->
+                       <td style="width:250px;">
+                       <a class="btn btn-default btn-sm active" href="#" onclick="fn(this, {$vo.id})" role="button" data-toggle="modal"  data-target="#bianji">编辑</a>
+                       <a id="{$vo.id}" class="btn btn-default btn-sm active" onclick="delete_jfw(this)">删除</a>
+                       <!--<a id="{$vo.id}" class="btn btn-default btn-sm active" style="" onclick="recover(this)">密码重置</a>-->
+                       </td>
+                       </tr>
+                       </volist>
+                      </tbody>
+                    </table>
+                    <a class="btn btn-default btn-lg active" href="#" role="button" data-toggle="modal"  data-target="#login">添加交付物信息</a>
+                  </div>
+                </div>
+              </div>
+</div>
+</div>
+
+
+<div class="modal fade" id="login" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true" style="float: right; border: 1px solid #333;"> 
+     <div class="modal-dialog">
+      <div class="modal-content">
+       <div class="modal-header">
+        <button type="button" class="close" 
+           data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+           添加交付物：
+        </h4>
+       </div>
+           <!--编辑主体 -->
+          <div class="modal-body">
+              
+             <!-- <table class="table"> -->
+             <form id="addForm" name="addForm">
+              <tr>
+                <th>编号:</th>
+                <td>
+                  <input type="text" id="bianhao" name="bianhao" class="form-control">
+                  <!-- <input type="hidden" id="text00" name="bianhaoTijiao" class="form_control"> -->
+                  <!-- <input type="text" id="bianh" name="text[]" class="form-control"> -->
+                </td>
+
+              </tr>
+              <tr>
+                <th>模板版本:</th>
+              <td><input type="text" id="version" name="version" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>名称:</th>
+              <td><input type="text" id="mingcheng" name="mingcheng" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>分线:</th>
+                <td><input type="text" id="fenxian" name="fenxian" class="form-control"></td>
+              </tr>
+               <tr>
+                <th>级别:</th>
+                <td><input type="text" id="fenlei" name="fenlei" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>来源:</th>
+                <td><input type="text" id="laiyuan" name="laiyuan" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>部门:</th>
+                <td><input type="text" id="bumen" name="bumen" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>价值:</th>
+                <td>
+                  <!-- <input type="textarea" id="text7" name="jiazhi" class="form-control"> -->
+                  <textarea class="form-control" rows="2" id="jiazhi" name="jiazhi"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th>目的:</th>
+                <td>
+                  <!-- <input type="text" id="text8" name="mudi" class="form-control"> -->
+                  <textarea class="form-control" rows="2" id="mudi" name="mudi"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th>上游输入:</th>
+                <td>
+                  <!-- <input type="text" id="text9" name="shuru_up" class="form-control"> -->
+                  <textarea class="form-control" rows="2" id="shuru_up" name="shuru_up"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th>下游输出:</th>
+                <td>
+                  <!-- <input type="text" id="text10" name="shuchu_down" class="form-control"> -->
+                  <textarea class="form-control" rows="2" id="shuchu_down" name="shuchu_down"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th>标准:</th>
+                <td><input type="text" id="biaozhun" name="biaozhun" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>设计评审级别:</th>
+                <td><input type="text" id="pingshen_jibie" name="pingshen_jibie" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>设计评审方式:</th>
+                <td><input type="text" id="pingshen_fangshi" name="pingshen_fangshi" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>形式:</th>
+                <td><input type="text" id="xingshi" name="xingshi" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>签订流程:</th>
+                <td><input type="text" id="liucheng" name="liucheng" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>编制:</th>
+                <td><input type="text" id="liucheng_bianzhi" name="liucheng_bianzhi" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>审核:</th>
+                <td><input type="text" id="liucheng_shenhe" name="liucheng_shenhe" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>标审:</th>
+                <td><input type="text" id="liucheng_biaoshen" name="liucheng_biaoshen" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>会签:</th>
+                <td><input type="text" id="liucheng_huiqian" name="liucheng_huiqian" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>审定:</th>
+                <td><input type="text" id="liucheng_shending" name="liucheng_shending" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>批准:</th>
+                <td><input type="text" id="liucheng_pizhun" name="liucheng_pizhun" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>地址:</th>
+                <td><input type="text" id="address" name="address" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>存放地点:</th>
+                <td><input type="text" id="cunfang_address" name="cunfang_address" class="form-control"></td>
+              </tr>
+              <tr>
+                <th>标准模板存放地址:</th>
+                <td><input type="text" id="moban_cunfang_address" name="moban_cunfang_address" class="form-control"></td>
+              </tr>
+             <!-- </table> -->
+             <input type="button" id="add-form" class="btn-block btn-lg btn-primary" value="提交">
+          </form>   
+          </div>
+          </div><!-- /.modal-content -->
+          </div><!-- /.modal -->
+</div>
+
+
+
+<div class="modal fade" id="bianji" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true" style="float: right; border: 1px solid #333;"> 
+     <div class="modal-dialog">
+      <div class="modal-content">
+       <div class="modal-header">
+        <button type="button" class="close" 
+           data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+           编辑交付物信息：
+        </h4>
+       </div>
+       <!--编辑主体 -->
+      <div class="modal-body">
+          
+         <!-- <table class="table"> -->
+         <form id="editForm" name="editForm">
+          <tr>
+            <th>编号:</th>
+            <td>
+              <input type="text" id="text0" name="bianhao" class="form-control" disabled="disabled">
+              <input type="hidden" id="text00" name="bianhaoTijiao" class="form_control">
+              <!-- <input type="text" id="bianh" name="text[]" class="form-control"> -->
+            </td>
+
+          </tr>
+          <tr>
+            <th>模板版本:</th>
+          <td><input type="text" id="text1" name="version" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>名称:</th>
+          <td><input type="text" id="text2" name="mingcheng" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>分线:</th>
+            <td><input type="text" id="text3" name="fenxian" class="form-control"></td>
+          </tr>
+           <tr>
+            <th>级别:</th>
+            <td><input type="text" id="text4" name="fenlei" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>来源:</th>
+            <td><input type="text" id="text5" name="laiyuan" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>部门:</th>
+            <td><input type="text" id="text6" name="bumen" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>价值:</th>
+            <td>
+              <!-- <input type="textarea" id="text7" name="jiazhi" class="form-control"> -->
+              <textarea class="form-control" rows="2" id="text7" name="jiazhi"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>目的:</th>
+            <td>
+              <!-- <input type="text" id="text8" name="mudi" class="form-control"> -->
+              <textarea class="form-control" rows="2" id="text8" name="mudi"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>上游输入:</th>
+            <td>
+              <!-- <input type="text" id="text9" name="shuru_up" class="form-control"> -->
+              <textarea class="form-control" rows="2" id="text9" name="shuru_up"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>下游输出:</th>
+            <td>
+              <!-- <input type="text" id="text10" name="shuchu_down" class="form-control"> -->
+              <textarea class="form-control" rows="2" id="text10" name="shuchu_down"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>标准:</th>
+            <td><input type="text" id="text11" name="biaozhun" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>设计评审级别:</th>
+            <td><input type="text" id="text12" name="pingshen_jibie" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>设计评审方式:</th>
+            <td><input type="text" id="text13" name="pingshen_fangshi" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>形式:</th>
+            <td><input type="text" id="text14" name="xingshi" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>签订流程:</th>
+            <td><input type="text" id="text15" name="liucheng" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>编制:</th>
+            <td><input type="text" id="text16" name="liucheng_bianzhi" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>审核:</th>
+            <td><input type="text" id="text17" name="liucheng_shenhe" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>标审:</th>
+            <td><input type="text" id="text18" name="liucheng_biaoshen" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>会签:</th>
+            <td><input type="text" id="text19" name="liucheng_huiqian" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>审定:</th>
+            <td><input type="text" id="text20" name="liucheng_shending" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>批准:</th>
+            <td><input type="text" id="text21" name="liucheng_pizhun" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>地址:</th>
+            <td><input type="text" id="text22" name="address" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>存放地点:</th>
+            <td><input type="text" id="text23" name="cunfang_address" class="form-control"></td>
+          </tr>
+          <tr>
+            <th>标准模板存放地址:</th>
+            <td><input type="text" id="text24" name="moban_cunfang_address" class="form-control"></td>
+          </tr>
+         <!-- </table> -->
+         <input type="button" id="edit-form" class="btn-block btn-lg btn-primary" value="提交">
+      </form>   
+      </div>
+      </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+</div>
+
+
+<include file="Public/foot" /> 
+ 
+    <!-- Datatables -->
+    <script src="__PUBLIC__/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="__PUBLIC__/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- Datatables -->
+<script type="text/javascript">
+$(document).ready(function() {
+     
+        $('#datatable').dataTable();
+
+        // $('#datatable1').dataTable();
+
+      });
+
+    $(function(){
+    $("#add-form").click(function(){
+     
+      var myForm = document.getElementById('addForm');
+      var formData = new FormData(myForm);
+      $.ajax({
+        type:"POST",
+        url: "jfw_add",
+        dataType:"json",
+        // data:{"shunxu_number":shunxu_number},
+        data: formData,
+        processData: false,
+        contentType: false,
+        success:function(data){
+          if(data.success==1){
+            alert('添加成功!');
+            location.href='JFWindex.html';
+          }
+          if(data.success==-1){  
+            alert('已存在!');
+          }
+          if(data.success==0){ 
+          //alert(data.username);
+          alert("添加失败！");
+            return false;
+          }
+        }
+      });
+  });
+    $("#edit-form").click(function(){
+      // alert('11111');
+      var myForm = document.getElementById('editForm');
+      var formData = new FormData(myForm);
+      // alert(formData);
+      $.ajax({
+        type:"POST",
+        url:"jfw_edit",
+        // dataType:"json",
+        data:formData,
+        processData: false,
+        contentType: false,
+        success:function(data){
+          if(data.success==1){
+            alert('编辑成功!');
+            //alert(data.ss);
+            location.href='JFWindex.html';
+          }
+          // if(data.success==-1){  
+          //   alert('该vse已有该工程!');
+          // }
+          if(data.success==0){ 
+          //alert(data.username);
+          alert("编辑失败！");
+            return false;
+          }
+        }
+      });
+  });
+  });
+    function fn(tt, id){
+       var tr1 = tt.parentNode.parentNode;  
+       for(var i=0;i<=6;i++)
+       {
+          document.getElementById("text"+i).value = tr1.cells[i].innerText;
+       }
+       document.getElementById("text00").value = document.getElementById("text0").value;
+
+       var content = $(".content"+id);
+       for (var ii=0; ii<= content.length-1; ii++)
+       {
+          document.getElementById("text"+(ii+i)).value = content[ii].value?content[ii].value:"";
+       }
+
+
+       // var action = "leader";
+       // var level=tr1.cells[6].innerText;
+       // var authority=tr1.cells[8].innerText;
+       // if(authority=="已授权"){
+       //      $("input[name='radio']").eq(0).attr("checked","checked");
+       //      $("input[name='radio']").eq(1).removeAttr("checked");
+       //      $("input[name='radio']").eq(0).click();
+       // }
+       // else{
+       //      $("input[name='radio']").eq(1).attr("checked","checked");
+       //      $("input[name='radio']").eq(0).removeAttr("checked");
+       //      $("input[name='radio']").eq(1).click();
+       // }
+      //   $.ajax({
+      //   type:"POST",
+      //   url:action,
+      //   dataType:"json",
+      //   data:{"level":level},
+      //   //async : false,
+      //   success:function(data){
+      //        var data = data.toString();
+      //        var data = data.split(",");
+      //        var obj = document.getElementById("leader"); // 获取select对象
+      //        obj.options.length = 0; // 删除原有选项
+      //        obj.add(new Option('默认','')); 
+      //        for (x in data){
+      //            obj.add(new Option(data[x],data[x])); // 添加选项
+      //         }
+          
+      //   }
+      // });
+    }
+    function delete_jfw(nn){
+      var re=nn.id;
+       //alert(re);
+      var action = "jfw_delete";
+      if (confirm("确定要删除吗？")) 
+      {      
+        $.ajax({
+        type:"GET",
+        url:action,
+        data:{"vid":re},
+        dataType:"json",
+        success:function(data){
+          if(data == 1){  
+            alert("删除成功!");
+            location.href='JFWindex.html';
+          }
+          else{
+          alert("删除失败！");
+          }
+        }
+        });
+      }
+    }
+  function recover(nn){
+       var re=nn.id;
+       //alert(re);
+       var action = "recoveruserpas";
+    if (confirm("确定要重置密码吗？")) 
+             {      
+      $.ajax({
+        type:"GET",
+        url:action,
+        data:{"vid":re},
+        dataType:"json",
+        success:function(data){
+          if(data.success==1){  
+             alert("重置成功!");
+              location.href='user.html';
+          }
+          else{
+          alert("重置失败！");
+          }
+        }
+      });
+    }
+  }
+  function fnnn(nn){
+       var re=nn.id;
+       //alert(re);ser
+       var action = "recoveruser";
+    if (confirm("确定要恢复吗？")) 
+             {      
+      $.ajax({
+        type:"GET",
+        url:action,
+        data:{"vid":re},
+        dataType:"json",
+        success:function(data){
+          if(data.success==1){  
+             alert("恢复成功!");
+              location.href='user.html';
+          }
+          else{
+          alert("恢复失败！");
+          }
+        }
+      });
+    }
+  }
+  function delete_ddd(nn){
+       var re=nn.id;
+       //alert(re);ser
+       var action = "deleuser";
+    if (confirm("确定要彻底删除吗？")) 
+             {      
+      $.ajax({
+        type:"GET",
+        url:action,
+        data:{"vid":re},
+        dataType:"json",
+        success:function(data){
+          if(data.success==1){  
+             alert("删除成功!");
+              location.href='user.html';
+          }
+          else{
+          alert("删除失败！");
+          }
+        }
+      });
+    }
+  }
+      
+    </script>
+    <!-- /Datatables -->
+
+
+
+         
