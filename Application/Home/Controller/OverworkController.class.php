@@ -28,54 +28,21 @@ class OverworkController extends Controller {
     	$this->model=D('planoverwork_total');
     	$tj['name']			= session('admin.username'); 
     	$tj['id_employee']  = session('admin.id_employee');
-
-    	//获取图表时间以及信息
-    	$overworkFlotNowTime           = date("Y-m-d");
-    	$overworkFlotBeforeTime        = date('Y-m-d', strtotime('-15 days'));
     	
-    	$flot=$this->model->where("overworkStartTime>='$overworkFlotBeforeTime' AND overworkStartTime<='$overworkFlotNowTime'")->where($tj)->order("overworkStartTime ASC")->field('overworkStartTime,overworkTotalTime')->select();
-    	
-    	//将ISO Date 转成 Timestamp
-    	$dt_start = strtotime($overworkFlotBeforeTime);
-    	$dt_end   = strtotime($overworkFlotNowTime);
-    	$i=0;
-    	do { 
-        //将 Timestamp 转成 ISO Date 输出
-        	$temp  =  date('Y-m-d', $dt_start);
-	        if(substr($flot[$i]['overworkstarttime'], 0,10)!=$temp){
-	        	echo substr($flot['overworkStartTime'], 0,10);
-	        	$temp_arr = array(array('overworkStartTime' => $temp,'overworkTotalTime' => "0" ));
-	        	array_splice($flot,$i,0,$temp_arr);
-	    }
-	        $i++;
-    	}while (($dt_start += 86400) <= $dt_end);// 重复 Timestamp + 1 天(86400), 直至大于结束日期中止
-
-    	//dump($flot);
-
-    	if(!empty($flot))
-      	{
-      		// return "sss";
-        	// $this->ajaxReturn($flot,"success");
-        	 // echo json_encode($flot);
-      		// $this->ajaxReturn($flot);
-      		print_r($flot);
-      	}
-      	else
-      	{
-        	$this->ajaxReturn(array('success'=>0),"json");
-      	}
     	//获取搜寻条件
     	$startTime          = I('post.startTime');
     	$endTime            = I('post.endTime');
     	$startTime_select   = $startTime.' 00:00:00';
-    	$endTime_select     = $endTime.' 00:00:00';
+    	$endTime_select     = $endTime.' 59:59:59';
     	///~
     	if($startTime!="" && $endTime!=""){
     		$data = $this->model->where("overworkStartTime>='$startTime_select' AND overworkStartTime<='$endTime_select'")->where($tj)->select();
     	}
     	else if($startTime==''){
-    		$data = $this->model->where($tj)->select();
+    		$data = $this->model->where($tj)->order("overworkStartTime DESC")->select();
     	}
+
+
     	$this->assign('data',$data);
     	$this->assign('flot',$flot);
     	$this->assign('startTime',$startTime);
@@ -83,8 +50,61 @@ class OverworkController extends Controller {
     	$this->assign('overworkFlotNowTime',$overworkFlotNowTime);
     	$this->assign('overworkFlotBeforeTime',$overworkFlotBeforeTime);
       	$this->display();
+
+
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function overwork_chart(){
+    	$this->model=D('planoverwork_total');
+    	$tj['name']			= session('admin.username'); 
+    	$tj['id_employee']  = session('admin.id_employee');
+
+    	//获取图表时间以及信息
+    	$overworkFlotNowTime           = date("Y-m-d");
+    	$overworkFlotBeforeTime        = date('Y-m-d', strtotime('-15 days'));
+    	$overworkFlotNowTime_select    = $overworkFlotNowTime.' 59:59:59';
+    	$overworkFlotBeforeTime_select = $overworkFlotBeforeTime.' 00:00:00';
+    	
+    	$flot=$this->model->where("overworkStartTime>='$overworkFlotBeforeTime' AND overworkStartTime<='$overworkFlotNowTime_select'")->where($tj)->order("overworkStartTime ASC")->field('overworkStartTime,overworkTotalTime')->select();
+    	
+    	//将ISO Date 转成 Timestamp
+    	$dt_start = strtotime($overworkFlotBeforeTime);
+    	$dt_end   = strtotime($overworkFlotNowTime);
+    	$i=0;
+    	do { 
+        	//将 Timestamp 转成 ISO Date 输出
+        	$temp  =  date('Y-m-d', $dt_start);
+	        if(substr($flot[$i]['overworkstarttime'], 0,10)!=$temp){
+	        	echo substr($flot['overworkStartTime'], 0,10);
+	        	$temp_arr = array(array('overworkStartTime' => $temp,'overworkTotalTime' => "0" ));
+	        	array_splice($flot,$i,0,$temp_arr);
+	    	}
+	        $i++;
+    	}while (($dt_start += 86400) <= $dt_end);// 重复 Timestamp + 1 天(86400), 直至大于结束日期中止
+
+    	if(!empty($flot))
+      	{
+  
+      		 $this->ajaxReturn($flot);
+      		// $this->ajaxReturn(array('success'=>1),"json");
+      	}
+      	else
+      	{
+        	$this->ajaxReturn(array('success'=>0),"json");
+      	}
+
+    	
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function overwork_approval(){
+    	//获取Model
+    	$this->model=D('planoverwork_total');
+    	$name       = session('admin.username');
+    	$data=$this->model->where("chief='$name' AND chief_confirm='未确认'")->order('name')->select();
+    	$this->assign('data',$data);
+    	$this->display(); 
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     public function overwork_add(){
     	//获取Model
     	$this->model=D('planoverwork_total');

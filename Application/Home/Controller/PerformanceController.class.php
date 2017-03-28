@@ -287,10 +287,22 @@ class PerformanceController extends BaseController {
    //~
    //月度绩效查看列表
    public function PlangradelistM(){
-      $search=I('post.search');        
-      $searchh=I('post.searchh');
-      $searchhh=I('post.searchhh');
-      //dump($searchh);dump($search);exit;
+      $search=I('get.research');        
+      $searchh=I('get.researchh');
+      $searchhh=I('get.researchhh');
+      if($search==null&&$searchh==null&&$searchhh==null){
+        $search=I('post.search');        
+        $searchh=I('post.searchh');
+        $searchhh=I('post.searchhh');
+      }
+      else{ 
+        if($search==null){$search[0]=session('admin.year');$search[1]=session('admin.month');$search[2]="";}
+        else{$search=explode(',',$search);}
+        if($searchh==null){$searchh[0]=session('admin.year');$searchh[1]=session('admin.month');$searchh[2]="";}
+        else{$searchh=explode(',',$searchh);}
+        if($searchhh==null){$searchhh[0]=session('admin.year');$searchhh[1]=session('admin.month');}
+        else{$searchhh=explode(',',$searchhh);}
+      }
       if($search==""){
         $tj['year']=session('admin.year');
         $tj['month']=session('admin.month');
@@ -300,7 +312,9 @@ class PerformanceController extends BaseController {
       }
       else{
         $tj['year']=$search[0];
-        $tj['month']=$search[1];    
+        $tj['month']=$search[1];
+        $research=implode(',',$search);
+        $this->assign('research',$research); 
       }
       $tj['plan_leader']=session('admin.username');
       $search1=session('admin.user_office');
@@ -395,7 +409,10 @@ class PerformanceController extends BaseController {
         }
         else{
         $tjh['year']=$searchh[0];
-        $tjh['month']=$searchh[1];    
+        $tjh['month']=$searchh[1];
+        $researchh=implode(',',$searchh);
+        //dump($researchh);
+        $this->assign('researchh',$researchh); 
         }
         if($searchhh==""){
         $tjhh['year']=session('admin.year');
@@ -406,7 +423,9 @@ class PerformanceController extends BaseController {
         }
         else{
         $tjhh['year']=$searchhh[0];
-        $tjhh['month']=$searchhh[1];    
+        $tjhh['month']=$searchhh[1];  
+        $researchhh=implode(',',$searchhh);
+        $this->assign('researchhh',$researchhh);   
         }
         if(session('admin.user_job')=="副部长")
         {
@@ -781,10 +800,10 @@ class PerformanceController extends BaseController {
       $tj=explode(",", $tj);
       $hrf=I('get.hrf');
       if($hrf=='PlangradelistM'){
-        $search1=I('get.search1');        
-        $searchh1=I('get.searchh1');
-        $searchhh1=I('get.searchhh1');
-        //dump($searchh1);dump($searchh1);dump($searchh1);
+        $search1=I('get.research');        
+        $searchh1=I('get.researchh');
+        $searchhh1=I('get.researchhh');
+        //dump($search1);dump($searchh1);dump($searchhh1);
         $this->assign('search1',$search1);
         $this->assign('searchh1',$searchh1);
         $this->assign('searchhh1',$searchhh1);

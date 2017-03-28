@@ -153,7 +153,7 @@
                       <a class="btn btn-success" onclick="form()" style="margin-left:30%;width:10%;">提交</a>
                       <!--document.getElementById('subform').submit();return false-->
                       <if condition="$hrf eq PlangradelistM">
-                      <a class="btn btn-success" href="{:U('Performance/PlangradelistM',array('search1'=>1,'searchh1'=>$searchh1,'searchhh1'=>$searchhh1))}" style="margin-left:10%;width:10%;" onclick="">返回</a>
+                      <a class="btn btn-success" href="{:U('Performance/PlangradelistM',array('research'=>$search1,'researchh'=>$searchh1,'researchhh'=>$searchhh1))}" style="margin-left:10%;width:10%;" onclick="">返回</a>
                       </if>
                       <if condition="$hrf eq PlangradeM">
                       <a class="btn btn-success" href="{:U('performance/PlangradeM')}" style="margin-left:10%;width:10%;" onclick="">返回</a>
