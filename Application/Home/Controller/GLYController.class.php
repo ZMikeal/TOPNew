@@ -449,7 +449,7 @@
         // 公共的创建模型的函数
         public function createModel($modelName)
         {
-            $Mmodel = M($modelName, '', 'mysql://huangtao:123456@192.168.10.20/wechat#utf8');
+            $Mmodel = M($modelName, '', 'mysql://huangtao:!huang1990@192.168.10.20/wechat#utf8');
             return $Mmodel;
         }
 
