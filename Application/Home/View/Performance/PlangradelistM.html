@@ -144,7 +144,7 @@
                             <td class=" " width="200px;">
                               <label>
             <if condition="$Think.session.admin.id_level eq 5">
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'hrf'=>'PlangradelistM'))}">[ 查看 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'hrf'=>'PlangradelistM','research'=>$research))}">[ 查看 ]</a>
             </if>
             <if condition="$Think.session.admin.id_level neq 5">
             <a href="{:U('Performance/PlangradelistshowM',array('id'=>$vo['id']))}">[ 查看 ]</a>
@@ -407,7 +407,7 @@
                             </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3','hrf'=>'PlangradelistM'))}">[ 查看 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'3','hrf'=>'PlangradelistM','researchh'=>$researchh))}">[ 查看 ]</a>
                               </label>
                             </td>
                           </tr>
@@ -527,7 +527,7 @@
                             </td>
                             <td class=" " width="200px;">
                               <label>
-            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'5','hrf'=>'PlangradelistM'))}">[ 查看 ]</a>
+            <a href="{:U('Performance/PlangradeshowM',array('id'=>$vo['id'],'lev'=>'5','hrf'=>'PlangradelistM','researchhh'=>$researchhh))}">[ 查看 ]</a>
                               </label>
                             </td>
                           </tr>
