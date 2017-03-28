@@ -1,3 +1,4 @@
+
 <?php
 namespace Home\Controller;
 use Home\Controller\BaseController;
@@ -586,6 +587,8 @@ class PerformanceController extends BaseController {
       $lev=$data['lev'];
       $ii=count($data['id']);
       $le=session('admin.id_level');
+      dump($le);
+      dump($lev);
       for($i=0;$i<$ii;$i++)
       {
         $id=$data['id'][$i];
@@ -646,7 +649,7 @@ $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(pla
                   {
                     $count[$k]['plan_grade']="";
                   }
-                  if($sum!=0)
+                  else($sum!=0)
                   {
                     $count[$k]['plan_grade']=$sum;
                   }
@@ -656,24 +659,25 @@ $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(pla
                  $tj['grade_leader']=$v['plan_leader'];$tj['staff_department']=$admin['department'];$tj['staff_office']=$admin['office'];
                  $this->model=D('grademonth_staff');
                  $found=$this->model->where($tj)->find();
-       //dump($found);
+                 dump($found);
                  
-          if($found=="")
-          {
-            $tj['grade']=$count[$k]['plan_grade'];
-            $tj['grade_last']=session('admin.username');
-            if($this->model->create($tj))
-             {
-               //dump($tj);
-               $this->model->add();
-             }
-          }  
-         else
-          {
-          $id=$found['id'];$tj['grade_last']=session('admin.username');
-          $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
-          }
-        }//dump($count);exit;
+                  if($found=="")
+                  {
+                    $tj['grade']=$count[$k]['plan_grade'];
+                    $tj['grade_last']=session('admin.username');
+                    if($this->model->create($tj))
+                     {
+                       //dump($tj);
+                       $this->model->add();
+                     }
+                  }  
+                 else
+                  {
+                    $id=$found['id'];$tj['grade_last']=session('admin.username');
+                    dump($tj);exit;
+                    $this->model->where($tj)->setField('grade',$count[$k]['plan_grade']);
+                  }
+                }//dump($count);exit;
           }
           else
           {
@@ -691,22 +695,22 @@ $count = $this->model->field("id,staff_id,staff_name,year,month,group_concat(pla
           $found=$this->model->where($tj)->find();
           if($found=="")
           {
-          $tj['grade']=$data['sum'];
-          $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
-          if($this->model->create($tj))
-          {
-            $this->model->add();
-          }
+            $tj['grade']=$data['sum'];
+            $tj['grade_leader']=session('admin.username');$tj['grade_last']="";
+            if($this->model->create($tj))
+            {
+              $this->model->add();
+            }
           }  
          else
           {
-          $id=$found['id'];$tj['grade_last']="";
-          $this->model->where($tj)->setField('grade',$data['sum']);
+            $id=$found['id'];$tj['grade_last']="";
+            $this->model->where($tj)->setField('grade',$data['sum']);
           }
         }    
         //dump($tj);exit;  
         //dump($tj);exit;  
-        $this->ajaxReturn(array('success'=>1),"json");
+      
     }
     public function PlangradeshowY(){
       $tj=I('get.id');

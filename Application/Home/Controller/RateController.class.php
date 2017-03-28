@@ -78,9 +78,21 @@ class RateController extends BaseController {
       $tj['office']=session('admin.user_office');
       $rate_chief=M('ratequarter_chief')->where($tj)->find();
     }
-    else{
+    if(session('admin.id_level')==5){
       $rate_chief=$rate;
-      $rate_chief['office']=$rate['department'];
+      $depart=session('admin.user_department');
+      $office=array_unique(M('info_admin')->where("user_department = '{$depart}'")->getField('user_office',true));
+      $this->assign('office',$office);
+      $search=I('post.search');
+      if($search!=null){
+        $tj['office']=$search;
+        $rate_chief=M('ratequarter_chief')->where($tj)->find();
+        $this->assign('search',$search);
+      }
+      else{
+        $tj['office']='无';
+        $rate_chief['office']=$rate['department'];
+      }
     }
     $this->assign('rate',$rate);
     $this->assign('rate_chief',$rate_chief);
@@ -159,6 +171,7 @@ class RateController extends BaseController {
      $this->assign('data',$data);
      $this->display();
    }
+
    public function rate_query(){
     $search=I('post.search');
     if($search!=null){
@@ -176,10 +189,75 @@ class RateController extends BaseController {
     $this->assign('search',$search);
     $this->display();
    }
+   //历史查看
    public function quarter_query(){
     $name=session('admin.username');
     $data=M('gradequarter_confirm')->where("name = '{$name}' and if_query = 1")->order('year desc')->order('quarter desc')->select();
     $this->assign('data',$data);
     $this->display();
    }
+
+   //季度评级提交
+   public function RatesubmissionQ(){
+    $quarter=I('get.quarter');
+      $tj['year']=session('admin.year');
+      $tj['department']=session('admin.user_department');
+      
+      for($i=1;$i<=4;$i++){
+        $tj['quarter']=$i;
+        $data[$i]=count(M('gradequarter_confirm')->where($tj)->select());
+        $office[$i]=array_unique(M('gradequarter_confirm')->where($tj)->getField('office',true));
+        $office[$i]=implode(',', $office[$i]);
+      }
+      $id='';
+      if($quarter!="")
+      {
+        $tj['quarter']=$quarter;
+        if($quarter==1){$month="1,2,3";}
+        if($quarter==2){$month="4,5,6";}
+        if($quarter==3){$month="7,8,9";}
+        if($quarter==4){$month="10,11,12";}
+        $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7) and confirm_rate_minister != '无' and if_grade =1")->select();
+        $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8) and confirm_rate_minister != '无' and if_grade =1")->select();
+        $data['no']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8,3,7) and confirm_rate_minister != '无' and if_grade =0")->select();
+        $id=1;
+        if($data['staff']==null&&$data['chief']==null)
+        {
+          $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7) and confirm_rate_minister = '无' and if_grade =1")->select();
+          $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8) and confirm_rate_minister = '无' and if_grade =1")->select();
+          $data['no']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8,3,7) and confirm_rate_minister = '无' and if_grade =0")->select();
+          $id='';
+        }
+        $this->assign('quarter',$quarter);
+      }
+      //dump($data);
+      $this->assign('id',$id);
+      $this->assign('data',$data);
+      $this->assign('office',$office);
+      $this->assign('quarter',$quarter);
+      $this->display();
+   }
+   //提交最终版
+   public function finalgradeQ(){
+      $data=I('post.');
+      foreach ($data['chief1'] as $k => $v) {
+       $m['confirm_rate_minister']=session('admin.username');
+       $this->model=D('gradequarter_confirm');
+       if($this->model->create($m))
+        $this->model->where($v)->save();
+      }
+      foreach ($data['staff1'] as $k => $v) {
+       $m['confirm_rate_minister']=session('admin.username');
+       $this->model=D('gradequarter_confirm');
+       if($this->model->create($m))
+        $this->model->where($v)->save();
+      }
+      foreach ($data['no'] as $k => $v) {
+       $m['confirm_rate_minister']=session('admin.username');
+       $this->model=D('gradequarter_confirm');
+       if($this->model->create($m))
+        $this->model->where($v)->save();
+      }
+      $this->ajaxReturn(array('success'=>1),"json");
+  }
 }

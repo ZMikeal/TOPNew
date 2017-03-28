@@ -1,0 +1,291 @@
+<include file="Public/header_president" /> 
+<style type="text/css">
+  .column-title{
+    text-align: center;
+  }
+</style>
+<div class="right_col" role="main" style="height:960px;">
+  
+  <div class="row">
+              <div class="col-md-12 col-xs-13">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$search[2]} 季度评级列表</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+
+                    <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title" width="3%">部门</th>
+                            <th class="column-title" width="3%">年度</th>                     
+                            <th class="column-title" width="3%">季度</th>
+                            <th class="column-title" width="3%">部门<br>总人数</th>
+                            <th class="column-title" width="3%">不参<br>评人数</th>
+                            <th class="column-title" width="3%">参评人数</th>
+                            <th class="column-title" width="3%">科级<br>参评人数</th>
+                            <th class="column-title" width="3%">员工<br>参评人数</th>
+                            <th class="column-title" width="3%">S总数</th>
+                            <th class="column-title" width="3%">A总数</th>
+                            <th class="column-title" width="3%">B总数</th>
+                            <th class="column-title" width="3%">C+D总数</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$sum.department}
+                            </td>
+                            <td class=" ">
+                            {$sum.year}
+                            </td>
+                           
+                            <td class=" ">
+                            {$sum.quarter}
+                            </td>
+                             
+                            <td class=" ">
+                            {$sum.all_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$sum.not_grade}
+                            </td>
+                            <td class=" ">
+                            {$sum.yes_grade}
+                            </td>
+                            <td class=" " width="">
+                            {$sum.chief}
+                            </td>
+                            <td class=" " width="">
+                            {$sum.staff}
+                            </td>
+                            <td class=" " width="">
+                            {$sum.s}
+                            <input type="hidden" id="s" value="{$sum.s}">
+                            </td>
+                            <td class=" " width="">
+                            {$sum.a}
+                            <input type="hidden" id="a" value="{$sum.a}">
+                            </td>
+                            <td class=" " width="">
+                            {$sum.b}
+                            <input type="hidden" id="b" value="{$sum.b}">
+                            </td>
+                            <td class=" " width="">
+                            {$sum.c}
+                            <input type="hidden" id="c" value="{$sum.c}">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <!-- <form class="form-horizontal form-label-left input_mask"> -->
+                    <form  action="{:U('Planpresident/Departmental_quarterly_rating_confirmation')}" method="post" class="form-horizontal">
+                    <a>年度：</a><select name="search[0]">
+                                 <option value="2017" <if condition="$search[0] eq 2017">selected</if>>2017</option>
+                                 <option value="2018" <if condition="$search[0] eq 2018">selected</if>>2018</option>
+                                 </select>
+                    <a>季度：</a><select name="search[1]">
+                                 <option value="1" <if condition="$search[1] eq 1">selected</if>>1</option>
+                                 <option value="2" <if condition="$search[1] eq 2">selected</if>>2</option>
+                                 <option value="3" <if condition="$search[1] eq 3">selected</if>>3</option>
+                                 <option value="4" <if condition="$search[1] eq 4">selected</if>>4</option>
+                                 </select>
+                    <a>部门：</a><select name="search[2]">
+                                 <option></option>
+                                 <volist name="department" id="vo">
+                                 <option value="{$vo}" <if condition="$vo eq $search[2]">selected</if>>{$vo}</option>
+                                 </volist>
+                                 </select>
+                    <input type="submit" value="查询">
+                    </form>
+                    <form id="subform" action="{:U('Planpresident/mod')}" method="post" class="form-horizontal">
+                    <empty name="data">
+                    <p style="margin-top:2%;">暂无信息结果！</p>
+                    <else/>
+                    <table class="table table-striped jambo_table bulk_action" style="text-align:center; margin-top:1%;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">序号</th>
+                            <th class="column-title">姓名</th>                     
+                            <th class="column-title">工号</th>
+                            <th class="column-title">部门</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">职级</th>
+                            <th class="column-title">季度分</th>
+                            <th class="column-title">评级</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          
+                          <volist name="data[yes]" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$i}
+                            </td>
+                            <td class=" ">
+                            {$vo.name}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.id_employee}
+                            </td>
+                             
+                            <td class=" ">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo[id_level]">
+                              <case value="3">科员</case>
+                              <case value="4">科长</case>
+                              <case value="7">VSE</case>
+                              <case value="8">项目经理</case>
+                            </switch>
+                            </td>
+                            <td class=" ">
+                            {$vo.grade_end}
+                            </td>
+                            <td class=" " width="">
+                            <input type="hidden" value="{$vo[id]}" name="{$i}[id]">
+                            <select name="{$i}[leader_rate]" id="leader_rate{$i}">
+                              <option value="1" <if condition="$vo[leader_rate] eq 1">selected</if>>S</option>
+                              <option value="2" <if condition="$vo[leader_rate] eq 2">selected</if>>A</option>
+                              <option value="3" <if condition="$vo[leader_rate] eq 3">selected</if>>B</option>
+                              <option value="4" <if condition="$vo[leader_rate] eq 4">selected</if>>C</option>
+                              <option value="5" <if condition="$vo[leader_rate] eq 5">selected</if>>D</option>
+                            </select>
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                        </table>
+                        <table class="table table-striped jambo_table bulk_action" style="text-align:center; margin-top:1%;">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">序号</th>
+                            <th class="column-title">姓名</th>                     
+                            <th class="column-title">工号</th>
+                            <th class="column-title">部门</th>
+                            <th class="column-title">科室</th>
+                            <th class="column-title">职级</th>
+                            <th class="column-title">状态</th>
+                            <th class="column-title">备注</th>
+                          </tr>
+                        </thead>
+                        <tbody> 
+                          未参评人员:
+                          <volist name="data[no]" id="vo">
+                          <tr class="even pointer">
+                            <td class=" ">
+                            {$i}
+                            </td>
+                            <td class=" ">
+                            {$vo.name}
+                            </td>
+                           
+                            <td class=" ">
+                            {$vo.id_employee}
+                            </td>
+                             
+                            <td class=" ">
+                            {$vo.department}
+                            </td>
+                            <td class=" " width="">
+                            {$vo.office}
+                            </td>
+                            <td class=" " width="">
+                            <switch name="vo[id_level]">
+                              <case value="3">科员</case>
+                              <case value="4">科长</case>
+                              <case value="7">VSE</case>
+                              <case value="8">项目经理</case>
+                            </switch>
+                            </td>
+                            <td class=" ">
+                            不参评
+                            </td>
+                            <td class=" " width="">
+                            {$vo.grade_content}
+                            </td>
+                          </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+                      <empty name="id">
+
+                      <input class="btn btn-success" type="button" value="确认并上传" id="bu" onclick="sub({$count})" style="margin-left:30%;width:10%;">
+                      <else/>
+                      <a class="btn btn-success" onclick="return confirm('已提交过该季度最终成绩！')" style="margin-left:30%;width:10%;">确认并上传</a>
+                      </else>
+                      </empty>
+                      </else>
+                      </empty>
+                      </form>
+                  </div>
+                </div>
+              </div>
+  </div>
+</div>
+<include file="Public/foot" /> 
+<script type="text/javascript">
+  function sub(tt){
+    var ss=0,aa=0,bb=0,cc=0,dd=0;
+    for(var i=1;i<=tt;i++){
+        var rate=document.getElementById('leader_rate'+i).value;
+        if(rate==1){ss++;}
+        if(rate==2){aa++;}
+        if(rate==3){bb++;}
+        if(rate==4){cc++;}
+        if(rate==5){dd++;}
+    }
+    cc=cc+dd;
+    var s=document.getElementById('s').value;
+    var a=document.getElementById('a').value;
+    var b=document.getElementById('b').value;
+    var c=document.getElementById('c').value;
+    if(s!=ss||a!=aa||b!=bb||c!=cc){
+      alert("评级数量分配不正确！");
+      return false;
+    }
+    $.ajax({
+                cache: true,
+                type: "POST",
+                dataType:"json",
+                url:"/TOPNew/Planpresident/mod",
+                data:$('#subform').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                    window.location.reload();
+                },
+                success: function(data) {
+                    if(data.success==1){
+                    alert('提交成功!');
+                    window.location.reload();
+                  }
+                }
+            });
+  }
+ 
+</script>

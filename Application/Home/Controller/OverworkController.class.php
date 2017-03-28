@@ -32,41 +32,38 @@ class OverworkController extends Controller {
     	//获取图表时间以及信息
     	$overworkFlotNowTime           = date("Y-m-d");
     	$overworkFlotBeforeTime        = date('Y-m-d', strtotime('-15 days'));
+    	
     	$flot=$this->model->where("overworkStartTime>='$overworkFlotBeforeTime' AND overworkStartTime<='$overworkFlotNowTime'")->where($tj)->order("overworkStartTime ASC")->field('overworkStartTime,overworkTotalTime')->select();
-
+    	
     	//将ISO Date 转成 Timestamp
     	$dt_start = strtotime($overworkFlotBeforeTime);
     	$dt_end   = strtotime($overworkFlotNowTime);
     	$i=0;
-    do { 
+    	do { 
         //将 Timestamp 转成 ISO Date 输出
-        
-        $temp  =  date('Y-m-d', $dt_start);
-        echo $temp.'<br>';
-	        if($flot['overworkStartTime']!=$temp){
-	        	$temp_arr = array('overworkStartTime' => $temp,'overworkTotalTime' => 0 );
-	        	dump($temp_arr);
-	        	array_splice($flot,0,0,$temp_arr);
-
-	        }
-	        
-	        else if ($flot['overworkStartTime']==$temp) {
-	        	# code...
-	        	$flot = next($flot);
-	        }
+        	$temp  =  date('Y-m-d', $dt_start);
+	        if(substr($flot[$i]['overworkstarttime'], 0,10)!=$temp){
+	        	echo substr($flot['overworkStartTime'], 0,10);
+	        	$temp_arr = array(array('overworkStartTime' => $temp,'overworkTotalTime' => "0" ));
+	        	array_splice($flot,$i,0,$temp_arr);
+	    }
 	        $i++;
     	}while (($dt_start += 86400) <= $dt_end);// 重复 Timestamp + 1 天(86400), 直至大于结束日期中止
 
-    	dump($flot);
+    	//dump($flot);
 
-    	if($flot)
-      {
-        $this->ajaxReturn($flot,"json");
-      }
-      else
-      {
-        $this->ajaxReturn(array('success'=>0),"json");
-      }
+    	if(!empty($flot))
+      	{
+      		// return "sss";
+        	// $this->ajaxReturn($flot,"success");
+        	 // echo json_encode($flot);
+      		// $this->ajaxReturn($flot);
+      		print_r($flot);
+      	}
+      	else
+      	{
+        	$this->ajaxReturn(array('success'=>0),"json");
+      	}
     	//获取搜寻条件
     	$startTime          = I('post.startTime');
     	$endTime            = I('post.endTime');
@@ -76,7 +73,7 @@ class OverworkController extends Controller {
     	if($startTime!="" && $endTime!=""){
     		$data = $this->model->where("overworkStartTime>='$startTime_select' AND overworkStartTime<='$endTime_select'")->where($tj)->select();
     	}
-    	if($startTime==''){
+    	else if($startTime==''){
     		$data = $this->model->where($tj)->select();
     	}
     	$this->assign('data',$data);

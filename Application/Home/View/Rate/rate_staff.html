@@ -18,6 +18,16 @@
                      <empty name="rate">
                       信息为空！
                       <else/>
+                      <if condition="$Think.session.admin.id_level eq 5">
+                      <form action="{:U('Rate/rate_staff')}" method="post" class="form-horizontal">
+                      科室：<select name="search">
+                          <volist name="office" id="office"> 
+                          <option value="{$office}" <if condition="$search eq $office">selected</if>>{$office}</option>
+                          </volist>
+                      </select>
+                      <input type="submit" value="查询">
+                      </form>
+                      </if>
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
