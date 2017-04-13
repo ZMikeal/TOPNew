@@ -41,45 +41,46 @@
 	                    	查询结束时间：<input type='text' class="select_date" style="width:100px;" name="endTime" value="{$endTime}"></input>
                       		<button type="submit" id="bn">搜索</button>
                  		</form>
-                      <empty name="data">
-                      查询信息为空（此时间节点可能没有加班预报）！
-                      <else/>
-                      <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
-                        <thead>
-                            <tr class="headings">
-	                            <th class="column-title">序号</th>
-	                            <th class="column-title">加班类型</th>
-	                            <th class="column-title">加班开始时间</th>
-	                            <th class="column-title">加班结束时间</th>
-	                            <th class="column-title">加班时长</th>
-	                            <th class="column-title">加班内容</th>
-	                            <th class="column-title">科长确认</th>
-	                            <th class="column-title">部长确认</th>    
-                          	</tr>
-                        </thead>
-
-                        <tbody>
-                          
-                        <volist name="data" id="vo">
-	                        <tr class="even pointer">
-	                            <td class=" ">{$i}</td>
-	                            <td class=" ">{$vo.overworktype}</td>
-	                            <td class=" ">{$vo.overworkstarttime}</td>
-	                            <td class=" ">{$vo.overworkendtime}</td>
-	                            <td class=" ">{$vo.overworktotaltime}</td>
-	                            <td class=" "  style="text-align: left;">{$vo.overworkcontent}</td>
-	                            <td class=" ">{$vo.chief_confirm}</td>
-	                            <td class=" ">{$vo.minister_confirm}</td>
-	                        </tr>
-                        </volist>
-                        </tbody>
-                      </table>
-                      </empty>
-                    </div>
-                  </div>
+                    <empty name="data">
+                     	询信息为空（此时间节点可能没有加班预报）！
+                    <else/>
+                      	<table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+	                        <thead>
+	                            <tr class="headings">
+		                            <th class="column-title" width="2%">序号</th>
+		                            <th class="column-title" width="5%">加班类型</th>
+		                            <th class="column-title" width="8%">加班开始时间</th>
+		                            <th class="column-title" width="8%">加班结束时间</th>
+		                            <th class="column-title" width="5%">加班时长</th>
+		                            <th class="column-title" width="10%">加班内容</th>
+		                            <th class="column-title" width="4%">科长确认</th>
+		                            <th class="column-title" width="5%">科长意见</th>
+		                            <th class="column-title" width="4%">部长确认</th>
+		                            <th class="column-title" width="5%">部长意见</th>     
+	                          	</tr>
+	                        </thead>
+                        	<tbody>
+		                        <volist name="data" id="vo">
+			                        <tr class="even pointer">
+			                            <td class=" ">{$i}</td>
+			                            <td class=" ">{$vo.overworktype}</td>
+			                            <td class=" ">{$vo.overworkstarttime}</td>
+			                            <td class=" ">{$vo.overworkendtime}</td>
+			                            <td class=" ">{$vo.overworktotaltime}</td>
+			                            <td class=" "  style="text-align: left;">{$vo.overworkcontent}</td>
+			                            <td class=" ">{$vo.chief_confirm}</td>
+			                            <td class=" ">{$vo.chief_suggestion}</td>
+			                            <td class=" ">{$vo.minister_confirm}</td>
+			                            <td class=" ">{$vo.minister_suggestion}</td>
+			                        </tr>
+		                        </volist>
+                        	</tbody>
+                    	</table>
+                   </empty>
                 </div>
-              </div>
-              </div>
+           	</div>
+        </div>
+    </div>
 </div>
 
 

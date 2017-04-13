@@ -950,8 +950,10 @@ class PerformanceController extends BaseController {
           }  
          else
           {
-              $tj['id']=$found['id'];$tj['grade_last']="";
-              $this->model->where($tj)->setField(array('grade','staff_office'),array($data['sum'],$tj['staff_office']));
+              if($data['staff_office']==''){unset($tj['staff_office']);}
+              $tj['id']=$found['id'];
+              $save['grade']=$data['sum'];$save['staff_office']=$admin['user_office'];
+              $this->model->where($tj)->save($save);
           }
         }
         if($le==5)
@@ -1353,14 +1355,18 @@ class PerformanceController extends BaseController {
         $info=implode(',',M('info_admin')->where("user_office = '".session('admin.user_office')."'")->getField('username',true));
         $level="3,7";
       }
-      if(session('admin.id_level')==4||session('admin.id_level')==8||session('admin.id_level')==7){
+      if(session('admin.id_level')==4||session('admin.id_level')==7){
         $info=implode(',',M('info_admin')->where("user_office = '".session('admin.user_office')."'")->getField('username',true));
         $level="3,7";
       }
       if(session('admin.id_level')==5){
         $info=implode(',',M('info_admin')->where("user_leader = '".session('admin.username')."'")->getField('username',true));
         $level="3,4,8,7";
-      } 
+      }
+      if (session('admin.id_level')==8) {
+        $info=implode(',',M('info_admin')->where("user_leader = '".session('admin.username')."'")->getField('username',true));
+        $level="3,7";
+      }
       $info=str_replace(",","','",$info);
       $data[1]=M('grademonth_confirm')->field("id_employee,grade_leader,grade_last,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (1,2,3) and name in ('".$info."') and id_level in (".$level.")")->order('id_level desc')->group('name')->select();
       $data[2]=M('grademonth_confirm')->field("id_employee,grade_leader,grade_last,name,department,id_level,office,year,job,group_concat(month) as month,group_concat(grade_total) as grade")->where($tj)->where("month in (4,5,6) and name in ('".$info."') and id_level in (".$level.")")->order('id_level desc')->group('name')->select();

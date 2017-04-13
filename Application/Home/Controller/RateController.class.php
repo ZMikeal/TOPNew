@@ -140,9 +140,16 @@ class RateController extends BaseController {
     $this->display();
    }
    //季度分配
-   public function rate_allocation(){
-     $tj['year']=session('admin.year_sys');
-     $tj['quarter']=session('admin.quarter');
+    public function rate_allocation(){
+      if(session('admin.quarter')==2||session('admin.quarter')==3|session('admin.quarter')==4)
+      {
+        $quarter=session('admin.quarter')-1;
+      }
+      else if (session('admin.quarter')==1) {
+        $quarter=4;
+      }
+      $tj['year']=session('admin.year_sys');
+     $tj['quarter']=$quarter;
      $tj['department']=session('admin.user_department');
      $rate=M('ratequarter_minister')->where($tj)->find();
      $office1=array_unique(M('gradequarter_confirm')->where("department = '".$tj['department']."'")->getField('office',true));
@@ -169,6 +176,7 @@ class RateController extends BaseController {
      $this->assign('officecount',$officecount);
      $this->assign('rate',$rate);
      $this->assign('data',$data);
+     $this->assign('quarter',$quarter);
      $this->display();
    }
 

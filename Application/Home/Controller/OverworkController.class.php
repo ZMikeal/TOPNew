@@ -7,6 +7,7 @@
  */
 namespace Home\Controller;
 use Think\Controller;
+use Think\Page;
 class OverworkController extends Controller {
     public function overwork_apply(){
     	$this->model=D('planoverwork_total');
@@ -23,7 +24,7 @@ class OverworkController extends Controller {
     	$this->assign('countlist',$countlist);
         $this->display();
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_show(){
     	$this->model=D('planoverwork_total');
     	$tj['name']			= session('admin.username'); 
@@ -49,11 +50,11 @@ class OverworkController extends Controller {
     	$this->assign('endTime',$endTime);
     	$this->assign('overworkFlotNowTime',$overworkFlotNowTime);
     	$this->assign('overworkFlotBeforeTime',$overworkFlotBeforeTime);
-      	$this->display();
+      $this->display();
 
 
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_chart(){
     	$this->model=D('planoverwork_total');
     	$tj['name']			= session('admin.username'); 
@@ -95,16 +96,46 @@ class OverworkController extends Controller {
 
     	
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_approval(){
     	//获取Model
-    	$this->model=D('planoverwork_total');
-    	$name       = session('admin.username');
-    	$data=$this->model->where("chief='$name' AND chief_confirm='未确认'")->order('name')->select();
+    	$this->model  =  D('planoverwork_total');
+    	$name  = session('admin.username');
+      $count = $this->model->where("chief='$name' AND chief_confirm='未确认'")->count(); // 查询满足要求的总记录数 $map表示查询条件
+      $Page  = new Page($count,15); // 实例化分页类 传入总记录数
+
+      //设置分页点样式
+      $Page->lastSuffix=false;
+      $Page->setConfig('header','<li class="rows">共<b>%TOTAL_ROW%</b>条记录&nbsp;&nbsp;每页<b>15</b>条&nbsp;&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');
+      $Page->setConfig('prev','上一页');
+      $Page->setConfig('next','下一页');
+      $Page->setConfig('last','末页');
+      $Page->setConfig('first','首页');
+      $Page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
+      ///~
+
+      $show= $Page->show();// 分页显示输出
+
+    	$data=$this->model->where("chief='$name' AND chief_confirm='未确认'")->order('name')->limit($Page->firstRow.','.$Page->listRows)->select();
+      
     	$this->assign('data',$data);
+      $this->assign('page',$show);// 赋值分页输出
     	$this->display(); 
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public function overwork_reback(){
+      $overwork                  = M('planoverwork_total');
+      $condition['id']           = I('post.overwork_id');
+      $data['chief_suggestion']  = I('post.suggestion');
+      $data['chief_confirm']     = '退回';
+      $result                    = $overwork->where($condition)->save($data);
+      if($result)
+        $this->ajaxReturn(array('success' =>1),"json");
+      else
+        $this->ajaxReturn(array('success' =>0),"json");
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_add(){
     	//获取Model
     	$this->model=D('planoverwork_total');
@@ -112,15 +143,15 @@ class OverworkController extends Controller {
     	$overworkType      = I('overworkType');
     	$overworkStartTime = I('overworkStartTime');
     	$overworkEndTime   = I('overworkEndTime');
-		$overworkTotalTime = I('overworkTotalTime');
-		$overworkContent   = I('overworkContent');
-		///~
-		// 获取需要的session变量
-		$id_level    = session('admin.id_level');
-		$name        = session('admin.username');  
-      	$id_employee = session('admin.id_employee');
-      	$department  = session('admin.user_department');
-      	$office      = session('admin.user_office');
+		  $overworkTotalTime = I('overworkTotalTime');
+		  $overworkContent   = I('overworkContent');
+		  ///~
+		  // 获取需要的session变量
+		  $id_level    = session('admin.id_level');
+		  $name        = session('admin.username');  
+    	$id_employee = session('admin.id_employee');
+    	$department  = session('admin.user_department');
+    	$office      = session('admin.user_office');
    		//获取正确的科长与部长
       	if ($id_level=='3'||$id_level=='7') {
       		# code...
@@ -145,14 +176,14 @@ class OverworkController extends Controller {
       		$map['overworkEndTime']   = $overworkEndTime[$key];
       		$map['overworkTotalTime'] = $overworkTotalTime[$key];
       		$map['overworkContent']   = $overworkContent[$key];
-      		$map['name']			  = $name;
+      		$map['name']			        = $name;
       		$map['id_employee']	      = $id_employee;
-      		$map['department']		  = $department;
-      		$map['office']			  = $office;
-      		$map['chief']			  = $chief;
-      		$map['minister']		  = $minister;
-      		$map['addTime']			  = date('y-m-d h:i:s',time());
-      		$map['chief_confirm']	  = $chief_confirm;
+      		$map['department']		    = $department;
+      		$map['office']			      = $office;
+      		$map['chief']			        = $chief;
+      		$map['minister']		      = $minister;
+      		$map['addTime']			      = date('y-m-d h:i:s',time());
+      		$map['chief_confirm']	    = $chief_confirm;
       		
       		if($map['overworkTotalTime']!=''){
       			if($this->model->create($map)){
@@ -163,7 +194,7 @@ class OverworkController extends Controller {
       	///~
       	$this->redirect('Overwork/overwork_apply');	
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_update(){
     	//获取单条信息ID
     	$id = I('id');
@@ -173,15 +204,15 @@ class OverworkController extends Controller {
     	$overworkType      = I('overworkTypeUpdate');
     	$overworkStartTime = I('overworkStartTimeUpdate');
     	$overworkEndTime   = I('overworkEndTimeUpdate');
-		$overworkTotalTime = I('overworkTotalTimeUpdate');
-		$overworkContent   = I('overworkContentUpdate');
+		  $overworkTotalTime = I('overworkTotalTimeUpdate');
+		  $overworkContent   = I('overworkContentUpdate');
     	// 获取需要的session变量
-		$id_level    = session('admin.id_level');
-		$name        = session('admin.username');  
-      	$id_employee = session('admin.id_employee');
-      	$department  = session('admin.user_department');
-      	$office      = session('admin.user_office');
-      	$chief 		 = session('admin.user_leader');
+		  $id_level    = session('admin.id_level');
+		  $name        = session('admin.username');  
+    	$id_employee = session('admin.id_employee');
+    	$department  = session('admin.user_department');
+    	$office      = session('admin.user_office');
+    	$chief 		 = session('admin.user_leader');
       	if ($id_level=='3'||$id_level=='7') {
       		# code...
       		$chief 	  			= session('admin.user_leader');
@@ -205,14 +236,14 @@ class OverworkController extends Controller {
       		$map['overworkEndTime']   = $overworkEndTime[$key];
       		$map['overworkTotalTime'] = $overworkTotalTime[$key];
       		$map['overworkContent']   = $overworkContent[$key];
-      		$map['name']			  = $name;
+      		$map['name']			        = $name;
       		$map['id_employee']	      = $id_employee;
-      		$map['department']		  = $department;
-      		$map['office']			  = $office;
-      		$map['chief']			  = $chief;
-      		$map['minister']		  = $minister;
-      		$map['updateTime']		  = date('y-m-d h:i:s',time());
-      		$map['chief_confirm']	  = $chief_confirm;
+      		$map['department']		    = $department;
+      		$map['office']			      = $office;
+      		$map['chief']			        = $chief;
+      		$map['minister']		      = $minister;
+      		$map['updateTime']		    = date('y-m-d h:i:s',time());
+      		$map['chief_confirm']	    = $chief_confirm;
       		$map['minister_confirm']  = $minister_confirm;
       		if($map['overworkTotalTime']!=''){
       			if($this->model->create($map)){
@@ -222,7 +253,7 @@ class OverworkController extends Controller {
       	}
       	$this->redirect('Overwork/overwork_apply');		
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //删除选中的加班预报
     public function overwork_delete(){
     	$id = I('id');

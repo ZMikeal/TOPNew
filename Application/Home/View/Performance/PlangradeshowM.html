@@ -37,20 +37,20 @@
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title" style="text-align:center;">工作类别</th>
-                            <th class="column-title">工作类型</th>
-                            <th class="column-title" style="width:17%">工作事项</th>
-                            <th class="column-title">计划完成时间 </th>
-                            <th class="column-title">权重 </th>
-                            
-                            <th class="column-title" style="width:17%">工作内容及目标/交付物 </th>
-                            <th class="column-title" style="width:4%">是否延续</th>
-                            <th class="column-title">自评等级</th>
-                            <th class="column-title">评价人</th>
-                            <th class="column-title" style="width:3%">上级评分 </th>
-                            <th class="column-title" style="width:6%">状态 </th>
-                            <th class="column-title" style="width:10%">不通过原因 </th>
-                            <th class="column-title" style="width:6%">评分 </th>
+                            <th class="column-title" style="text-align:center;" width="5%">工作类别</th>
+                            <th class="column-title" width="5%">工作类型</th>
+                            <th class="column-title" width="8%">工作事项</th>
+                            <th class="column-title" width="5%">计划完成时间 </th>
+                            <th class="column-title" width="3%">权重 </th>       
+                            <th class="column-title" width="10%">工作内容及目标/交付物 </th>
+                            <th class="column-title" width="3%">是否延续</th>
+                            <th class="column-title" width="3%">自评等级</th>
+                            <th class="column-title" width="10%">完成情况</th>
+                            <th class="column-title" width="3%">评价人</th>
+                            <th class="column-title" width="3%">上级评分 </th>
+                            <th class="column-title" width="3%">状态 </th>
+                            <th class="column-title" width="5%">不通过原因 </th>
+                            <th class="column-title" width="3%">评分 </th>
                           </tr>
                         </thead>
 
@@ -96,6 +96,11 @@
                                 是
                                 <else/>否
                                 </if>
+                              </label>
+                            </td>
+                            <td class=" ">
+                              <label>
+                                {$vo.plan_self}
                               </label>
                             </td>
                             <td class=" ">

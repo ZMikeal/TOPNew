@@ -326,7 +326,7 @@ class PlanjhyController extends BaseController {
          $leader=$this->model->where($leadertj)->where("id_level = 5")->getField('username',true);
       }
       if($lev=="科员"||$lev==""){
-         $leader=$this->model->where($leadertj)->where("(id_level in (4,5,8)) OR (if_authority in (2,3))")->getField('username',true);
+         $leader=$this->model->where($leadertj)->where("(id_level in (4,5,8)) OR (if_authority in (2,3,4))")->getField('username',true);
       }
       if($lev=="项目经理"){
          $leader=$this->model->where($leadertj)->where("(id_level in (4,5)) OR (if_authority in (2,3))")->getField('username',true);
