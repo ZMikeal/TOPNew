@@ -136,6 +136,20 @@ class OverworkController extends Controller {
         $this->ajaxReturn(array('success' =>0),"json");
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+    public function overwork_pass(){
+      $overwork                  = M('planoverwork_total');
+      $condition['id']           = I('post.overwork_id');
+      $data['chief_suggestion']  = I('post.suggestion');
+      $data['chief_confirm']     = '退回';
+      $result                    = $overwork->where($condition)->save($data);
+      if($result)
+        $this->ajaxReturn(array('success' =>1),"json");
+      else
+        $this->ajaxReturn(array('success' =>0),"json");
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
     public function overwork_add(){
     	//获取Model
     	$this->model=D('planoverwork_total');

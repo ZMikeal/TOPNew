@@ -184,21 +184,22 @@
 <script type="text/javascript">
   function getinformation(tt){
     var employee=document.getElementById('employee['+tt+']').value;
+    // alert(employee);
     $.ajax({
-                cache: true,
-                type: "POST",
-                dataType:"json",
-                url:"/TOPNew/Plandq/getinformation",
-                data:{"employee":employee},// 你的formid
-                async: false,
-                success: function(data) {
-                    if(data.success==1){
-                    document.getElementById('department['+tt+']').value=data.department;
-                    document.getElementById('office['+tt+']').value=data.office;
-                    document.getElementById('name['+tt+']').value=data.nam;
-                  }
-                }
-            });
+      cache: true,
+      type: "POST",
+      dataType:"json",
+      url:"/TOPNew/Plandq/getinformation",
+      data:{"employee":employee},// 你的formid
+      async: false,
+      success: function(data) {
+          if(data.success==1){
+          document.getElementById('department['+tt+']').value=data.department;
+          document.getElementById('office['+tt+']').value=data.office;
+          document.getElementById('name['+tt+']').value=data.nam;
+        }
+      }
+    });
   }
   function dqgradesub(){
     $.ajax({

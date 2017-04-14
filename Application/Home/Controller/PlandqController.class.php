@@ -33,7 +33,7 @@ class PlandqController extends BaseController {
     //获取人员信息
     public function getinformation(){
       $employee=I('post.employee');
-      $data=M('info_admin')->where("id_employee = 3171")->getField('id_employee,username,user_department,user_office');
+      $data=M('info_admin')->where("id_employee = $employee")->getField('id_employee,username,user_department,user_office');
       $this->ajaxReturn(array('success'=>1,'nam'=>$data[$employee]['username'],'department'=>$data[$employee]['user_department'],'office'=>$data[$employee]['user_office']),"json");
     }
     //修改党群成绩分数
