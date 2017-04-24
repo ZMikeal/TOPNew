@@ -72,19 +72,19 @@ class LoginController extends Controller {
          //dump($admin);exit;
         $this->redirect('Plansuper/index');
       }
-
+      //  6 代表党群管理员
       if($admin['id_level']==6)
       {
         $dat['id_employee']=$admin['id_employee'];
         $dat['user_department']=$admin['user_department'];
         $admin['month_sys']=date('m');
-         $admin['year_sys']=date('Y');
+        $admin['year_sys']=date('Y');
         session('admin',$admin);
          //dump($admin);exit;
          $this->redirect('Plandq/index');
       }
 
-
+      //  10 代表院级
       if($admin['id_level']==10)
       {
         $dat['id_employee']=$admin['id_employee'];
@@ -92,7 +92,6 @@ class LoginController extends Controller {
         $admin['month_sys']=date('m');
          $admin['year_sys']=date('Y');
         session('admin',$admin);
-         //dump($admin);exit;
          $this->redirect('Planpresident/index');
       }
 
@@ -105,7 +104,6 @@ class LoginController extends Controller {
         $m=M('info_systime')->where("username='人力管理员' and year='{$Year}'")->getField('month');
         if($m==''){$m=1;}
         $admin['Year']=$m;
-        //dump($p);
         if($p!=null)
         {
          $admin['month']=$p[0]['month'];
@@ -118,10 +116,10 @@ class LoginController extends Controller {
         }
          $admin['month_sys']=date('m');
          $admin['year_sys']=date('Y');
-         if($admin['month_sys']==1||$admin['month_sys']==2||$admin['month_sys']==3){$admin['quarter']=1;}
-         if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;}
-         if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;}
-         if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;}
+         if($admin['month_sys']==1||$admin['month_sys']==2||$admin['month_sys']==3){$admin['quarter']=1;$admin['quarter_last']=4;}
+         if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;$admin['quarter_last']=1;}
+         if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;$admin['quarter_last']=2;}
+         if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;$admin['quarter_last']=3;}
         session('admin',$admin);
         //dump(session('admin'));exit;
         $this->redirect('Plan/index');

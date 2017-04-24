@@ -67,11 +67,11 @@
                             </td>
                             <td class=" " width="">
                             {$rate.s}
-                            <input id="sss" value="{$rate.s}" type="hidden">
+                            <input id="num_s_total" value="{$rate.s}" type="hidden">
                             </td>
                             <td class=" " width="">
                             {$rate.a}
-                            <input id="aaa" value="{$rate.a}" type="hidden">
+                            <input id="num_a_total" value="{$rate.a}" type="hidden">
                             </td>
                             <td class=" " width="">
                             {$rate.b}
@@ -86,8 +86,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-
+            </div>
+<!-- 参评科长 -->
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -99,7 +99,7 @@
                      <empty name="data">
                       信息为空！
                       <else/>
-                      <form id="subform" action="{:U('Rate/ratesub')}" method="post" >
+                      <form id="rate_chief_form" action="{:U('Rate/rate_chief_submit')}" method="post" >
                       <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
                         <thead>
                           <tr class="headings">
@@ -111,7 +111,7 @@
                             <th class="column-title" width="3%">部门</th>
                             <th class="column-title" width="3%">科室</th>
                             <th class="column-title" width="3%">岗级</th>
-                            <switch name="Think.session.admin.quarter">
+                            <switch name="Think.session.admin.quarter_last">
                             <case value="1">
                             <th class="column-title" width="5%">1月得分</th>
                             <th class="column-title" width="5%">2月得分</th>
@@ -148,11 +148,9 @@
                             <td class=" ">
                             {$vo.year}
                             </td>
-                           
                             <td class=" ">
                             {$vo.quarter}
                             </td>
-                             
                             <td class=" " width="">
                             {$vo.id_employee}
                             </td>
@@ -187,19 +185,19 @@
                             </td>
                             <td class=" " width="">
                             <select name="{$i}[leader_rate]" id="leader_rate{$i}" class="form-control">
-                            <option value="1" <if condition="$vo[leader_rate] eq 1">selected</if>>S</option>
-                            <option value="2" <if condition="$vo[leader_rate] eq 2">selected</if>>A</option>
-                            <option value="3" <if condition="$vo[leader_rate] eq 3">selected</if>>B</option>
-                            <option value="4" <if condition="$vo[leader_rate] eq 4">selected</if>>C</option>
-                            <option value="5" <if condition="$vo[leader_rate] eq 5">selected</if>>D</option>
+                                <option value="1" <if condition="$vo[leader_rate] eq 1">selected</if>>S</option>
+                                <option value="2" <if condition="$vo[leader_rate] eq 2">selected</if>>A</option>
+                                <option value="3" <if condition="$vo[leader_rate] eq 3">selected</if>>B</option>
+                                <option value="4" <if condition="$vo[leader_rate] eq 4">selected</if>>C</option>
+                                <option value="5" <if condition="$vo[leader_rate] eq 5">selected</if>>D</option>
                             </select>
                             </td>
-                          </tr>
-                          </volist>
+                        </tr>
+                        </volist>
                         </tbody>
                         
                       </table></form>
-                      <input class="btn btn-success" type="button" onclick="fom({$count})" value="提交成绩" id="bu" style="margin-left:40%;width:10%;">
+                      <input class="btn btn-success" type="button" onclick="rate_chief_check({$rate_chief_count})" value="提交成绩" id="rate_chief_button" style="margin-left:40%;width:10%;">
                       </empty>
                       
                     </div>
@@ -207,6 +205,7 @@
                 </div>
               </div>
 
+<!-- 不参评科长 -->
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -229,7 +228,7 @@
                             <th class="column-title" width="3%">部门</th>
                             <th class="column-title" width="3%">科室</th>
                             <th class="column-title" width="3%">岗级</th>
-                            <switch name="Think.session.admin.quarter">
+                            <switch name="Think.session.admin.quarter_last">
                             <case value="1">
                             <th class="column-title" width="5%">1月得分</th>
                             <th class="column-title" width="5%">2月得分</th>
@@ -299,15 +298,14 @@
                             {$vo.grade_three}
                             </td>
                             <td class=" " width="">
-                            {$vo.grade_total}
+                            {$vo.grade_end}
                             </td>
                           </tr>
                           </volist>
                         </tbody>
                         
                       </table>
-                      </empty>
-                      
+                      </empty>     
                     </div>
                   </div>
                 </div>
@@ -316,38 +314,42 @@
 </div>
 <include file="Public/foot" /> 
 <script type="text/javascript">
-	function fom(tt){
-        var sum=0;
-        var sss=0,aaa=0;
-        for(var i=1;i<=tt;i++){
+//科长评级提交时检验
+	function rate_chief_check(rate_chief_count){
+        var sum_rate=0;
+        var num_s_rate=0,num_a_rate=0;
+        for(var i=1;i<=rate_chief_count;i++){
             var o=document.getElementById("leader_rate"+i).value;
             if(o==1){
-                sum++;
-                sss++;
+                sum_rate++;
+                num_s_rate++;
             }
             if(o==2){
-                sum++;
-                aaa++;
+                sum_rate++;
+                num_a_rate++;
             }
-
         }
-        var ss=document.getElementById("sss").value;
-        var aa=document.getElementById("aaa").value;
-        var sum1=(parseInt(aa)+parseInt(ss))*0.5;
-        if(sum>=sum1){
-            alert("科级评级S和A的总数不能超过总数百分之50！");
+
+        //科长评级A+S总是不能超过科长人数的一半（保留整数）
+        var num_chief       = rate_chief_count;
+        var num_limit_chief = parseInt(parseInt(num_chief)*0.5);
+        //获取评级中分配的总S与总A数
+        var num_s_total     = document.getElementById("num_s_total").value;
+        var num_a_total     = document.getElementById("num_a_total").value;
+        if(sum_rate>num_limit_chief){
+            alert("科级评级S和A的总数不能超过评级科长总数的50%！");
             return false;
         }
-        if(sss>ss||aaa>aa){
+        if(num_s_rate>parseInt(num_s_total)||num_a_rate>parseInt(num_a_total)){
             alert("数量不对！");
             return false;
         }
-    document.getElementById("bu").disabled = "disabled";
-      $.ajax({
+        document.getElementById("rate_chief_button").disabled = "disabled";
+        $.ajax({
                 cache: true,
                 type: "POST",
                 url:"/TOPNew/Rate/ratesub",
-                data:$('#subform').serialize(),// 你的formid
+                data:$('#rate_chief_form').serialize(),// 你的formid
                 async: false,
                 error: function(request) {
                     alert("Connection error");

@@ -17,28 +17,46 @@ class RateController extends BaseController {
         }
    }
    //科长评级
-   public function rate_chief(){
-       $tj['year']=session('admin.year_sys');
-       $tj['quarter']=session('admin.quarter');
-       $tj['department']=session('admin.user_department');
-       $rate=M('ratequarter_minister')->where($tj)->find();
-       $tj['id_level']=4;
-       $tj['if_grade']=1;
-       $data=M('gradequarter_confirm')->where($tj)->select();
-       $count=count($data);
-       $tj['if_grade']=0;
-       $data_no=M('gradequarter_confirm')->where($tj)->select();
-       $this->assign('rate',$rate);
-       $this->assign('data',$data);
-       $this->assign('data_no',$data_no);
-       $this->assign('count',$count);
-       $this->display();
-   }
+  public function rate_chief(){
+    //季度时间规划
+    if (session('admin.quarter')==2||session('admin.quarter')==3||session('admin.quarter')==4) {
+      $chief_condition['quarter']     = session('admin.quarter')-1;
+      $chief_condition['year']        = session('admin.year_sys');
+    }
+    else if (session('admin.quarter')==1) {
+      $chief_condition['quarter']     = 4;
+      $chief_condition['year']        = session('admin.year_sys')-1;
+    }
+
+    $chief_condition['department']    = session('admin.user_department');
+    $rate      = M('ratequarter_minister')->where($chief_condition)->find();
+
+    $chief_condition['if_grade']=1;
+    $rate_model= D('gradequarter_confirm');
+    $rate_data = $rate_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))  
+                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,grade_end,a.leader_rate')  
+                      ->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")  
+                      ->where($chief_condition)
+                      ->select();
+    $rate_chief_count=count($rate_data);
+
+
+    //不参评科级
+    $chief_condition['if_grade']=0;
+    $data_no=M('gradequarter_confirm')->where($chief_condition)->select();
+
+    $this->assign('rate',$rate);
+    $this->assign('data',$rate_data);
+    $this->assign('data_no',$data_no);
+    $this->assign('rate_chief_count',$rate_chief_count);
+    $this->display();
+  }
+
    //科长评级录入
    public function ratesub(){
     $data=I('post.');
     $this->model=D('gradequarter_confirm');
-    foreach ($data as $k => $v) {
+    foreach ($data as $k => $v){
       if($v['leader_rate']!=''){
         if($this->model->create($v)){
           $this->model->save();
@@ -47,6 +65,7 @@ class RateController extends BaseController {
     }
     $this->ajaxReturn(array('success'=>1),"json");
    }
+  
    //科室评级分配录入
    public function ratequarter_chief(){
     $data=I('post.');
@@ -55,7 +74,7 @@ class RateController extends BaseController {
       if($v['id']==''){
         $v['department']=session('admin.user_department');
         $v['year']=session('admin.year_sys');
-        $v['quarter']=session('admin.quarter');
+        $v['quarter']=session('admin.quarter_last');
         unset($v['id']);
         if($this->model->create($v)){
           $this->model->add();
@@ -69,16 +88,26 @@ class RateController extends BaseController {
     }
     $this->ajaxReturn(array('success'=>1),"json");
    }
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
    public function rate_staff(){
-    $tj['year']=session('admin.year_sys');
-    $tj['quarter']=session('admin.quarter');
+    
+    if (session('admin.quarter')==2||session('admin.quarter')==3||session('admin.quarter')==4) {
+      $tj['quarter'] = session('admin.quarter')-1;
+      $tj['year']=session('admin.year_sys');
+    }
+    else if (session('admin.quarter')==1) {
+      $tj['quarter'] = 4;
+      $tj['year']=session('admin.year_sys')-1;
+    }
+    $data_authority = session('admin.if_authority');
     $tj['department']=session('admin.user_department');
     $rate=M('ratequarter_minister')->where($tj)->find();
     if(session('admin.id_level')==4){
       $tj['office']=session('admin.user_office');
       $rate_chief=M('ratequarter_chief')->where($tj)->find();
     }
-    if(session('admin.id_level')==5){
+    else if(session('admin.id_level')==5){
       $rate_chief=$rate;
       $depart=session('admin.user_department');
       $office=array_unique(M('info_admin')->where("user_department = '{$depart}'")->getField('user_office',true));
@@ -87,6 +116,11 @@ class RateController extends BaseController {
       if($search!=null){
         $tj['office']=$search;
         $rate_chief=M('ratequarter_chief')->where($tj)->find();
+        $rate_authority = D('gradequarter_confirm')->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))  
+                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,grade_end,a.leader_rate')  
+                      ->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")  
+                      ->where($chief_condition)
+                      ->select();
         $this->assign('search',$search);
       }
       else{
@@ -94,11 +128,18 @@ class RateController extends BaseController {
         $rate_chief['office']=$rate['department'];
       }
     }
+    //授权科长
+    else if (session('admin.id_level')==3 && session('admin.if_authority')==3) {
+      $name_authority =  session('admin.username');
+      $tj['office']=session('admin.user_office');
+      $rate_chief=M('ratequarter_chief')->where($tj)->find();
+    }
+
     $this->assign('rate',$rate);
     $this->assign('rate_chief',$rate_chief);
 
     $tj['if_grade']=1;
-    $data=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->order("grade_total desc")->select();
+    $data=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->where("name <> '$name_authority'")->order("grade_total desc")->select();
     foreach ($data as $k => $v) {
       $data[$k]['confirm_rate']=$v['leader_rate'];
     }
@@ -130,6 +171,7 @@ class RateController extends BaseController {
         $rate_chief['c']--;
       }
     }
+
     $tj['if_grade']=0;
     $data_no=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->order("grade_total desc")->select();
     
@@ -137,38 +179,60 @@ class RateController extends BaseController {
     $this->assign('data',$data);
     $this->assign('data_no',$data_no);
     $this->assign('count',$count);
+    $this->assign('authority',$data_authority);
     $this->display();
    }
+
    //季度分配
     public function rate_allocation(){
+    //时间配置
       if(session('admin.quarter')==2||session('admin.quarter')==3|session('admin.quarter')==4)
       {
-        $quarter=session('admin.quarter')-1;
+        $tj['quarter']=session('admin.quarter')-1;
+        $tj['year']=session('admin.year_sys');
       }
       else if (session('admin.quarter')==1) {
-        $quarter=4;
+        $tj['quarter']=4;
+        $tj['year']=session('admin.year_sys')-1;
       }
-      $tj['year']=session('admin.year_sys');
-     $tj['quarter']=$quarter;
-     $tj['department']=session('admin.user_department');
-     $rate=M('ratequarter_minister')->where($tj)->find();
-     $office1=array_unique(M('gradequarter_confirm')->where("department = '".$tj['department']."'")->getField('office',true));
-     $i=1;
+      //其他配置
+      $tj['department']=session('admin.user_department');
+      $rate=M('ratequarter_minister')->where($tj)->find();
+      $office1=array_unique(M('gradequarter_confirm')->where("department = '".$tj['department']."'")->getField('office',true));
+      $i=1;
 
-     foreach ($office1 as $k => $v) {
-       $tj['office']=$v; 
-         $data[$i]=M('ratequarter_chief')->where($tj)->find();
-         $data[$i]['all_grade']=M('gradequarter_confirm')->where($tj)->count('id');
-         $tj['if_grade']=1;
-         $data[$i]['yes_grade']=M('gradequarter_confirm')->where($tj)->count('id');
-         $data[$i]['not_grade']=$data[$i]['all_grade']-$data[$i]['yes_grade'];
-         $data[$i]['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8)")->count('id');
-         $data[$i]['staff']=$data[$i]['yes_grade']-$data[$i]['chief'];
-       $tj['if_grade']=1;
-       $data[$i]['chief_rate']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8)")->getField('leader_rate');
-       unset($tj['if_grade']);
-       $office[$i]=$v;
-       $i++;
+    foreach ($office1 as $k => $v) {
+      $tj['office']=$v;
+      $data_model = D('gradequarter_confirm');
+
+      $s[$i] = M('ratequarter_chief')->where($tj)->getField('s');
+      $a[$i] = M('ratequarter_chief')->where($tj)->getField('a');
+      $b[$i] = M('ratequarter_chief')->where($tj)->getField('b');
+      $c[$i] = M('ratequarter_chief')->where($tj)->getField('c');
+      $id[$i] = M('ratequarter_chief')->where($tj)->getField('id');
+
+      $data[$i]=$data_model->where($tj)->find();
+      //提交科室总人数
+      $data[$i]['all_grade']=$data_model->where($tj)->count('id');
+      //科室参评总人数
+      $tj['if_grade']=1;
+      $data[$i]['yes_grade']=$data_model->where($tj)->count('id');
+      //科室不参评总人数
+      $data[$i]['not_grade']=$data[$i]['all_grade']-$data[$i]['yes_grade'];
+      //科级参评人数
+      $data[$i]['chief']=$data_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))
+                                    ->where($tj)->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")
+                                    ->count('a.id');
+      //科室员工参评人数
+      $data[$i]['staff']=$data[$i]['yes_grade']-$data[$i]['chief']-$data_authority;
+      //科级参评等级
+      $tj['if_grade']=1;
+      $data[$i]['chief_rate']=$data_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))
+                                         ->where($tj)->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")
+                                         ->getField('a.leader_rate');
+      unset($tj['if_grade']);
+      $office[$i]=$v;
+      $i++;
      }
      //dump($data);exit;
      $officecount=count($office);
@@ -177,6 +241,12 @@ class RateController extends BaseController {
      $this->assign('rate',$rate);
      $this->assign('data',$data);
      $this->assign('quarter',$quarter);
+
+     $this->assign('s',$s);
+     $this->assign('a',$a);
+     $this->assign('b',$b);
+     $this->assign('c',$c);
+     $this->assign('id',$id);
      $this->display();
    }
 

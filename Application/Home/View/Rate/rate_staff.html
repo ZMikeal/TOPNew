@@ -37,8 +37,14 @@
                             <th class="column-title" width="3%">部门（科室）<br>总人数</th>
                             <th class="column-title" width="3%">不参<br>评人数</th>
                             <th class="column-title" width="3%">参评人数</th>
-                            <th class="column-title" width="3%">科级<br>参评人数</th>
-                            <th class="column-title" width="3%">员工<br>参评人数</th>
+                            <if condition="$Think.session.admin.id_level eq 5">
+                                <th class="column-title" width="3%">科级参评人数</th>
+                                <th class="column-title" width="3%">员工参评人数</th>
+                            </if>
+                            <else>
+                                <th class="column-title" width="3%">科级参评人数<br>(包含授权者)</th>
+                                <th class="column-title" width="3%">员工参评人数<br>(除授权者外)</th>
+                            </else> 
                             <th class="column-title" width="3%">S总数</th>
                             <th class="column-title" width="3%">A总数</th>
                             <th class="column-title" width="3%">B总数</th>
@@ -165,7 +171,7 @@
                             <th class="column-title" width="3%">部门</th>
                             <th class="column-title" width="3%">科室</th>
                             <th class="column-title" width="3%">岗级</th>
-                            <switch name="Think.session.admin.quarter">
+                            <switch name="Think.session.admin.quarter_last">
                             <case value="1">
                             <th class="column-title" width="5%">1月得分</th>
                             <th class="column-title" width="5%">2月得分</th>
@@ -388,7 +394,7 @@
             document.getElementById(i+"[leader_rate]").value=confirm_rate;
         }
         else{
-            alert("第"+i+"行评级超出范围");
+            alert("第"+i+"行评级超出范围！（只能上下调整一级）");
             return false;
         }
         if(confirm_rate==1){sss++;}
@@ -405,7 +411,7 @@
     if(sss==ss&&aa==aaa&&bb==bbb&&cc==ccc){
     }
     else{
-        alert("数量不对！");
+        alert("评级数量错误！");
         return false;
     }
     document.getElementById("bu").disabled = "disabled";

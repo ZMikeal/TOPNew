@@ -107,13 +107,12 @@
                             <th class="column-title" width="5%">科室</th>
                             <th class="column-title" width="3%">年度</th>                     
                             <th class="column-title" width="3%">季度</th>
-                            <th class="column-title" width="3%">科室总人数</th>
-                            <th class="column-title" width="3%">不参评人数</th>
-                            <th class="column-title" width="3%">参评总人数</th>
-
-                            <th class="column-title" width="3%">科级参评人数</th>
-                            <th class="column-title" width="3%">科级参评等级</th>
-                            <th class="column-title" width="3%">员工参评人数</th>
+                            <th class="column-title" width="4%">科室总人数</th>
+                            <th class="column-title" width="4%">不参评人数</th>
+                            <th class="column-title" width="4%">参评总人数</th>
+                            <th class="column-title" width="4%">科级参评人数<br>(含授权内)</th>
+                            <th class="column-title" width="4%">科级参评等级<br>(含授权内)</th>
+                            <th class="column-title" width="4%">员工参评人数<br>(除授权外)</th>
                             <th class="column-title" width="3%">员工S总数</th>
                             <th class="column-title" width="3%">员工A总数</th>
                             <th class="column-title" width="3%">员工B总数</th>
@@ -123,9 +122,9 @@
                         <tbody>
                         <volist name="data" id="vo">
                           <tr class="even pointer"> 
-                            <td class=" ">
+                            <td class=" " style="text-align: left;">
                             {$office[$i]}
-                            <input name="{$i}[id]" value="{$vo.id}" type="hidden">
+                            <input name="{$i}[id]" value="{$id[$i]}" type="hidden">
                             <input name="{$i}[office]" value="{$office[$i]}" type="hidden">
                             </td>
                             <td class=" ">
@@ -133,7 +132,7 @@
                             </td>
                            
                             <td class=" ">
-                            {$quarter}
+                            {$Think.session.admin.quarter_last}
                             </td>
                              
                             <td class=" " width="">
@@ -157,7 +156,8 @@
                             <case value="1">S</case>
                             <case value="2">A</case>
                             <case value="3">B</case>
-                            <case value="4">C+D</case>
+                            <case value="4">C</case>
+                            <case value="5">D</case>
                             <case value="">暂无评级</case>
                             </switch>
                             <input id="level{$i}" value="{$vo[chief_rate]}" type="hidden">
@@ -167,16 +167,16 @@
                             <input id="staff[{$i}]"  name="{$i}[staff]" value="{$vo.staff}" type="hidden">
                             </td>
                             <td class=" " width="">
-                            <input id="s[{$i}][1]" name="{$i}[s]" value="{$vo[s]}">
+                            <input id="s[{$i}][1]" name="{$i}[s]" value="{$s[$i]}">
                             </td>
                             <td class=" " width="">
-                            <input id="s[{$i}][2]" name="{$i}[a]" value="{$vo[a]}">
+                            <input id="s[{$i}][2]" name="{$i}[a]" value="{$a[$i]}">
                             </td>
                             <td class=" " width="">
-                            <input id="s[{$i}][3]" name="{$i}[b]" value="{$vo[b]}">
+                            <input id="s[{$i}][3]" name="{$i}[b]" value="{$b[$i]}">
                             </td>
                             <td>
-                            <input id="s[{$i}][4]" name="{$i}[c]" value="{$vo[c]}">
+                            <input id="s[{$i}][4]" name="{$i}[c]" value="{$c[$i]}">
                             </td>
                           </tr>
                           </volist>

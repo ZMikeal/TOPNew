@@ -209,12 +209,11 @@ function overworkPass(){
         data:{"overwork_id":overwork_id},
         async: false,
         error: function(request) {
-            alert("Connection error");
-            //window.location.reload();
+            alert("通过失败，请重新提交！");
         },
         success: function(data) {
             if(data.success==1){
-            alert('提交成功!');
+            alert('通过成功!');
             location.reload();
           }
         }

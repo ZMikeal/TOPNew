@@ -22,7 +22,7 @@ class OverworkController extends Controller {
     	
     	$this->assign('list',$list);
     	$this->assign('countlist',$countlist);
-        $this->display();
+      $this->display();
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_show(){
@@ -138,18 +138,54 @@ class OverworkController extends Controller {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
     public function overwork_pass(){
-      $overwork                  = M('planoverwork_total');
-      $condition['id']           = I('post.overwork_id');
-      $data['chief_suggestion']  = I('post.suggestion');
-      $data['chief_confirm']     = '退回';
-      $result                    = $overwork->where($condition)->save($data);
+      $data                    =I('post.');
+      $overwork_id             = explode(",", $data['overwork_id']);
+      $data['chief_confirm']   = '通过';
+
+      foreach ($overwork_id as $k => $v) {
+        $result = M('planoverwork_total')->where("id = '{$v}'")->save($data);
+      }
+
       if($result)
         $this->ajaxReturn(array('success' =>1),"json");
       else
         $this->ajaxReturn(array('success' =>0),"json");
     }
+   
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    public function overwork_history(){
+      $this->model=D('planoverwork_total');
+      $term['office']     = session('admin.user_office'); 
+      $term['department']  = session('admin.user_department');
+      
+      //获取搜寻条件
+      $startTime          = I('post.startTime');
+      $endTime            = I('post.endTime');
+      $startTime_select   = $startTime.' 00:00:00';
+      $endTime_select     = $endTime.' 59:59:59';
+      ///~
+      if($startTime!="" && $endTime!=""){
+        $data = $this->model->where("overworkStartTime>='$startTime_select' AND overworkStartTime<='$endTime_select'")->where($term)->select();
+      }
+      else if($startTime==''){
+        $data = $this->model->where($term)->order("overworkStartTime DESC")->select();
+      }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+      $this->assign('data',$data);
+      $this->assign('flot',$flot);
+      $this->assign('startTime',$startTime);
+      $this->assign('endTime',$endTime);
+      $this->assign('overworkFlotNowTime',$overworkFlotNowTime);
+      $this->assign('overworkFlotBeforeTime',$overworkFlotBeforeTime);
+      $this->display();
+
+
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public function overwork_add(){
     	//获取Model
     	$this->model=D('planoverwork_total');

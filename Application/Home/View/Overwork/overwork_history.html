@@ -1,0 +1,212 @@
+<include file="Public/header" />
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+
+<div class="right_col" role="main">
+
+<!-- 加班图表 -->
+	<div class="row">
+	  	<div class="col-md-12 col-sm-12 col-xs-12">
+	    	<div class="dashboard_graph x_panel">
+	      		<div class="row x_title">
+	        		<div class="col-md-6">
+	          			<h3>{$Think.session.admin.user_office}  近两周加班时长波动图<small>  {$overworkFlotBeforeTime} - {$overworkFlotNowTime}</small></h3>
+	        		</div>
+	        
+	      		</div>
+	      		<div class="x_content">
+	        		<div class="demo-container" style="height:250px">
+	          			<div id="overworkFlot" class="demo-placeholder" style="width: 100%; height:250px;"></div>
+	        		</div>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+<!-- 加班图表结束 -->
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{$Think.session.admin.user_office} 加班审批信息</h2>
+                	<div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive">
+                		<form id="form1" action="{:U('Overwork/overwork_history')}" method="post" class="form-horizontal">   
+	                    	查询起始时间：<input type='text' class="select_date" style="width:100px;" name="startTime" value="{$startTime}"></input>
+	                    	查询结束时间：<input type='text' class="select_date" style="width:100px;" name="endTime" value="{$endTime}"></input>
+                      		<button type="submit" id="bn">搜索</button>
+                 		</form>
+                    <empty name="data">
+                     	询信息为空（此时间节点可能没有加班预报）！
+                    <else/>
+                      	<table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+	                        <thead>
+	                            <tr class="headings">
+		                            <th class="column-title" width="2%">序号</th>
+		                            <th class="column-title" width="2%">姓名</th>
+		                            <th class="column-title" width="3%">加班类型</th>
+		                            <th class="column-title" width="8%">加班开始时间</th>
+		                            <th class="column-title" width="8%">加班结束时间</th>
+		                            <th class="column-title" width="3%">加班时长</th>
+		                            <th class="column-title" width="10%">加班内容</th>
+		                            <th class="column-title" width="4%">科长确认</th>
+		                            <th class="column-title" width="5%">科长意见</th>
+		                            <th class="column-title" width="4%">部长确认</th>
+		                            <th class="column-title" width="5%">部长意见</th>     
+	                          	</tr>
+	                        </thead>
+                        	<tbody>
+		                        <volist name="data" id="vo">
+			                        <tr class="even pointer">
+			                            <td class=" ">{$i}</td>
+			                            <td class=" ">{$vo.name}</td>
+			                            <td class=" ">{$vo.overworktype}</td>
+			                            <td class=" ">{$vo.overworkstarttime}</td>
+			                            <td class=" ">{$vo.overworkendtime}</td>
+			                            <td class=" ">{$vo.overworktotaltime}</td>
+			                            <td class=" "  style="text-align: left;">{$vo.overworkcontent}</td>
+			                            <td class=" ">{$vo.chief_confirm}</td>
+			                            <td class=" ">{$vo.chief_suggestion}</td>
+			                            <td class=" ">{$vo.minister_confirm}</td>
+			                            <td class=" ">{$vo.minister_suggestion}</td>
+			                        </tr>
+		                        </volist>
+                        	</tbody>
+                    	</table>
+                   </empty>
+                </div>
+           	</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<include file="Public/foot" />
+
+ <!-- jQuery -->
+    <script src="__PUBLIC__/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="__PUBLIC__/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+   
+    <!-- Flot -->
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="__PUBLIC__/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="__PUBLIC__/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="__PUBLIC__/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="__PUBLIC__/vendors/flot.curvedlines/curvedLines.js"></script>
+  
+    <!-- Flot -->
+    <script>
+    
+      $(document).ready(function() {
+        var action = "overwork_chart";
+        $.ajax({
+        type:"GET",
+        dataType:'json',
+        url:action,
+        // dataType:"json",
+        success:function(data){
+            var list = JSON.stringify(data);  
+            var list2 = json2totaltime(list);   //返回的List此时为二维数组
+            var list1 = [].concat.apply([],list2);//将二维数组转换为一维数组
+            show_chart(list1);//将一维数组传值到show_chart中，否则不能直接读取list1的值
+        }
+      });
+        function show_chart(list1){   
+	        var d1 = [
+	          [0,list1[0]],
+	          [1,list1[1]],
+	          [2,list1[2]],
+	          [3,list1[3]],
+	          [4,list1[4]],
+	          [5,list1[5]],
+	          [6,list1[6]],
+	          [7,list1[7]],
+	          [8,list1[8]],
+	          [9,list1[9]],
+	          [10,list1[10]],
+	          [11,list1[11]],
+	          [12,list1[12]],
+	          [13,list1[13]],
+	          [14,list1[14]],
+	          [15,list1[15]],
+	          
+	        ];
+
+	        //flot options
+	        var options = {
+	          series: {
+	            curvedLines: {
+	              apply: true,
+	              active: true,
+	              monotonicFit: true
+	            }
+	          },
+	          colors: ["#26B99A"],
+	          grid: {
+	            borderWidth: {
+	              top: 0,
+	              right: 0,
+	              bottom: 1,
+	              left: 1
+	            },
+	            borderColor: {
+	              bottom: "#7F8790",
+	              left: "#7F8790"
+	            }
+	          }
+	        };
+	        var plot = $.plot($("#overworkFlot"), [{
+	          label: "加班时长",
+	          data: d1,
+	          lines: {
+	            fillColor: "rgba(150, 202, 89, 0.12)"
+	          }, //#96CA59 rgba(150, 202, 89, 0.42)
+	          points: {
+	            fillColor: "#fff"
+	          }
+	        }], options);
+	      }
+	        }
+       );
+    </script>
+    <!-- /Flot -->
+
+    <script>
+		function json2totaltime(jsonData) {
+		    var jsonsString = jsonData.slice(1, jsonData.length - 1);//取消[]
+		    var jsonStrings = jsonsString.split("},");//取消}，并生成},分割数组
+		    var length = jsonStrings.length;//获取这个数组的长度
+		     for (var i = 0; i != length-1; ++i) {
+		        jsonStrings[i] += '}';
+		    }
+		    var jsons = [];
+		    var source = [[]];
+		    for (var i = 0; i != length; ++i) {
+		        jsons[i] = eval('(' + jsonStrings[i] + ')');
+		        var data = [];
+		        var flag = 0;
+		        for(var key in jsons[i]) {
+		        	if(flag==1){
+		        		data.push(jsons[i][key]);
+		        	}
+		        	if(flag==0)
+		        		flag=1;	
+		        }
+		        source.push(data);
+		    }
+		    return source;
+		}
+	</script>

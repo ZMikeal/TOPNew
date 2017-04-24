@@ -1189,6 +1189,8 @@ class PerformanceController extends BaseController {
       $this->assign('sum',$sum);
       $this->display();
     }
+
+    //部长提交正式版季度分数查询
     public function GradesubmissionQ(){
       $quarter=I('get.quarter');
       $tj['year']=session('admin.year');
@@ -1220,8 +1222,8 @@ class PerformanceController extends BaseController {
         if($quarter==2){$month="4,5,6";}
         if($quarter==3){$month="7,8,9";}
         if($quarter==4){$month="10,11,12";}
-        $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level=3")->select();
-        $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level=4")->select();
+        $data['staff']=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->select();
+        $data['chief']=M('gradequarter_confirm')->where($tj)->where("id_level in (4,8)")->select();
         $id=1;
         if($data['staff']==null&&$data['chief']==null)
         {
@@ -1238,6 +1240,8 @@ class PerformanceController extends BaseController {
       $this->assign('quarter',$quarter);
       $this->display();
     }
+
+    //部长提交正式版季度分数
     public function finalgradeQ(){
       $data=I('post.');
       foreach ($data['chief'] as $k => $v) {
