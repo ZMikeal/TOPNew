@@ -34,7 +34,7 @@ class RateController extends BaseController {
     $chief_condition['if_grade']=1;
     $rate_model= D('gradequarter_confirm');
     $rate_data = $rate_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))  
-                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,grade_end,a.leader_rate')  
+                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,a.grade_total,a.leader_rate')  
                       ->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")  
                       ->where($chief_condition)
                       ->select();
@@ -104,6 +104,7 @@ class RateController extends BaseController {
     $tj['department']=session('admin.user_department');
     $rate=M('ratequarter_minister')->where($tj)->find();
     if(session('admin.id_level')==4){
+      $name_authority =  session('admin.username');
       $tj['office']=session('admin.user_office');
       $rate_chief=M('ratequarter_chief')->where($tj)->find();
     }
@@ -139,7 +140,7 @@ class RateController extends BaseController {
     $this->assign('rate_chief',$rate_chief);
 
     $tj['if_grade']=1;
-    $data=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->where("name <> '$name_authority'")->order("grade_total desc")->select();
+    $data=M('gradequarter_confirm')->where($tj)->where("id_level in ('3','7')")->where("name <> '$name_authority'")->order("grade_total desc")->select();
     foreach ($data as $k => $v) {
       $data[$k]['confirm_rate']=$v['leader_rate'];
     }
