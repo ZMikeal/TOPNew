@@ -34,7 +34,8 @@ class RateController extends BaseController {
     $chief_condition['if_grade']=1;
     $rate_model= D('gradequarter_confirm');
     $rate_data = $rate_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))  
-                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,a.grade_total,a.leader_rate')  
+                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,
+                        a.grade_end,a.leader_rate')  
                       ->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")  
                       ->where($chief_condition)
                       ->select();
