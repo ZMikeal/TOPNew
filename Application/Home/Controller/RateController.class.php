@@ -36,7 +36,7 @@ class RateController extends BaseController {
     $rate_data = $rate_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))  
                       ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,
                         a.grade_end,a.leader_rate')  
-                      ->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")  
+                      ->where("(b.id_level =4 and b.username=a.name and b.if_delete=0) or  (b.if_authority =3 and b.username=a.name and b.if_delete=0)")
                       ->where($chief_condition)
                       ->select();
     $rate_chief_count=count($rate_data);
@@ -104,11 +104,14 @@ class RateController extends BaseController {
     $data_authority = session('admin.if_authority');
     $tj['department']=session('admin.user_department');
     $rate=M('ratequarter_minister')->where($tj)->find();
+//////科长
     if(session('admin.id_level')==4){
       $name_authority =  session('admin.username');
       $tj['office']=session('admin.user_office');
       $rate_chief=M('ratequarter_chief')->where($tj)->find();
     }
+
+//////部长
     else if(session('admin.id_level')==5){
       $rate_chief=$rate;
       $depart=session('admin.user_department');
@@ -117,12 +120,8 @@ class RateController extends BaseController {
       $search=I('post.search');
       if($search!=null){
         $tj['office']=$search;
+        $name_authority =  M('info_admin')->where("user_office='{$search}' and (id_level = '4' or if_authority = '3') and if_delete = 0")->getField('username');
         $rate_chief=M('ratequarter_chief')->where($tj)->find();
-        $rate_authority = D('gradequarter_confirm')->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))  
-                      ->field('a.id,a.name,a.year,a.quarter,a.department,a.office,a.id_employee,a.id_level,a.grade_one,a.grade_two,a.grade_three,grade_end,a.leader_rate')  
-                      ->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")  
-                      ->where($chief_condition)
-                      ->select();
         $this->assign('search',$search);
       }
       else{
@@ -130,18 +129,17 @@ class RateController extends BaseController {
         $rate_chief['office']=$rate['department'];
       }
     }
-    //授权科长
+
+//////授权科长
     else if (session('admin.id_level')==3 && session('admin.if_authority')==3) {
       $name_authority =  session('admin.username');
       $tj['office']=session('admin.user_office');
       $rate_chief=M('ratequarter_chief')->where($tj)->find();
     }
-
     $this->assign('rate',$rate);
     $this->assign('rate_chief',$rate_chief);
-
     $tj['if_grade']=1;
-    $data=M('gradequarter_confirm')->where($tj)->where("id_level in ('3','7')")->where("name <> '$name_authority'")->order("grade_total desc")->select();
+    $data=M('gradequarter_confirm')->where($tj)->where("id_level in ('3','7')")->where("name <> '$name_authority'")->order("grade_end desc")->select();
     foreach ($data as $k => $v) {
       $data[$k]['confirm_rate']=$v['leader_rate'];
     }
@@ -175,8 +173,9 @@ class RateController extends BaseController {
     }
 
     $tj['if_grade']=0;
-    $data_no=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->order("grade_total desc")->select();
-    
+    $data_no=M('gradequarter_confirm')->where($tj)->where("id_level in (3,7)")->order("grade_end desc")->select();
+
+
     $count=count($data);
     $this->assign('data',$data);
     $this->assign('data_no',$data_no);
@@ -230,7 +229,7 @@ class RateController extends BaseController {
       //科级参评等级
       $tj['if_grade']=1;
       $data[$i]['chief_rate']=$data_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))
-                                         ->where($tj)->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")
+                                         ->where($tj)->where("(b.id_level =4 and b.username=a.name) or  (b.if_authority =3 and b.username=a.name)")
                                          ->getField('a.leader_rate');
       unset($tj['if_grade']);
       $office[$i]=$v;
@@ -254,6 +253,7 @@ class RateController extends BaseController {
 
    public function rate_query(){
     $search=I('post.search');
+    $name  = session('admin.username');
     if($search!=null){
       $tj['yaer']=$search[0];
       $tj['quarter']=$search[1];
@@ -263,7 +263,7 @@ class RateController extends BaseController {
       else{
         $tj['department']=session('admin.user_department');
       }
-      $data=M('gradequarter_confirm')->where($tj)->order("name desc")->select();
+      $data=M('gradequarter_confirm')->where($tj)->where("name <> '$name'")->order("name desc")->select();
       $this->assign('data',$data);
     }
     $this->assign('search',$search);

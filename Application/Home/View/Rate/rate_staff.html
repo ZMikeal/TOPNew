@@ -37,14 +37,8 @@
                             <th class="column-title" width="3%">部门（科室）<br>总人数</th>
                             <th class="column-title" width="3%">不参<br>评人数</th>
                             <th class="column-title" width="3%">参评人数</th>
-                            <if condition="$Think.session.admin.id_level eq 5">
-                                <th class="column-title" width="3%">科级参评人数</th>
-                                <th class="column-title" width="3%">员工参评人数</th>
-                            </if>
-                            <else>
-                                <th class="column-title" width="3%">科级参评人数<br>(包含授权者)</th>
-                                <th class="column-title" width="3%">员工参评人数<br>(除授权者外)</th>
-                            </else> 
+                            <th class="column-title" width="3%">科级参评人数</th>
+                            <th class="column-title" width="3%">员工参评人数</th>
                             <th class="column-title" width="3%">S总数</th>
                             <th class="column-title" width="3%">A总数</th>
                             <th class="column-title" width="3%">B总数</th>
@@ -53,7 +47,6 @@
                         </thead>
 
                         <tbody>
-                        <if condition="$Thinkphp.session.admin.id_level eq 4">
                           <tr class="even pointer">
                             <td class=" ">
                             {$rate.department}
@@ -94,19 +87,16 @@
                             {$rate.c}
                             </td>
                           </tr>
-                          </if>
                           <tr class="even pointer">
                             <td class=" ">
                             {$rate_chief.office}
                             </td>
                             <td class=" ">
                             {$rate_chief.year}
-                            </td>
-                           
+                            </td>    
                             <td class=" ">
                             {$rate_chief.quarter}
-                            </td>
-                             
+                            </td>  
                             <td class=" ">
                             {$rate_chief.all_grade}
                             </td>
@@ -144,7 +134,6 @@
                       </empty>
                     </div>
                   </div>
-
               </div>
 
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -243,7 +232,7 @@
                             {$vo.grade_three}
                             </td>
                             <td class=" " width="">
-                            {$vo.grade_total}
+                            {$vo.grade_end}
                             </td>
                             <td>
                             <input type="hidden" name="{$i}[leader_rate]" id="{$i}[leader_rate]" value="{$vo[leader_rate]}">
