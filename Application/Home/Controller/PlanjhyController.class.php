@@ -44,24 +44,18 @@ class PlanjhyController extends BaseController {
       $this->display();
     }
 
-
-
-
     public function formmidplan(){
       //echo C('USER_TYPE');exit;
       $le=session('admin.user_department');
-      
-        $this->model=D('info_admin');
-        $list = $this->model->where("user_department='".$le."'")->select();
-
+      $this->model=D('info_admin');
+      $list = $this->model->where("user_department='".$le."'")->select();
       $this->assign('list',$list);
 
       $vse['1'] = date('Y');
       $vse['2'] = date('Y') - 1;
       $vse['m'] = date('m');
       
-      $this->assign('year',$vse);
-      
+      $this->assign('year',$vse);    
       $list1 = M('info_systime')->where("user_department='".$le."'")->select();
       $this->assign('list1',$list1);
       //dump($list1);exit;
@@ -84,9 +78,6 @@ class PlanjhyController extends BaseController {
         $this->ajaxReturn(array('success'=>0),"json");
       }
     }
-
-
-
 
 
     public function addmplan(){
@@ -146,8 +137,6 @@ class PlanjhyController extends BaseController {
         <script type='text/javascript'> alert('创建时间成功！');parent.location.href='../Planjhy/formmidplan'; </script>"; 
 
     }
-
-
 
     protected function shangji(){
       $username=session('admin.user_leader');
@@ -433,6 +422,7 @@ class PlanjhyController extends BaseController {
         $result1['success']=1;
         $this->ajaxReturn($result1,"json");
     }
+
     //月度计划提交情况查看
     public function Plan_submission(){
       $search=I('post.search');

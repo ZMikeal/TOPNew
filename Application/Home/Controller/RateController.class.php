@@ -222,7 +222,7 @@ class RateController extends BaseController {
       $data[$i]['not_grade']=$data[$i]['all_grade']-$data[$i]['yes_grade'];
       //科级参评人数
       $data[$i]['chief']=$data_model->Table(array('gradequarter_confirm'=>'a','info_admin'=>'b'))
-                                    ->where($tj)->where("(b.id_level in (4,8) and b.username=a.name) or  (b.if_authority in (2,3) and b.username=a.name)")
+                                    ->where($tj)->where("(b.id_level in (4,8) and b.username=a.name and a.if_grade='1') or  (b.if_authority in (2,3) and b.username=a.name and a.if_grade='1')")
                                     ->count('a.id');
       //科室员工参评人数
       $data[$i]['staff']=$data[$i]['yes_grade']-$data[$i]['chief']-$data_authority;
