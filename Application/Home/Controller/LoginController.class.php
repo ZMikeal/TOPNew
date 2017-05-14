@@ -120,6 +120,11 @@ class LoginController extends Controller {
          if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;$admin['quarter_last']=1;}
          if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;$admin['quarter_last']=2;}
          if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;$admin['quarter_last']=3;}
+
+         if($admin['nickname']=="limenglin"||$admin['nickname']=="zhangjianping01"||$admin['nickname']=="jiangyiling"||$admin['nickname']=="duqiang"||$admin['nickname']=="lizhao"||$admin['nickname']=="liangxiuqing"||$admin['nickname']=="wangwei04"||$admin['nickname']=="zhangjingsong"||$admin['nickname']=="mahaizhen"||$admin['nickname']=="yurongjiang")
+          $admin['overwork_after18']=1;
+        else
+          $admin['overwork_after18']=0;
         session('admin',$admin);
         //dump(session('admin'));exit;
         $this->redirect('Plan/index');

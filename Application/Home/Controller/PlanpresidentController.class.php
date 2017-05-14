@@ -17,6 +17,7 @@ class PlanpresidentController extends BaseController {
     public function index(){
       $this->display();
     }
+
     //部门季度评级确认
     public function Departmental_quarterly_rating_confirmation(){
       $search=I('post.search');
@@ -46,9 +47,11 @@ class PlanpresidentController extends BaseController {
       $this->assign('department',$department);
       $this->display();
     }
+
     //部门年度评级确认
     public function Departmental_annual_rating_confirmation(){
     }
+
     //修改评级等级
     public function mod(){
       $data=I('post.');

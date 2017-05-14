@@ -85,16 +85,22 @@
                   </li>
 
                     <!--加班管理模块-->
-                 <!--    <li><a><i class="fa fa-sitemap"></i> 加班管理 <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-sitemap"></i> 加班管理 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{:U('Overwork/overwork_apply')}">加班预报</a>
-                            <li><a href="{:U('Overwork/overwork_show')}">预报历史</a>
-                            <if condition="($Think.session.admin.id_level eq 4)">
+                            <if condition="($Think.session.admin.id_level neq 5)">
+                              <li><a href="{:U('Overwork/overwork_apply')}">加班预报</a>
+                              <li><a href="{:U('Overwork/overwork_show')}">预报历史</a>
+                            </if>
+                            <if condition="($Think.session.admin.id_level eq 4 or $Think.session.admin.id_level eq 5 or $Think.session.admin.id_level eq 8)">
                               <li><a href="{:U('Overwork/overwork_approval')}">预报审批</a>
                               <li><a href="{:U('Overwork/overwork_history')}">审批历史</a>
                             </if>
+                            <if condition="($Think.session.admin.if_authority neq 0)">
+                              <li><a href="{:U('Overwork/overwork_approval')}">预报审批[授权]</a></li>
+                              <li><a href="{:U('Overwork/overwork_history')}">审批历史[授权]</a></li>
+                            </if>
                         </ul>
-                    </li> -->
+                    </li>
                     <!--加班管理模块结束-->
 
                   <if condition="$Think.session.admin.id_level neq 3">                
@@ -457,7 +463,7 @@
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">计划员设置时间为： {$Think.session.admin.year_sys} 年 {$Think.session.admin.month} 月 </a>
                 </li>
                 <li class="">
-                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.3.3</a>
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.3.4</a>
                 </li>
               </ul>
             </nav>

@@ -12,57 +12,71 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
+                  <if condition="($Think.session.admin.id_level eq 5)">
+                    <h2>{$Think.session.admin.user_department} 加班预报审批</h2>
+                  <else />
                     <h2>{$Think.session.admin.user_office} 加班预报审批</h2>
+                  </if>
                 	<div class="clearfix"></div>
                 </div>
-                <div class="x_content">  
-                  <form id="subform" action="{:U('Overwork/overwork_pass')}" method="get" class="form-horizontal">   
-                  	<table class="table table-striped jambo_table bulk_action" style="text-align:center;" id="overwork_table">
-                        <thead>
-                            <tr class="headings">
-	                            <th width="3%" style="text-align: center;"><input type="checkbox" id="check-all" class="flat"></th>
-	                            <th class="column-title" width="5%">姓名</th>
-	                            <th class="column-title" width="5%">加班类别</th>
-	                            <th class="column-title" width="8%">加班开始时间</th>
-	                            <th class="column-title" width="8%">加班结束时间</th>
-	                            <th class="column-title" width="5%">加班时长</th>
-	                            <th class="column-title" width="25%">加班内容</th>
-	                            <th class="column-title" width="3%">状态</th>
-	                            <th class="column-title" width="3%">操作</th>
-                              <th class="bulk-actions" colspan="7">
-                                <a class="antoo" style="color:#fff; font-weight:500;">已选项 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>    
-                          	</tr>
-                        </thead>
-                        <tbody>                      
-	                        <volist name="data" id="vo">
-		                        <tr class="even pointer">
-		                            <td><input type="checkbox" class="flat" name="table_records" id="overwork_records{$i}" value="{$vo.id}">
-                                    <input type="hidden" name="overwork_id" id="overwork_id" value="{$vo.id}">
+                <empty name="data">
+                      询信息为空（暂无人员提报加班信息）！
+                <else/>
+                  <div class="x_content">  
+                    <form id="subform" action="{:U('Overwork/overwork_pass')}" method="get" class="form-horizontal">   
+                    	<table class="table table-striped jambo_table bulk_action" style="text-align:center;" id="overwork_table">
+                          <thead>
+                              <tr class="headings">
+  	                            <th width="3%" style="text-align: center;"><input type="checkbox" id="check-all" class="flat"></th>
+  	                            <th class="column-title" width="5%">姓名</th>
+  	                            <th class="column-title" width="5%">加班类别</th>
+  	                            <th class="column-title" width="8%">加班开始时间</th>
+  	                            <th class="column-title" width="8%">加班结束时间</th>
+  	                            <th class="column-title" width="5%">加班时长</th>
+  	                            <th class="column-title" width="25%">加班内容</th>
+  	                            <th class="column-title" width="3%">状态</th>
+  	                            <th class="column-title" width="3%">操作</th>
+                                <th class="bulk-actions" colspan="7">
+                                  <a class="antoo" style="color:#fff; font-weight:500;">已选项 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                              </th>    
+                            	</tr>
+                          </thead>
+                          <tbody>                      
+  	                        <volist name="data" id="vo">
+  		                        <tr class="even pointer">
+  	                            <td><input type="checkbox" class="flat" name="table_records" id="overwork_records{$i}" value="{$vo.id}">
+                                    <input type="hidden" name="overwork_id" id="overwork_id{$i}" value="{$vo.id}">
                                 </td>
-		                            <td class=" ">{$vo.name}</td>
-		                            <td class=" ">{$vo.overworktype}</td>
-		                            <td class=" ">{$vo.overworkstarttime}</td>
-		                            <td class=" ">{$vo.overworkendtime}</td>
-		                            <td class=" ">{$vo.overworktotaltime}</td>
-		                            <td class=" " style="text-align: left;">{$vo.overworkcontent}</td>
-		                            <td class=" ">{$vo.chief_confirm}</td>
-		                            <td class=" "><a id="{$vo.id}" class="btn btn-warning btn-sm" onclick="overworkRetreat(this,{$i})" data-toggle="modal"  data-target="#retreat">退回</a></td>
-		                        </tr>
-	                        </volist>
-                        </tbody>
-                    </table>
-                      <input type="hidden" id="overworkReback_url" class="form-control" value="{:U('Overwork/overwork_reback')}">
-                      <input type="hidden" id="overworkPass_url" class="form-control" value="{:U('Overwork/overwork_pass')}">
-                      <input type="button" class="btn btn-success" style="margin-left:40%; width:10%;" value="通 过" onclick="overworkPass()" id="overworkpass">
-                  </form>
-                </div>         
+  	                            <td class=" ">{$vo.name}</td>
+  	                            <td class=" ">{$vo.overworktype}</td>
+  	                            <td class=" ">{$vo.overworkstarttime}</td>
+  	                            <td class=" ">{$vo.overworkendtime}</td>
+  	                            <td class=" ">{$vo.overworktotaltime}</td>
+  	                            <td class=" " style="text-align: left;">{$vo.overworkcontent}</td>
+                                <if condition="($Think.session.admin.id_level eq 5)">
+  	                              <td class=" ">{$vo.minister_confirm}</td>
+                                <else />
+                                  <td class=" ">{$vo.chief_confirm}</td>
+                                </if>
+  	                            <td class=" "><a id="{$vo.id}" class="btn btn-warning btn-sm" onclick="overworkRetreat(this,{$i})" data-toggle="modal"  data-target="#retreat">退回</a></td>
+  		                        </tr>
+  	                        </volist>
+                          </tbody>
+                      </table>
+                        <input type="hidden" id="overworkReback_url" class="form-control" value="{:U('Overwork/overwork_reback')}">
+                        <input type="hidden" id="overworkPass_url" class="form-control" value="{:U('Overwork/overwork_pass')}">
+                        <input type="button" class="btn btn-success" style="margin-left:40%; width:10%;" value="通 过" onclick="overworkPass()" id="overworkpass">
+                    </form>
+                  </div>
+                </else>
+                </empty>       
             </div>
               <div style="margin:0 auto; width:850px; height:100px;" id="pager">
                 <ul class="pages">
                   {$page}
                 </ul>
               </div>
+          </div>
         </div>
     </div>
 </div>
@@ -88,7 +102,7 @@
 		          	<tr>
 		            	<th>预报人员:</th>
 		            	<td>
-			            	<input type="hidden" id="overwork_id" class="form-control">
+			            	<input type="hidden" id="overwork_id">
 			          		<input type="text" id="text1" name="text[]" class="form-control" disabled="disabled">
 		          		</td>
 		          	</tr>
@@ -146,7 +160,6 @@
       var overwork_id  = $("#overwork_id").val();
       var overworkReback_url = $("#overworkReback_url").val();
       var action       = overworkReback_url;
-
       if(suggestion==""){
         alert("回退原因不能为空!");
         return false;
@@ -178,7 +191,8 @@
 /////////////////////////////接收到表格中的信息至Plan///////////////////////////////////////////// 
 	function overworkRetreat(tt,num){
     var tr1 = tt.parentNode.parentNode;
-    document.getElementById("overwork_id").value=document.getElementById("overwork_table").getElementsByTagName("INPUT")[num-1].value;
+    // document.getElementById("overwork_id").value=document.getElementById("overwork_table").getElementsByTagName("INPUT")[num+1].value;
+    document.getElementById("overwork_id").value=document.getElementById("overwork_id"+num).value;
     for(var i=1;i<=6;i++)
     {
         document.getElementById("text"+i).value = tr1.cells[i].innerText;
@@ -190,10 +204,16 @@
 function overworkPass(){
   var overwork_id='';
   for(var i=1;i<=15;i++){
-    if(document.getElementById("overwork_records"+i+"").checked==true){
-      overwork_id=overwork_id+","+document.getElementById("overwork_records"+i+"").value;
+    if (document.getElementById("overwork_records"+i)){
+      if(document.getElementById("overwork_records"+i).checked==true){
+        overwork_id=overwork_id+","+document.getElementById("overwork_records"+i).value;
+      }
     }
+    else
+      break;
   }
+      
+
   if(overwork_id==''){
     alert("您没有选择需要通过的加班预报！");
     return(false);

@@ -12,13 +12,17 @@ class OverworkController extends Controller {
     public function overwork_apply(){
     	$this->model=D('planoverwork_total');
     	$username           = session('admin.username'); 
-    	$tj['name']			= session('admin.username'); 
+    	$tj['name']			    = session('admin.username'); 
     	$tj['id_employee']  = session('admin.id_employee');
-    	$id_level    = session('admin.id_level');
+    	$id_level           = session('admin.id_level');
     	if(session('admin.id_level')=='3' || session('admin.id_level')=='7'){
-    		$list=$this->model->where($tj)->where("(chief_confirm='未确认' AND minister_confirm='未确认') OR (chief_confirm='通过' AND minister_confirm='退回') OR (chief_confirm='退回' AND minister_confirm='未确认') OR (chief='$username' AND minister_confirm='未确认')")->select();
+    		$list=$this->model->where($tj)->where("(chief_confirm='未确认' AND minister_confirm='未确认') OR (chief_confirm='通过' AND minister_confirm='退回') OR (chief_confirm='退回' AND minister_confirm='未确认') OR (chief='$username' AND minister_confirm='未确认')")->order('id desc')->select();
     		$countlist=count($list);
     	}
+      elseif (session('admin.id_level')=='4' || session('admin.id_level')=='8') {
+        $list=$this->model->where($tj)->where(" minister_confirm='未确认' OR minister_confirm='退回'")->order('id desc')->select();
+        $countlist=count($list);
+      }
     	
     	$this->assign('list',$list);
     	$this->assign('countlist',$countlist);
@@ -43,7 +47,10 @@ class OverworkController extends Controller {
     		$data = $this->model->where($tj)->order("overworkStartTime DESC")->select();
     	}
 
-
+      //获取图表时间以及信息
+      $overworkFlotNowTime           = date("Y-m-d");
+      $overworkFlotBeforeTime        = date('Y-m-d', strtotime('-15 days'));
+      
     	$this->assign('data',$data);
     	$this->assign('flot',$flot);
     	$this->assign('startTime',$startTime);
@@ -99,9 +106,14 @@ class OverworkController extends Controller {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function overwork_approval(){
     	//获取Model
-    	$this->model  =  D('planoverwork_total');
-    	$name  = session('admin.username');
-      $count = $this->model->where("chief='$name' AND chief_confirm='未确认'")->count(); // 查询满足要求的总记录数 $map表示查询条件
+    	$this->model  = D('planoverwork_total');
+    	$name         = session('admin.username');
+      $id_level     = session('admin.id_level');
+      if($id_level=='4' || $id_level=='8' || $id_level=='3')
+        $count = $this->model->where("chief='$name' AND chief_confirm='未确认'")->count(); // 查询满足要求的总记录数 $map表示查询条件
+      elseif ($id_level=='5') {
+        $count = $this->model->where("minister='$name' AND minister_confirm='未确认' AND chief_confirm='通过'")->count(); // 查询满足要求的总记录数 $map表示查询条件
+      }
       $Page  = new Page($count,15); // 实例化分页类 传入总记录数
 
       //设置分页点样式
@@ -115,9 +127,11 @@ class OverworkController extends Controller {
       ///~
 
       $show= $Page->show();// 分页显示输出
-
-    	$data=$this->model->where("chief='$name' AND chief_confirm='未确认'")->order('name')->limit($Page->firstRow.','.$Page->listRows)->select();
-      
+      if($id_level=='4' || $id_level=='8' || $id_level=='3')
+    	 $data=$this->model->where("chief='$name' AND chief_confirm='未确认'")->order('name')->limit($Page->firstRow.','.$Page->listRows)->select();
+      elseif ($id_level=='5') {
+        $data=$this->model->where("minister='$name' AND minister_confirm='未确认' AND chief_confirm='通过'")->order('name')->limit($Page->firstRow.','.$Page->listRows)->select();
+      }
     	$this->assign('data',$data);
       $this->assign('page',$show);// 赋值分页输出
     	$this->display(); 
@@ -126,9 +140,13 @@ class OverworkController extends Controller {
 
     public function overwork_reback(){
       $overwork                  = M('planoverwork_total');
+      $id_level                  = session('admin.id_level');
       $condition['id']           = I('post.overwork_id');
       $data['chief_suggestion']  = I('post.suggestion');
-      $data['chief_confirm']     = '退回';
+      if($id_level=='4' || $id_level=='8' || $id_level=='3')
+        $data['chief_confirm']   = '退回';
+      elseif ($id_level=='5')
+        $data['minister_confirm']= '退回';
       $result                    = $overwork->where($condition)->save($data);
       if($result)
         $this->ajaxReturn(array('success' =>1),"json");
@@ -139,8 +157,14 @@ class OverworkController extends Controller {
    
     public function overwork_pass(){
       $data                    =I('post.');
+      $id_level                = session('admin.id_level');
       $overwork_id             = explode(",", $data['overwork_id']);
-      $data['chief_confirm']   = '通过';
+
+      if($id_level=='4' || $id_level=='8' || $id_level=='3')
+        $data['chief_confirm']      = '通过';
+      elseif ($id_level=='5') {
+        $data['minister_confirm']   = '通过';
+      }
 
       foreach ($overwork_id as $k => $v) {
         $result = M('planoverwork_total')->where("id = '{$v}'")->save($data);
@@ -155,9 +179,16 @@ class OverworkController extends Controller {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public function overwork_history(){
-      $this->model=D('planoverwork_total');
-      $term['office']     = session('admin.user_office'); 
-      $term['department']  = session('admin.user_department');
+      $this->model = D('planoverwork_total');
+      $id_level    = session('admin.id_level');
+
+      if ($id_level != 5) {
+        $term['office']     = session('admin.user_office'); 
+        $term['department']  = session('admin.user_department');
+      }
+      elseif ($id_level = 5) {
+        $term['department']  = session('admin.user_department');
+      }
       
       //获取搜寻条件
       $startTime          = I('post.startTime');
@@ -202,13 +233,22 @@ class OverworkController extends Controller {
     	$id_employee = session('admin.id_employee');
     	$department  = session('admin.user_department');
     	$office      = session('admin.user_office');
+      $if_authority= session('admin.if_authority');
    		//获取正确的科长与部长
       	if ($id_level=='3'||$id_level=='7') {
       		# code...
       		$chief 	  		= session('admin.user_leader');
-      		$minister 		= M('info_admin')->where("username='$chief'")->getField('user_leader');
-      		$chief_confirm  = "未确认";
-
+          if ($if_authority = 2 || $if_authority = 3) {
+            # 授权项目经理与授权科长
+            $chief        = $name;
+            $minister     = session('admin.user_leader');
+            $chief_confirm  = "通过";
+          }
+          else  //没有任何授权
+          {
+            $minister     = M('info_admin')->where("username='$chief'")->getField('user_leader');
+            $chief_confirm  = "未确认";
+          }
       	}
       	elseif ($id_level=='4'||$id_level=='8') {
       		# code...

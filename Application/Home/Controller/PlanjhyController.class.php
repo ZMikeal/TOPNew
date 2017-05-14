@@ -450,21 +450,22 @@ class PlanjhyController extends BaseController {
         $tj['month']=$i+1;
         $submitted[$i]=array_unique($this->model->where($tj)->getField("$name",true));
 
-        $intersect[$i]=array_intersect($all,$submitted[$i]);
-        $intersectsum[$i]=count($intersect[$i]);
+        $intersect[$i]=array_intersect($all,$submitted[$i]);//返回两个数组的交集
+        $intersectsum[$i]=count($intersect[$i]);//计算提交人数
 
-        $diff[$i]=array_diff($all,$intersect[$i]);
-        $diffsum[$i]=count($diff[$i]);
+        $diff[$i]=array_diff($all,$intersect[$i]);//返回两个数组的差集
+        $diffsum[$i]=count($diff[$i]);//计算未提交人数
 
         $intersect[$i]=implode(',', $intersect[$i]);
         $diff[$i]=implode(',', $diff[$i]);
-
-        if($diffsum[$i]==""&&$diff[$i]=="")
+        
+        if($intersect[$i]==""&&$intersectsum[$i]=="")
         {
           $diff[$i]=implode(',', $all);
           $diffsum[$i]=count($all);
         }
       }
+
       $date['month']=$month;
       $date['year']=date('Y');
       $this->assign('intersect',$intersect);
@@ -510,7 +511,7 @@ class PlanjhyController extends BaseController {
         $intersect[$i]=implode(',', $intersect[$i]);
         $diff[$i]=implode(',', $diff[$i]);
 
-        if($diffsum[$i]==""&&$diff[$i]=="")
+        if($intersectsum[$i]==""&&$intersect[$i]=="")
         {
           $diff[$i]=implode(',', $all);
           $diffsum[$i]=count($all);
