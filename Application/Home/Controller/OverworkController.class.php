@@ -234,7 +234,6 @@ class OverworkController extends Controller {
     	$department  = session('admin.user_department');
     	$office      = session('admin.user_office');
       $if_authority= session('admin.if_authority');
-      dump($if_authority);
    		//获取正确的科长与部长
       	if ($id_level=='3'||$id_level=='7') {
       		# code...
@@ -304,12 +303,20 @@ class OverworkController extends Controller {
     	$department  = session('admin.user_department');
     	$office      = session('admin.user_office');
     	$chief 		 = session('admin.user_leader');
+      $if_authority= session('admin.if_authority');
       	if ($id_level=='3'||$id_level=='7') {
-      		# code...
-      		$chief 	  			= session('admin.user_leader');
-      		$minister 			= M('info_admin')->where("username='$chief'")->getField('user_leader');
-      		$chief_confirm  	= "未确认";
-      		$minister_confirm	= "未确认";
+      		if ($if_authority == '2' || $if_authority == '3') {
+            $chief            = $name;
+            $minister         = session('admin.user_leader');
+            $chief_confirm    = "通过";
+            $minister_confirm = "未确认";
+          }
+          else{
+        		$chief 	  			  = session('admin.user_leader');
+        		$minister 			  = M('info_admin')->where("username='$chief'")->getField('user_leader');
+        		$chief_confirm  	= "未确认";
+        		$minister_confirm	= "未确认";
+          }
       	}
       	elseif ($id_level=='4'||$id_level=='8') {
       		# code...

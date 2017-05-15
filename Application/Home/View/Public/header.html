@@ -267,84 +267,70 @@
                   </if>
                   <!-- 科长兼职显示结束 -->
                   
-                  
-                      <if condition="$Think.session.admin.id_level eq 5">
-                      <li><a><i class="fa fa-table"></i> 季度评级 <span class="fa fa-chevron-down"></span></a>
-                      <ul class="nav child_menu"> 
-                      <li><a href="{:U('Rate/rate_chief')}">科级季度评级</a></li>
-                      <li><a href="{:U('Rate/rate_allocation')}">科室季度分配</a></li>
-                      <li><a href="{:U('Rate/RatesubmissionQ')}">季度评级提交</a></li>
-                      <li><a href="{:U('Rate/rate_staff')}">科员季度评级</a></li>
-                      </ul>
-                      </li>
-                      </if>
-                      <if condition="$Think.session.admin.id_level eq 4"> 
-                      <li><a><i class="fa fa-table"></i> 季度评级 <span class="fa fa-chevron-down"></span></a>
-                      <ul class="nav child_menu">             
-                      <li><a href="{:U('Rate/rate_staff')}">科员季度评级</a></li>
-                      <li><a href="{:U('Rate/rate_query')}">历史查询</a></li>
-                      </ul>
-                      </li>
+                  <!-- 季度评级模块 -->
+                  <if condition="$Think.session.admin.id_level eq 5">
+                    <li><a><i class="fa fa-table"></i> 季度评级 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu"> 
+                    <li><a href="{:U('Rate/rate_chief')}">科级季度评级</a></li>
+                    <li><a href="{:U('Rate/rate_allocation')}">科室季度分配</a></li>
+                    <li><a href="{:U('Rate/RatesubmissionQ')}">季度评级提交</a></li>
+                    <li><a href="{:U('Rate/rate_staff')}">科员季度评级</a></li>
+                    </ul>
+                    </li>
                     </if>
+                    <if condition="$Think.session.admin.id_level eq 4"> 
+                    <li><a><i class="fa fa-table"></i> 季度评级 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">             
+                    <li><a href="{:U('Rate/rate_staff')}">科员季度评级</a></li>
+                    <li><a href="{:U('Rate/rate_query')}">历史查询</a></li>
+                    </ul>
+                    </li>
+                  </if>
+                  <!-- 季度评级模块结束 -->
+
+                  <!--能力建设模块模块-->
+                  <li><a><i class="fa fa-edit"></i> 能力建设 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <if condition="($Think.session.admin.id_level neq 5)">
+                          <li><a href="{:U('Overwork/overwork_apply')}">加班预报</a>
+                          <li><a href="{:U('Overwork/overwork_show')}">预报历史</a>
+                        </if>
+                        <if condition="($Think.session.admin.id_level eq 4 or $Think.session.admin.id_level eq 5 or $Think.session.admin.id_level eq 8)">
+                          <li><a href="{:U('Overwork/overwork_approval')}">预报审批</a>
+                          <li><a href="{:U('Overwork/overwork_history')}">审批历史</a>
+                        </if>
+                        <if condition="($Think.session.admin.if_authority neq 0)">
+                          <li><a href="{:U('Overwork/overwork_approval')}">预报审批[授权]</a></li>
+                          <li><a href="{:U('Overwork/overwork_history')}">审批历史[授权]</a></li>
+                        </if>
+                    </ul>
+                  </li>
+                  <!--能力建设块结束-->
+
+                  <!-- 综合查询模块 -->
                   <li><a><i class="fa fa-desktop"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{:U('Rate/quarter_query')}">季度评级查询</a></li>
                     </ul>
                   </li>
+                  <!-- 综合查询模块结束 -->
+
+                  <!-- 账户管理模块 -->
                   <li><a><i class="fa fa-table"></i> 账户管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{:U('user/pass')}">修改密码</a></li>
                       <li><a href="{:U('User/index')}">修改个人信息</a></li>
                     </ul>
                   </li>
+                  <!-- 账户管理模块结束 -->
+
                   <li><a href="javascript:void(0)"><i class="fa fa-bar-chart-o"></i> 扩展功能 <span class="label label-success pull-right">Coming Soon</span></a>
                   </li>
                   <li><a href="javascript:void(0)"><i class="fa fa-clone"></i>帮助 <span class="label label-success pull-right">Coming Soon</span></a>
                   </li>
                 </ul>
               </div>
-         <!--      <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="e_commerce.html">E-commerce</a></li>
-                      <li><a href="projects.html">Projects</a></li>
-                      <li><a href="project_detail.html">Project Detail</a></li>
-                      <li><a href="contacts.html">Contacts</a></li>
-                      <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="page_403.html">403 Error</a></li>
-                      <li><a href="page_404.html">404 Error</a></li>
-                      <li><a href="page_500.html">500 Error</a></li>
-                      <li><a href="plain_page.html">Plain Page</a></li>
-                      <li><a href="login.html">Login Page</a></li>
-                      <li><a href="pricing_tables.html">Pricing Tables</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="#level1_1">Level One</a>
-                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="level2.html">Level Two</a>
-                            </li>
-                            <li><a href="#level2_1">Level Two</a>
-                            </li>
-                            <li><a href="#level2_2">Level Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#level1_2">Level One</a>
-                        </li>
-                    </ul>
-                  </li>                  
-                  <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
-                </ul>
-              </div> -->
+
 
             </div>
             <!-- /sidebar menu -->
