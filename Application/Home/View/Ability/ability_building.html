@@ -1,0 +1,215 @@
+<include file="Public/header" />
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
+<div class="right_col" role="main">
+<!-- 能力新建 -->
+    <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{$Think.session.admin.year_sys}.{$Think.session.admin.halfyear_sys}  能力建设：新建</h2>
+                    <!-- 右侧设置栏 -->
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <!-- 右侧栏结束 -->
+
+              <div class="x_content">
+                <form id="postFormAdd" name="postFormAdd" action="{:U('Ability/ability_add')}" method="post" class="form-horizontal">
+                  <table class="table table-striped jambo_table bulk_action" style="text-align:center;height:50px;">   
+                   <!-- 能力表头 -->
+                   <thead>
+                      <tr class="headings">
+                      	<th class="column-title" width="5%">序号</th>
+                        <th class="column-title" width="8%">目标选择</th>
+                        <th class="column-title" width="8%">目标详述</th>
+                        <th class="column-title" width="8%">行动计划</th>
+                      </tr>
+                    </thead>
+                    <!--能力表头结束  -->
+                    <tbody>
+	                    <for start="1" end="5"  step="1" name="j" >
+	                      	<tr class="even pointer">
+		                        <td class=" ">
+		                          <label>{$j}</label>
+		                          <input type="hidden" name="abilityId[]" id="abilityId[]" value="{$listBuilding[$j-1].id}">
+		                        </td>
+		                        <td class=" ">
+		                        	<select name="abilityTarget[]">
+			                        	<volist name="abilityTarget" id="vo">
+			                        		<if condition="$vo.ability_target eq $listBuilding[$j-1]['abilitytarget']">
+			                        			<option value="{$vo.ability_target}" selected="selected">{$vo.ability_target}</option>
+			                        		<else />
+			                        			<option value="{$vo.ability_target}">{$vo.ability_target}</option>
+			                        		</if>
+			                        	</volist>
+		                        	</select>
+		                        </td>
+		                       	<td class=" ">
+		                          <textarea name="abilityDescribe[]" id="abilityDescribe[]" rows="3">{$listBuilding[$j-1].abilitydescribe}</textarea>
+		                        </td>
+		                        <td class=" ">
+		                          <textarea name="abilityPlan[]" id="abilityPlan[]" rows="3">{$listBuilding[$j-1].abilityplan}</textarea>
+		                        </td>
+	                      	</tr>
+	                    </for>
+                    </tbody>
+                  </table>
+                  <input class="btn btn-success" type="button" value="提交" id="bu1" onclick="checkFucAdd()" style="margin-left:40%;width:10%;">
+                  </form>            
+                </div>
+            </div>
+		</div>
+	</div>
+<!-- 能力新建结束 -->
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- 能力总结 -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>{$Think.session.admin.year_last}.{$Think.session.admin.halfyear_last}  能力建设：总结</h2>
+                    <!-- 右侧设置栏 -->
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        	<ul class="dropdown-menu" role="menu">
+	                          	<li><a href="#">Settings 1</a>
+	                          	</li>
+	                          	<li><a href="#">Settings 2</a>
+	                          	</li>
+                        	</ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      	</li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                  <!-- 右侧栏结束 -->
+
+                <div class="x_content">
+                	<form id="postFormSum" name="postFormSum" action="{:U('Ability/ability_summarize')}" method="post" class="form-horizontal">
+	                 	<empty name="listSummarize">
+	                 		<table class="table">
+	                  		您无能力建设规划！
+	                  		</table>
+	                  	</empty>
+                  		<notempty name="listSummarize">
+                  			<table class="table table-striped jambo_table bulk_action" style="text-align:center;height:50px;">   
+                   			<!-- 总结表头 -->
+                   				<thead>
+                     				<tr class="headings">
+				                      	<th class="column-title" width="5%">序号</th>
+				                        <th class="column-title" width="8%">目标选择</th>
+				                        <th class="column-title" width="8%">目标详述</th>
+				                        <th class="column-title" width="8%">行动计划</th>
+				                        <th class="column-title" width="8%">能力总结</th>
+				                        <th class="column-title" width="5%">能力自评</th>
+				                    </tr>
+                    			</thead>
+                    		<!--总结表头结束  -->
+                    			<tbody>
+	                    			<volist name="listSummarize" id="vo">
+		                        		<tr class="even pointer">
+					                        <td class=" ">
+					                          	<label>{$i}</label>
+					                          	<input type="hidden" name="abilityId[]" id="abilityId[]" value="{$vo.id}">
+					                        </td>
+					                        <td class=" ">{$vo.abilitytarget}</td>
+					                       	<td class=" ">{$vo.abilitydescribe}</td>
+					                        <td class=" ">{$vo.abilityplan}</td>
+					                        <td class=" ">
+			                        			<textarea name="abilitySummarize[]" id="abilitySummarize[]" rows="3">{$vo.abilitysummarize}</textarea>
+			                       			</td>
+			                       			<td>
+			                       				<select name="abilitySelfGrade[]">
+			                       					<for start="1" end="6" step="1" name="k">
+			                       						<option value="{$k}" <if condition="$listSummarize[$i-1]['abilityselfgrade'] eq $k">selected="selected"</if>>{$k}</option>
+			                       					</for>
+			                       				</select>
+			                       			</td>
+		                        		</tr>
+	                   		 		</volist>
+                    			</tbody>
+                  			</table>
+                  			<input class="btn btn-success" type="button" value="总结" onclick="checkFucSum({$i})" style="margin-left:40%;width:10%;">
+                  		</notempty>
+                  	</form>            
+                </div>
+            </div>
+		</div>
+	</div>
+<!-- 能力总结结束 -->
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+
+<include file="Public/foot" />
+
+<script type="text/javascript">
+// 新建判断提交是否为合法信息
+function checkFucAdd(){
+	var abilityDescribe = document.getElementsByName('abilityDescribe[]');
+	var abilityPlan = document.getElementsByName('abilityPlan[]');
+	for (var i = 0; i < 4; i++) {
+		var num = i+1;	//显示第num行错误消息
+		if(abilityPlan[i].value!='')
+		{
+			if (abilityDescribe[i].value=='') {
+				alert("第"+num+"行未填写目标详述！");
+				return false;
+			}
+		}
+		if(abilityDescribe[i].value!='')
+		{
+			if (abilityPlan[i].value=='') {
+				alert("第"+num+"行未填写行动计划！");
+				return false;
+			}
+		}
+	}
+	alert("能力建设提交成功！");
+	document.getElementById("postFormAdd").submit();
+}
+// 总结判断提交是否为合法信息
+function checkFucSum(num){
+	var abilitySummarize = document.getElementsByName('abilitySummarize[]');
+	var abilitySelfGrade = document.getElementsByName('abilitySelfGrade[]');
+	var num_grade = 0;//存放总自评分数
+	for (var i = 0; i < num; i++) {
+		var num_info = i+1;	//显示第num行错误消息
+		num_grade    += parseInt(abilitySelfGrade[i].value);
+		if(abilitySummarize[i].value==''){
+			alert("第"+num_info+"行未填写能力总结！");
+			return false;
+		}
+	}
+	if(num_grade!=5)
+	{
+		alert("自评分数未达到满分5分，请重新分配自评分数！");
+		return false;
+	}
+	alert("能力总结提交成功！");
+	document.getElementById("postFormSum").submit();
+}
+</script>

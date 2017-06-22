@@ -1,0 +1,103 @@
+<include file="Public/header" />
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+
+<div class="right_col" role="main">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                	<h2>
+	                	<if condition="$Think.session.admin.id_level eq 5">{$Think.session.admin.user_department} . 科长 . {$Think.session.admin.year_last}{$Think.session.admin.halfyear_last} . 能力评分</if>
+	                	<if condition="$Think.session.admin.id_level neq 5">{$Think.session.admin.user_office} . 科员 . {$Think.session.admin.year_last}{$Think.session.admin.halfyear_last} . 能力评分</if>
+                	</h2>
+                	<ul class="nav navbar-right panel_toolbox">
+                    	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    	<li class="dropdown">
+                        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        	<ul class="dropdown-menu" role="menu">
+                          		<li><a href="#">Settings 1</a></li>
+                          		<li><a href="#">Settings 2</a></li>
+                        	</ul>
+                      	</li>
+                      	<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive"  style="">
+                      	<table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                  		<empty name="listGrade">暂无能力可以评分！</empty>
+                  		<notempty name="listGrade">
+                       		<thead>
+                          		<tr class="headings"> 
+		                            <th class="column-title">下属姓名</th>
+		                            <th class="column-title">下属工号</th>
+		                            <th class="column-title">年份</th>
+		                            <th class="column-title">半年</th>
+		                            <th class="column-title">能力目标</th>
+		                            <th class="column-title">能力详述</th>
+		                            <th class="column-title">能力总分</th>
+		                            <th class="column-title">操作 </th>
+                          		</tr>
+                       		</thead>
+                       		<tbody>
+                        	<volist name="listGrade" id="vo">
+                          		<tr class="even pointer">
+                           			<td class=" " width="8%">
+		                            <label>
+		                               	{$vo.name}
+		                            </label>
+                           			</td>
+                            		<td class=" " width="8%">
+                              			<label>
+			                                {$vo.id_employee}
+                              			</label>
+                            		</td>
+                            		<td class=" " width="8%">
+		                              	<label>
+		                                	{$vo.year}
+		                              	</label>
+                            		</td>
+                            		<td class=" " width="8%">
+                              			<label>
+                                			{$vo.halfyear}
+                              			</label>
+                            		</td>
+                            		<td class=" " width="20%">
+                                		{$vo.abilitytarget}                    		
+                            		</td>
+                            		<td class=" " width="20%">
+                                		{$vo.abilitydescribe}                    		
+                            		</td>
+                            		<td class=" " width="8%">
+                              			<label>
+                                			<empty name="vo[abilitysumgrade]">
+                                				暂未评分！
+                                			</empty>
+                                			<notempty name="vo[abilitysumgrade]">
+                                				{$vo.abilitysumgrade}
+                                			</notempty>
+                              			</label>
+                            		</td>
+                            		<td class=" " width="8%">
+                              			<label>
+            								<a href="{:U('Ability/ability_mark',array('id'=>$vo['id']))}">[ 评分 ]</a>
+                             	 		</label>
+                            		</td>
+                          		</tr>
+                        	</volist>
+                        </tbody>
+                        </notempty>
+                      	</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+<include file="Public/foot" />

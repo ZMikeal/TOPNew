@@ -1,0 +1,83 @@
+<include file="Public/header" />
+<style type="text/css">
+.column-title{
+  text-align: center;
+}
+</style>
+
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>能力建设历史查询</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <empty name="list">暂无能力可以查询！</empty>
+                <notempty name="list">
+                <for start="0" end="$listHistoryCount" step="1" name="number">
+                    <!--tab-->
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="height: 310px">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><i class="fa fa-bars"></i> {$list[$number][0][year]} <small>{$list[$number][0][halfyear]}</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-xs-3">
+                                    <!-- required for floating -->
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs tabs-left">
+                                        <li class="active"><a href="#first{$number}" data-toggle="tab">{$list[$number][0][abilitytarget]}</a>
+                                        </li>
+                                        <li><a href="#second{$number}" data-toggle="tab">{$list[$number][1][abilitytarget]}</a>
+                                        </li>
+                                        <if condition="$list[$number][2][abilitytarget] neq ''">
+                                            <li><a href="#third{$number}" data-toggle="tab">{$list[$number][2][abilitytarget]}</a>
+                                            </li>
+                                        </if>
+                                        <if condition="$list[$number][3][abilitytarget] neq ''">
+                                            <li><a href="#forth{$number}" data-toggle="tab">{$list[$number][3][abilitytarget]}</a>
+                                            </li>
+                                        </if>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-9">
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="first{$number}">
+                                            <p><h4><strong>目标详述：</strong></h4>{$list[$number][0][abilitydescribe]}</p>
+                                            <p><h4><strong>行动计划：</strong></h4>{$list[$number][0][abilityplan]}</p>
+                                            <p><h4><strong>能力总结：</strong></h4>{$list[$number][0][abilitysummarize]}</p>
+                                        </div>
+                                        <div class="tab-pane" id="second{$number}">
+                                            <p><h4><strong>目标详述：</strong></h4>{$list[$number][1][abilitydescribe]}</p>
+                                            <p><h4><strong>行动计划：</strong></h4>{$list[$number][1][abilityplan]}</p>
+                                            <p><h4><strong>能力总结：</strong></h4>{$list[$number][1][abilitysummarize]}</p>
+                                        </div>
+                                        <div class="tab-pane" id="third{$number}">
+                                            <p><h4><strong>目标详述：</strong></h4>{$list[$number][2][abilitydescribe]}</p>
+                                            <p><h4><strong>行动计划：</strong></h4>{$list[$number][2][abilityplan]}</p>
+                                            <p><h4><strong>能力总结：</strong></h4>{$list[$number][2][abilitysummarize]}</p>
+                                        </div>
+                                        <div class="tab-pane" id="forth{$number}">
+                                            <p><h4><strong>目标详述：</strong></h4>{$list[$number][3][abilitydescribe]}</p>
+                                            <p><h4><strong>行动计划：</strong></h4>{$list[$number][3][abilityplan]}</p>
+                                            <p><h4><strong>能力总结：</strong></h4>{$list[$number][3][abilitysummarize]}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--tab lose-->
+                </for>
+                </notempty>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<include file="Public/foot" />

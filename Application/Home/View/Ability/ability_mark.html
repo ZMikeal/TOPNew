@@ -1,0 +1,132 @@
+<include file="Public/header" />
+<style type="text/css">
+    .column-title{
+        text-align: center;
+    }
+</style>
+
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        {$listMark[0]['name']} . {$listMark[0]['year']}{$listMark[0]['halfyear']} . 能力评分
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a></li>
+                                <li><a href="#">Settings 2</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="postFormMark" name="postFormMark" action="{:U('Ability/ability_marking')}" method="post" class="form-horizontal">
+                    <div class="table-responsive"  style="">
+                        <table class="table table-striped jambo_table bulk_action" style="text-align:center;">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title" width="5%">姓名</th>
+                                    <th class="column-title" width="5%">工号</th>
+                                    <th class="column-title" width="5%">年份</th>
+                                    <th class="column-title" width="5%">半年</th>
+                                    <th class="column-title" width="8%">能力目标</th>
+                                    <th class="column-title" width="18%">能力详述</th>
+                                    <th class="column-title" width="18%">能力计划</th>
+                                    <th class="column-title" width="18%">能力总结</th>
+                                    <th class="column-title" width="8%">能力自评</th>
+                                    <th class="column-title" width="8%">能力评分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <volist name="listMark" id="vo">
+                                    <tr class="even pointer">
+                                        <td class=" " >
+                                            <label>
+                                                <input name="abilityId[]" id="abilityId[]" type="hidden" value="{$vo.id}">
+                                                {$vo.name}
+                                            </label>
+                                        </td>
+                                        <td class=" ">
+                                            <label>
+                                                {$vo.id_employee}
+                                            </label>
+                                        </td>
+                                        <td class=" ">
+                                            <label>
+                                                {$vo.year}
+                                            </label>
+                                        </td>
+                                        <td class=" ">
+                                            <label>
+                                                {$vo.halfyear}
+                                            </label>
+                                        </td>
+                                        <td class=" ">
+                                            {$vo.abilitytarget}
+                                        </td>
+                                        <td class=" ">
+                                            {$vo.abilitydescribe}
+                                        </td>
+                                        <td class=" ">
+                                            {$vo.abilityplan}
+                                        </td>
+                                        <td class=" ">
+                                            {$vo.abilitysummarize}
+                                        </td>
+                                        <td class=" ">
+                                            {$vo.abilityselfgrade}
+                                        </td>
+                                        <td class=" ">
+                                            <select name="abilityMarking[]">
+                                                <for start="1" end="4" name="j">
+                                                    <option value="{$j}" <if condition="$vo[abilityleadergrade] eq $j">selected</if>>{$j}</option>
+                                                </for>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </volist>
+                            </tbody>
+                        </table>
+                        <input name="buttonMarking" class="btn btn-success" type="button" value="评分" onclick="checkFucMark({$i})" style="margin-left:40%;width:10%;">
+                        <a class="btn btn-success" href="{:U('Ability/ability_grade')}" style="width:10%;">返回</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="Public/foot" />
+
+<script>
+    // 总结判断提交是否为合法信息
+    function checkFucMark(num){
+        var abilityMarking = document.getElementsByName('abilityMarking[]');
+        var buttonMarking  = document.getElementsByName('buttonMarking');
+        var abilitySum     = 0; //评分总分
+        for (var i = 0; i < num; i++) {
+            abilitySum += parseInt(abilityMarking[i].value);
+        }
+        if (abilitySum>5){
+            alert("能力评分超过上限5分，请重新规划！");
+            return false;
+        }
+        if(confirm("半年能力评分为"+abilitySum+"，是否确认提交？"))
+        {
+            alert("能力评分提交成功！");
+            buttonMarking.disabled=true;
+            document.getElementById("postFormMark").submit();
+        }
+        else{
+            return false;
+        }
+    }
+</script>

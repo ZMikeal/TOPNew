@@ -6,14 +6,29 @@ class LoginController extends Controller {
       $this->display();
   }
   public function dologin(){
-    //dump(session('admin'));//exit;
-    //adminname
-    //password
-    $map=array(
-    'nickname'=> I('post.username'),
-    'password'=> md5(md5(I('post.password')))
-    );
-    $admin=M('info_admin')->where($map)->where("if_delete=0")->find();
+
+      $ws = "http://10.10.1.106:9090/webservice6/services/Generic?wsdl";//webservice服务的地址
+      $client = new \SoapClient ($ws, array('features' => SOAP_USE_XSI_ARRAY_TYPE));
+      $clientkey=$_GET['clientkey'];
+
+      if($clientkey!='')
+      {
+          $username=$client->getClientUser($clientkey);
+          $username = explode("@",$username);
+          $map=array(
+              'nickname'=> $username[0],
+          );
+          $admin=M('info_admin')->where($map)->where("if_delete=0")->find();
+      }
+      else
+      {
+          $map=array(
+              'nickname'=> I('post.username'),
+              'password'=> md5(md5(I('post.password')))
+          );
+          $admin=M('info_admin')->where($map)->where("if_delete=0")->find();
+      }
+
     if($admin){
       
       if($admin['id_level']==2)
@@ -116,12 +131,12 @@ class LoginController extends Controller {
         }
          $admin['month_sys']=date('m');
          $admin['year_sys']=date('Y');
-         if($admin['month_sys']==1||$admin['month_sys']==2||$admin['month_sys']==3){$admin['quarter']=1;$admin['quarter_last']=4;}
-         if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;$admin['quarter_last']=1;}
-         if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;$admin['quarter_last']=2;}
-         if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;$admin['quarter_last']=3;}
+        if($admin['month_sys']==1||$admin['month_sys']==2||$admin['month_sys']==3){$admin['quarter']=1;$admin['quarter_last']=4;$admin['halfyear_sys']='上半年';$admin['year_last']=intval($admin['year_sys'])-1;$admin['halfyear_last']='下半年';}
+        if($admin['month_sys']==4||$admin['month_sys']==5||$admin['month_sys']==6){$admin['quarter']=2;$admin['quarter_last']=1;$admin['halfyear_sys']='上半年';$admin['year_last']=intval($admin['year_sys'])-1;$admin['halfyear_last']='下半年';}
+        if($admin['month_sys']==7||$admin['month_sys']==8||$admin['month_sys']==9){$admin['quarter']=3;$admin['quarter_last']=2;$admin['halfyear_sys']='下半年';$admin['year_last']=intval($admin['year_sys']);$admin['halfyear_last']='上半年';}
+        if($admin['month_sys']==10||$admin['month_sys']==11||$admin['month_sys']==12){$admin['quarter']=4;$admin['quarter_last']=3;$admin['halfyear_sys']='下半年';$admin['year_last']=intval($admin['year_sys']);$admin['halfyear_last']='上半年';}
 
-         if($admin['nickname']=="limenglin"||$admin['nickname']=="zhangjianping01"||$admin['nickname']=="jiangyiling"||$admin['nickname']=="duqiang"||$admin['nickname']=="lizhao"||$admin['nickname']=="liangxiuqing"||$admin['nickname']=="wangwei04"||$admin['nickname']=="zhangjingsong"||$admin['nickname']=="mahaizhen"||$admin['nickname']=="yurongjiang")
+        if($admin['nickname']=="limenglin"||$admin['nickname']=="zhangjianping01"||$admin['nickname']=="jiangyiling"||$admin['nickname']=="duqiang"||$admin['nickname']=="lizhao"||$admin['nickname']=="liangxiuqing"||$admin['nickname']=="wangwei04"||$admin['nickname']=="zhangjingsong"||$admin['nickname']=="mahaizhen"||$admin['nickname']=="yurongjiang")
           $admin['overwork_after18']=1;
         else
           $admin['overwork_after18']=0;
