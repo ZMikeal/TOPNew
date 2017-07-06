@@ -289,21 +289,29 @@
                   <!-- 季度评级模块结束 -->
 
                   <!--能力建设模块模块-->
-                  <li><a><i class="fa fa-line-chart"></i> 能力建设 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <if condition="$Think.session.admin.id_level neq 5">
-                            <li><a href="{:U('Ability/ability_building')}">半年计划</a>
-                            <li><a href="{:U('Ability/ability_history')}">建设历史</a>
-                        </if>
-                        <if condition="$Think.session.admin.id_level eq 4 or $Think.session.admin.id_level eq 5 or $Think.session.admin.id_level eq 8">
-                            <li><a href="{:U('Ability/ability_grade')}">能力评分</a>
-                        </if>
-                        <if condition="$Think.session.admin.if_authority eq 3 or $Think.session.admin.if_authority eq 2 or $Think.session.admin.if_authority eq 4">
-                            <li><a href="{:U('Ability/ability_grade')}">能力评分[授权]</a>
-                        </if>
-                    </ul>
-                  </li>
-                  <!--能力建设块结束-->
+                    <li><a><i class="fa fa-line-chart"></i> 能力建设 <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <if condition="$Think.session.admin.id_level neq 5">
+                                <li><a href="{:U('Ability/ability_building')}">半年计划</a>
+                                <li><a href="{:U('Ability/ability_history')}">建设历史</a>
+                            </if>
+                            <if condition="$Think.session.admin.id_level eq 4 or $Think.session.admin.id_level eq 5 or $Think.session.admin.id_level eq 8">
+                                <li><a href="{:U('Ability/ability_grade')}">能力评分</a>
+                            </if>
+                            <if condition="$Think.session.admin.if_authority eq 3 or $Think.session.admin.if_authority eq 2 or $Think.session.admin.if_authority eq 4">
+                                <li><a href="{:U('Ability/ability_grade')}">能力评分[授权]</a>
+                            </if>
+                        </ul>
+                    </li>
+                    <!--能力建设块结束-->
+
+                    <!--工时管理块模块-->
+                    <li><a><i class="fa fa-reply-all"></i> 工时管理 <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                                <li><a href="{:U('Tasktime/tasktime_link')}">工时链接</a>
+                        </ul>
+                    </li>
+                    <!--能力建设块结束-->
 
                   <!-- 综合查询模块 -->
                   <li><a><i class="fa fa-share-alt-square"></i> 综合查询 <span class="fa fa-chevron-down"></span></a>
@@ -447,7 +455,7 @@
                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">计划员设置时间为： {$Think.session.admin.year_sys} 年 {$Think.session.admin.month} 月 </a>
                 </li>
                 <li class="">
-                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.3.4</a>
+                 <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">当前版本：1.5.1</a>
                 </li>
               </ul>
             </nav>
