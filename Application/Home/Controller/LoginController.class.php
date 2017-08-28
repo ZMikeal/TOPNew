@@ -138,6 +138,8 @@ class LoginController extends Controller {
 
         if($admin['nickname']=="limenglin"||$admin['nickname']=="zhangjianping01"||$admin['nickname']=="jiangyiling"||$admin['nickname']=="duqiang"||$admin['nickname']=="lizhao"||$admin['nickname']=="liangxiuqing"||$admin['nickname']=="wangwei04"||$admin['nickname']=="zhangjingsong"||$admin['nickname']=="mahaizhen"||$admin['nickname']=="yurongjiang")
           $admin['overwork_after18']=1;
+        elseif ($admin['nickname']=="zhangtong02"||$admin['nickname']=="huangtao01")
+            $admin['overwork_after18']=2;
         else
           $admin['overwork_after18']=0;
         session('admin',$admin);
