@@ -771,11 +771,11 @@ class PerformanceController extends BaseController {
     //~
     //年度计划评分列表
     public function PlangradeY(){
-      $level=session('admin.id_level');
-      $tj['plan_leader']=session('admin.username');
-      $tj['year']=session('admin.year');
+      $level              =  session('admin.id_level');
+      $tj['plan_leader']  =  session('admin.username');
+      $tj['year']         =  session('admin.year');
       //$tj['month']=session('admin.month');
-      if($level==4||$level==7||$level==8)
+      if($level==4||$level==7||$level==8||$level==3)
       {
         $this->model=D('planyear_staff');
         $jh = $this->model->field("id,staff_id,staff_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('staff_name')->select();
@@ -786,10 +786,23 @@ class PerformanceController extends BaseController {
         $jh = $this->model->field("id,chief_id,chief_name,year,plan_name,group_concat(plan_name) as plan_name,group_concat(id) as id")->where($tj)->group('chief_name')->select();
       }
       foreach ($jh as $k => $v) {   //  循环保存每一条值
-                  //$map = array();
-                  $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
-                }
-      //dump($jh);exit;
+          //$map = array();
+          $jh[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
+
+          if ($level==4||$level==7||$level==8||$level==3){
+              $condition_sum['staff_id'] = $jh[$k]['staff_id'];
+              $condition_sum['year'] = $tj['year'];
+              $model_sum = $this->model=D('gradeyear_staff');
+              $jh[$k]['plan_grade'] = $model_sum->where($condition_sum)->getField('grade');
+//              echo $model_sum->where($condition_sum)->getLastSql();
+          }
+          elseif ($level==5){
+              $condition_sum['chief_id'] = $jh[$k]['chief_id'];
+              $condition_sum['year'] = $tj['year'];
+              $model_sum = $this->model=D('gradeyear_chief');
+              $jh[$k]['plan_grade'] = $model_sum->where($condition_sum)->getField('grade');
+          }
+      }
       $this->assign('jh',$jh);
       $this->display();
     }
@@ -870,6 +883,7 @@ class PerformanceController extends BaseController {
         $name1['month']=$name['month'];
         $name1['grade_leader']=$name['plan_leader'];
         $sum=$this->model->where($name1)->getField('grade');
+//        echo $sum->getLastSql();exit();
         $name[1]=$name['chief_name'];
         $name[2]=$name['year'];
         $name[3]=$name['month'];
@@ -895,16 +909,76 @@ class PerformanceController extends BaseController {
                 }
                 //dump($shuju);exit;
         $this->assign('name',$name);
-        $this->assign('sum',$sum);$this->assign('lev',$lev);
+        $this->assign('sum',$sum);
+        $this->assign('lev',$lev);
         $this->assign('shuju',$shuju);
         $this->display();
     }
     //~
+
+    //年度计划评分
+    public function PlangradeshowY(){
+        $tj    =  I('get.id');
+        $lev   =  I('get.lev');
+        $tj    =  explode(",", $tj);
+        $le    =  session('admin.id_level');
+//        dump($tj);
+        if($le==4||$le==7||$le==8||$le==3)
+        {
+            $condition_year  = $this->model=D('planyear_staff');
+            $condition_grade = $this->model=D('gradeyear_staff');
+
+            $name            =  $condition_year->where("id=$tj[0]")->find();
+
+            $name_sum['staff_id']      = $name['staff_id'];
+            $name_sum['year']          = $name['year'];
+            $name_sum['grade_leader']  = $name['plan_leader'];
+            $sum=$condition_grade->where($name_sum)->getField('grade');
+            $this->assign('name',$name['staff_name']);
+        }
+        else if($le==5)
+        {
+            $condition_year  =  $this->model=D('planyear_chief');
+            $condition_grade =  $this->model=D('gradeyear_chief');
+
+            $name            =  $condition_year->where("id=$tj[0]")->find();
+
+            $name_sum['chief_id']      = $name['chief_id'];
+            $name_sum['year']          = $name['year'];
+            $name_sum['grade_leader']  = $name['plan_leader'];
+            $sum=$condition_grade->where($name_sum)->getField('grade');
+            $this->assign('name',$name['chief_name']);
+        }
+
+        //循环保存每一条值
+        foreach ($tj as $k => $v) {
+            $shuju[$k]=$condition_year->where("id=$v")->find();
+            $f=1;
+            for($i=0;$i<6;$i++)
+            {
+                $shuju[$k]['fenshu'][$i]['fen']=round($shuju[$k]['plan_weight']*$f);
+                $f-=0.2;
+            }
+            $shuju[$k]['fenshu'][0]['dengji']=S;
+            $shuju[$k]['fenshu'][1]['dengji']=A;
+            $shuju[$k]['fenshu'][2]['dengji']=B;
+            $shuju[$k]['fenshu'][3]['dengji']=C;
+            $shuju[$k]['fenshu'][4]['dengji']=D;
+            $shuju[$k]['fenshu'][5]['dengji']=E;
+        }
+
+        $this->assign('shuju',$shuju);
+        $this->assign('lev',$lev);
+        $this->assign('sum',$sum);
+        $this->display();
+    }
+    //~
+
+
     //月度分数写入数据库
     public function addgradeM(){
       $data=I('post.');
       $lev=$data['lev'];
-      
       $ii=count($data['id']);
       $le=session('admin.id_level');
       for($i=0;$i<$ii;$i++)
@@ -1124,45 +1198,114 @@ class PerformanceController extends BaseController {
         }
         $this->ajaxReturn(array('success'=>1),"json");
   }
+///~
 
-    //年度评分列表查看
-    public function PlangradeshowY(){
-      $tj=I('get.id');
-      $tj=explode(",", $tj);
-      $le=session('admin.id_level');
-      if($le==4||$le==7||$le==8||$le==3)
-      {
-        $this->model=D('planyear_staff');
-        $name=$this->model->where("id=$tj[0]")->getField('staff_name');
-      }
-      else if($le==5)
-      {
-        $this->model=D('planyear_chief');
-        $name=$this->model->where("id=$tj[0]")->getField('chief_name');
-      }
-      //dump($tj);exit;
-      //循环保存每一条值
-      foreach ($tj as $k => $v) {               
-                  $shuju[$k]=$this->model->where("id=$v")->find();
-                  $f=1;
-                  for($i=0;$i<6;$i++)
-                  {
-                    $shuju[$k]['fenshu'][$i]['fen']=round($shuju[$k]['plan_weight']*$f);
-                    $f-=0.2;
-                  }
-                  $shuju[$k]['fenshu'][0]['dengji']=S;
-                  $shuju[$k]['fenshu'][1]['dengji']=A;
-                  $shuju[$k]['fenshu'][2]['dengji']=B;
-                  $shuju[$k]['fenshu'][3]['dengji']=C;
-                  $shuju[$k]['fenshu'][4]['dengji']=D;
-                  $shuju[$k]['fenshu'][5]['dengji']=E;
-      }
-        //dump($shuju);exit;
-        $this->assign('name',$name);
-        $this->assign('shuju',$shuju);
-        $this->display();
+
+//年度分数写入数据库
+    public function addgradeY(){
+        $data          = I('post.');
+        $level_other   = $data['lev'];//lev
+        $data_number   = count($data['id']);
+        $level_me      = session('admin.id_level');//le
+
+        for($i=0;$i<$data_number ;$i++)
+        {
+            $id      = $data['id'][$i];
+            $grade   = $data['fenshu'][$i];
+            if($level_me==4||$level_me==7||$level_me==8||$level_me==3)
+            {//自己是以上角色，数据表选择年度员工表
+                $this->model=D('planyear_staff');
+            }
+            if($level_me==5)
+            {//评分是部长角色，分情况搜索表
+                if($level_other==3 || $level_other==7)
+                    $this->model=D('planyear_staff');
+                else if($level_other==5)
+                    $this->model=D('planyear_minister');
+                else
+                    $this->model=D('planyear_chief');
+            }
+            $this->model->where("id=$id")->setField('plan_grade',$grade);//将分数储存
+            $admin=$this->model->where("id=$id")->find();
+        }
+        //评价者为科长、项目经理、代理科长、有评分权限的VSE
+        if($level_me==4||$level_me==7||$level_me==8||$level_me==3)
+        {
+            $tj['staff_id']    =  $admin['staff_id'];
+            $tj['staff_name']  =  $admin['staff_name'];
+            $tj['year']        =  $admin['year'];
+            //获取变更过的部门与科室
+            $this->model=M('info_admin');
+            $admin=$this->model->where("id_employee=".$tj['staff_id'])->find();
+
+            $tj['staff_department']  =  $admin['user_department'];
+            $tj['grade_leader']      =  session('admin.username');
+            $tj['staff_office']      =  $admin['user_office'];
+
+            $this->model=D('gradeyear_staff');
+            $found=$this->model->where($tj)->find();//是否之前打过分数
+
+            if($found==null)
+            {
+                $tj['grade']         =  $data['sum'];
+                if($this->model->create($tj))
+                    $this->model->add();
+            }
+            else
+            {
+                if($data['staff_office']==''){
+                    unset($tj['staff_office']);
+                }
+                $tj['id']             =  $found['id'];
+                $save['grade']        =  $data['sum'];
+                $save['staff_office'] = $admin['user_office'];
+                $this->model->where($tj)->save($save);
+            }
+        }
+        //评价者为部长
+        if($level_me==5) {
+            //被评价者为科长或者账目经理
+            if ($level_other == 4 || $level_other == 8) {
+                $this->model = D('planyear_chief');
+
+                $tj['chief_id'] = $admin['chief_id'];
+                $tj['chief_name'] = $admin['chief_name'];
+                $tj['year'] = $admin['year'];
+
+                //获取变更过的部门与科室
+                $this->model = M('info_admin');
+                $admin = $this->model->where("id_employee=" . $tj['chief_id'])->find();
+
+                $tj['chief_department'] = $admin['user_department'];
+                $tj['grade_leader'] = session('admin.username');
+                $tj['chief_office'] = $admin['user_office'];
+
+                $this->model = D('gradeyear_chief');
+                $found = $this->model->where($tj)->find();//是否之前打过分数
+
+                if ($found == null) {
+                    $tj['grade'] = $data['sum'];
+                    if ($this->model->create($tj))
+                        $this->model->add();
+                } else {
+                    if ($data['chief_office'] == '') {
+                        unset($tj['chief_office']);
+                    }
+                    $tj['id'] = $found['id'];
+                    $save['grade'] = $data['sum'];
+                    $save['chief_office'] = $admin['user_office'];
+                    $this->model->where($tj)->save($save);
+                }
+            }
+
+        }
+        $this->ajaxReturn(array('success'=>1),"json");
     }
-    //~
+    ///~~
+
+
+
+    ///~
     public function GradesubmissionM(){
       $tj['year']=session('admin.year');
       $tj['department']=session('admin.user_department');
