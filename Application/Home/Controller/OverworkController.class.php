@@ -224,16 +224,16 @@ class OverworkController extends Controller {
     	$overworkType      = I('overworkType');
     	$overworkStartTime = I('overworkStartTime');
     	$overworkEndTime   = I('overworkEndTime');
-		  $overworkTotalTime = I('overworkTotalTime');
-		  $overworkContent   = I('overworkContent');
+        $overworkTotalTime = I('overworkTotalTime');
+        $overworkContent   = I('overworkContent');
 		  ///~
 		  // 获取需要的session变量
-		  $id_level    = session('admin.id_level');
-		  $name        = session('admin.username');  
+        $id_level    = session('admin.id_level');
+        $name        = session('admin.username');
     	$id_employee = session('admin.id_employee');
     	$department  = session('admin.user_department');
     	$office      = session('admin.user_office');
-      $if_authority= session('admin.if_authority');
+        $if_authority= session('admin.if_authority');
    		//获取正确的科长与部长
       	if ($id_level=='3'||$id_level=='7') {
       		# code...
@@ -245,9 +245,20 @@ class OverworkController extends Controller {
           }
           else  //没有任何授权
           {
-            $chief        = session('admin.user_leader');
-            $minister     = M('info_admin')->where("username='$chief'")->getField('user_leader');
-            $chief_confirm  = "未确认";
+            $leader        = session('admin.user_leader');
+            $leader_level  = M('info_admin')->where("username='$leader'")->getField('id_level');
+            //是否为部长第一评价人
+            if($leader_level=='4'){
+                $chief     = $leader;
+                $minister     = M('info_admin')->where("username='$chief'")->getField('user_leader');
+                $chief_confirm  = "未确认";
+            }
+            else{
+                $chief          = $leader;
+                $minister       = $leader;
+                $chief_confirm  = "通过";
+            }
+
           }
       	}
       	elseif ($id_level=='4'||$id_level=='8') {
@@ -266,14 +277,14 @@ class OverworkController extends Controller {
       		$map['overworkEndTime']   = $overworkEndTime[$key];
       		$map['overworkTotalTime'] = $overworkTotalTime[$key];
       		$map['overworkContent']   = $overworkContent[$key];
-      		$map['name']			        = $name;
+      		$map['name']			  = $name;
       		$map['id_employee']	      = $id_employee;
-      		$map['department']		    = $department;
-      		$map['office']			      = $office;
-      		$map['chief']			        = $chief;
-      		$map['minister']		      = $minister;
-      		$map['addTime']			      = date('y-m-d h:i:s',time());
-      		$map['chief_confirm']	    = $chief_confirm;
+      		$map['department']		  = $department;
+      		$map['office']		      = $office;
+      		$map['chief']	          = $chief;
+      		$map['minister']	      = $minister;
+      		$map['addTime']		      = date('y-m-d h:i:s',time());
+      		$map['chief_confirm']     = $chief_confirm;
       		
       		if($map['overworkTotalTime']!=''){
       			if($this->model->create($map)){

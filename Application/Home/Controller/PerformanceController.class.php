@@ -647,7 +647,7 @@ class PerformanceController extends BaseController {
         $jh2 = $this->model->field("id,minister_id,minister_name,year,month,plan_name,plan_grade,group_concat(plan_name) as plan_name,group_concat(id) as id,group_concat(plan_grade) as plan_grade")->where($tj)->order('minister_name')->group('minister_name')->select();
         $this->model=D('grademonth_minister');
         //jh1是部长查看科员plan_leader为自己的数据
-        foreach ($jh2 as $k => $v) {   //  循环保存每一条值
+        foreach ($jh2 as $k => $v) {   //循环保存每一条值
                   //$map = array();
                   $jh2[$k]['plan_name']=str_replace(",","<br>",$v['plan_name']);
                   $jh2[$k]['plan_grade']=explode(",", $v['plan_grade']);
@@ -842,7 +842,7 @@ class PerformanceController extends BaseController {
       }
       if($le==5)
       {
-        $lev=I('get.lev');
+        $lev=I('get.lev');//被评等级
         if($lev==3){
         $this->model=D('planmonth_staff');
         $name=$this->model->where("id=$tj[0]")->find();

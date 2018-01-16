@@ -199,7 +199,7 @@ class RateController extends BaseController {
       //其他配置
       $tj['department']=session('admin.user_department');
       $rate=M('ratequarter_minister')->where($tj)->find();
-      $office1=array_unique(M('gradequarter_confirm')->where("department = '".$tj['department']."'")->getField('office',true));
+      $office1=array_unique(M('gradequarter_confirm')->where($tj)->getField('office',true));
       $i=1;
 
     foreach ($office1 as $k => $v) {
