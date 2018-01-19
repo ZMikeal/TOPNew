@@ -106,7 +106,7 @@
   if (confirm("确定要撤回成绩吗？")) 
              {
       var tr1 = tt.parentNode.parentNode;
-      var month  = tr1.cells[2].innerText;
+      var quarter  = tr1.cells[2].innerText;
       var year = tr1.cells[1].innerText;
       var department = tr1.cells[3].innerText;
       //document.getElementById('form1').submit();
@@ -115,7 +115,7 @@
         type:"GET",
         url:action,
         dataType:"json",
-        data:{"year":year,"month":month,"department":department,"typ":'Q'},
+        data:{"year":year,"quarter":quarter,"department":department,"typ":'Q'},
         success:function(data){
           if(data.success==1){
             alert('删除成功!');
