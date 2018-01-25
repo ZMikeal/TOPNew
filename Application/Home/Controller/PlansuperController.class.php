@@ -77,8 +77,7 @@ class PlansuperController extends BaseController {
       $department=array_unique(M('info_admin')->where("user_department != ''")->getField("user_department",true));
       $tj['year']=$search[0];
       $tj['quarter']=$search[1];
-      //已经确认的
-      $tj['if_query'] = 1;
+      
       if($search[2]!=""){
         $tj['department']=$search[2];
       }
@@ -99,15 +98,20 @@ class PlansuperController extends BaseController {
     //撤回（删除）最终成绩
     public function delete(){
       $tj['year']=I('get.year');
-      $tj['month']=I('get.month');
+      
       $tj['department']=I('get.department');
-      $tj['quarter'] = I('get.quarter');
+      
       $typ=I("get.typ");
-      if($typ=='M'){$this->model=M('grademonth_confirm');}
-      if($typ=='Q'){$this->model=M('gradequarter_confirm');}
-      // $result=$this->model->where($tj)->delete();
-      $this->model->if_query = 0;
-      $result = $this->model->where($tj)->save();
+      if($typ=='M'){
+        $tj['month']=I('get.month');
+        $this->model=M('grademonth_confirm');
+      }
+      if($typ=='Q'){
+        $tj['quarter'] = I('get.quarter');
+        $this->model=M('gradequarter_confirm');
+      }
+      $result=$this->model->where($tj)->delete();
+      
       if($result){
         $this->ajaxReturn(array('success'=>1),"json");
       }
