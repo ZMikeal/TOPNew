@@ -248,15 +248,16 @@ class OverworkController extends Controller {
             $leader        = session('admin.user_leader');
             $leader_level  = M('info_admin')->where("username='$leader'")->getField('id_level');
             //是否为部长第一评价人
-            if($leader_level=='4'){
-                $chief     = $leader;
-                $minister     = M('info_admin')->where("username='$chief'")->getField('user_leader');
-                $chief_confirm  = "未确认";
-            }
-            else{
+            //如果第一评价人是部长
+            if($leader_level=='5'){
                 $chief          = $leader;
                 $minister       = $leader;
                 $chief_confirm  = "通过";
+            }
+            else{
+                $chief     = $leader;
+                $minister     = M('info_admin')->where("username='$chief'")->getField('user_leader');
+                $chief_confirm  = "未确认";
             }
 
           }
